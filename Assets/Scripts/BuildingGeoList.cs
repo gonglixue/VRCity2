@@ -32,6 +32,8 @@ public class BuildingGeoList : MonoBehaviour
     public bool useAtlas = false;
     #endregion
 
+    // 修正高度差
+    public float heightCorrect = -6.5f;
 
     void Awake()
     {
@@ -44,6 +46,8 @@ public class BuildingGeoList : MonoBehaviour
         {
             loadTileKML(tile);  // 加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
         }
+
+        
     }
 
     void Start()
@@ -210,7 +214,7 @@ public class BuildingGeoList : MonoBehaviour
             path = path.Replace('\\', '/');
             //Debug.Log(position);
             GameObject buildingInstance = Instantiate(Resources.Load(path, typeof(GameObject)), position, rotate, tile.transform) as GameObject;
-
+            buildingInstance.transform.Translate(new Vector3(0, heightCorrect*(float)_scaleFactor, 0), Space.World);
             // 为创建的GameObject添加组件
             buildingInstance.AddComponent<BuildingIntro>();  // 添加脚本
             buildingInstance.GetComponent<BuildingIntro>().setBuildingInfo(buildingItem.name, buildingItem.latitude, buildingItem.longitude, buildingItem.altitude);
