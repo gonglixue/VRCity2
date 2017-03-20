@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public static class Config{
     public static double longitude = 13.3905676;  // 用该经纬度来定义参考tile
     public static double latitude = 52.5387557;
+    public static string LatLng = "52.5387557,13.3905676";
     public static int zoom = 16;
     public static float tileSize = 100;
 

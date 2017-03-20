@@ -7,8 +7,11 @@ public class BuildingIntro : MonoBehaviour {
     public double longitude;
     public double altitude;
 
-	// Use this for initialization
-	void Start () {
+    // 和这幢建筑相关联的tip
+    private GameObject thisTip;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
@@ -23,5 +26,23 @@ public class BuildingIntro : MonoBehaviour {
         latitude = _latitude;
         longitude = _longitude;
         altitude = _altitude;
+    }
+
+    void displayBillBoard()
+    {
+        Camera mainCamera = Camera.main;
+        Object tipPrefab = Resources.Load("tip", typeof(GameObject));
+        Vector3 tipPos = new Vector3(this.transform.position.x, this.transform.position.y + 10, this.transform.position.z);
+        GameObject tip = Instantiate(tipPrefab) as GameObject;
+
+        tip.transform.up = mainCamera.transform.position - tip.transform.position;
+        tip.GetComponent<tipController>().SetText(buildingName);
+        thisTip = tip;
+    }
+
+    void OnMouseDown()
+    {
+        Debug.Log("click " + buildingName);
+        displayBillBoard();
     }
 }

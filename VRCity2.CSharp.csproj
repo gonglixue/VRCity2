@@ -200,6 +200,7 @@
     <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\TileIntro.cs" />
     <Compile Include="Assets\Scripts\TransformDae.cs" />
+    <Compile Include="Assets\Scripts\test\tipShowTest.cs" />
     <Compile Include="Assets\Scripts\texturePacker\textureTest.cs" />
     <Compile Include="Assets\Scripts\util\CityQuadTree.cs" />
     <Compile Include="Assets\Scripts\util\Config.cs" />
@@ -207,11 +208,13 @@
     <Compile Include="Assets\Scripts\util\XMLParser.cs" />
     <Compile Include="Assets\Scripts\vis\monthDataController.cs" />
     <Compile Include="Assets\Scripts\vis\monthDotInfo.cs" />
+    <Compile Include="Assets\Scripts\vis\tipController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mapbox\Core\Plugins\link.xml" />
     <None Include="Assets\Mapbox\README.txt" />
     <None Include="Assets\Mapbox\Resources\Fonts\OpenSansLic.txt" />
+    <None Include="Assets\Materials\EasePointer.shader" />
     <None Include="Assets\Materials\Height.shader" />
     <None Include="Assets\Materials\VertColor.shader" />
     <None Include="Assets\Materials\VertFrag_Diffuse.shader" />

@@ -33,7 +33,7 @@ public class BuildingGeoList : MonoBehaviour
     #endregion
 
     // 修正高度差
-    public float heightCorrect = -6.5f;
+    public float heightCorrect = -8f;
 
     void Awake()
     {
