@@ -64,26 +64,26 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="Mapbox.VectorTile.Geometry">
-      <HintPath>Assets\Mapbox\Core\Plugins\MapboxVectorTile\Mapbox.VectorTile.Geometry.dll</HintPath>
-    </Reference>
-    <Reference Include="Triangulation">
-      <HintPath>Assets\Mapbox\Core\Plugins\ThirdParty\Triangulation.dll</HintPath>
+    <Reference Include="Mapbox.Json">
+      <HintPath>Assets\Mapbox\Core\Plugins\Mapbox.Json.dll</HintPath>
     </Reference>
     <Reference Include="Mapbox.VectorTile.ExtensionMethods">
       <HintPath>Assets\Mapbox\Core\Plugins\MapboxVectorTile\Mapbox.VectorTile.ExtensionMethods.dll</HintPath>
     </Reference>
-    <Reference Include="Mapbox.Json">
-      <HintPath>Assets\Mapbox\Core\Plugins\Mapbox.Json.dll</HintPath>
+    <Reference Include="Mapbox.VectorTile.Geometry">
+      <HintPath>Assets\Mapbox\Core\Plugins\MapboxVectorTile\Mapbox.VectorTile.Geometry.dll</HintPath>
     </Reference>
     <Reference Include="Mapbox.VectorTile.PbfReader">
       <HintPath>Assets\Mapbox\Core\Plugins\MapboxVectorTile\Mapbox.VectorTile.PbfReader.dll</HintPath>
     </Reference>
+    <Reference Include="Mapbox.VectorTile.VectorTileReader">
+      <HintPath>Assets\Mapbox\Core\Plugins\MapboxVectorTile\Mapbox.VectorTile.VectorTileReader.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>Assets\Mapbox\Core\Plugins\ThirdParty\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Mapbox.VectorTile.VectorTileReader">
-      <HintPath>Assets\Mapbox\Core\Plugins\MapboxVectorTile\Mapbox.VectorTile.VectorTileReader.dll</HintPath>
+    <Reference Include="Triangulation">
+      <HintPath>Assets\Mapbox\Core\Plugins\ThirdParty\Triangulation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +205,8 @@
     <Compile Include="Assets\Scripts\util\Config.cs" />
     <Compile Include="Assets\Scripts\util\Quadtree.cs" />
     <Compile Include="Assets\Scripts\util\XMLParser.cs" />
+    <Compile Include="Assets\Scripts\vis\monthDataController.cs" />
+    <Compile Include="Assets\Scripts\vis\monthDotInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mapbox\Core\Plugins\link.xml" />
