@@ -191,6 +191,28 @@ namespace Mapbox.MeshGeneration
             }
         }
 
+        public void UpdateMapMesh(Rect[] newRect)
+        {
+            terrainControllerScript.UpdateTerrain(newRect);
+
+            // 为每一个tile重新计算深度
+            foreach (KeyValuePair<Vector2, GameObject> item in Config.tilesDic)
+            {
+                UnityTile tile_unityTile = item.Value.GetComponent<UnityTile>();
+                int oldDepth = tile_unityTile.depth;
+                int newDepth = terrainControllerScript.getTheTileDepth(item.Value);
+                tile_unityTile.depth = newDepth;
+                // TODO： 如果该tile的depth发生变化，再重新生成Mesh，否则不做处理
+                if (oldDepth != newDepth)
+                {
+                    Debug.Log("change depth from:" + oldDepth + "to" + newDepth);
+                    MapVisualization.ShowTile(tile_unityTile);
+                }
+
+                //Debug.Log("reshow tile");
+            }
+        }
+
         
 	}
 }

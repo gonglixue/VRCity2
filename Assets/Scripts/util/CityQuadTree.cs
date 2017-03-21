@@ -210,6 +210,21 @@ public class CityQuadTree{
         }
     }
 
+    public void UpdateSearchTarget(Rect[] myPos, GameObject root, GameObject planeMeshPrefab)
+    {
+        if(this.currentDepth < CityQuadTree.maxDepth)
+        {
+            if(TestRectInter(this.nodeBounds, myPos[this.currentDepth]))
+            {
+                this.GenerateChildNodes();
+                foreach(CityQuadTree child in this.childNodes)
+                {
+                    child.UpdateSearchTarget(myPos, root, planeMeshPrefab);
+                }
+            }
+        }
+    }
+
     // 判断两矩形是否相交
     public bool TestRectInter(Rect r1, Rect r2)
     {

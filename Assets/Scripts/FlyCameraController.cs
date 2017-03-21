@@ -3,7 +3,8 @@ using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
 [AddComponentMenu("Control Script/FPS Input")]
-public class CameraController : MonoBehaviour {
+public class FlyCameraController : MonoBehaviour
+{
 
     public Vector4 Range;   // 决定当前tile显示范围
     public Vector3 UpMax;
@@ -12,7 +13,7 @@ public class CameraController : MonoBehaviour {
     public double latitude = 52.5387557;
     public float cameraHeightInWorld = 15.0f;
 
-    public GameObject MapController;
+
     private CharacterController _charController;
     public float speed = 6.0f;  // 移动速度
     public float gravity = -9.8f;
@@ -32,32 +33,61 @@ public class CameraController : MonoBehaviour {
     private Vector2 positionMeter;  // 相机在墨卡托坐标下的位置
     [SerializeField]
     private Rect cameraRect;    // 相机墨卡托坐标Rect
-    private Rect[] cameraRectArray;
     private float RectWidth;    // 相机在墨卡托坐标下Rect的宽度
 
+    public GameObject FlyMapController;
+    private bool[] alreadyUpdateZoom = { false, false, false };
+    private int[] UpdateZoomBorder = { 100, 200, 300 };
     //private GameObject rectPlane;
     void Awake()
     {
         _fieldOfView = GetComponent<Camera>().fieldOfView;
         _height = transform.position.y;
         InitReference();
-        
+
         InitCameraAttrib();
 
-        //CalRange(_height, _fieldOfView);
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         _charController = GetComponent<CharacterController>();
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         // keyboard control
         move();
-	}
+
+        if(transform.position.y > 100 && transform.position.y < 200)
+        {
+            if(!alreadyUpdateZoom[0])
+            {
+                FlyMapController.GetComponent<Mapbox.MeshGeneration.FlyMapController>().setZoom();
+                alreadyUpdateZoom[0] = true;
+            }
+        }
+        else if(transform.position.y >200 && transform.position.y <300)
+        {
+            if(!alreadyUpdateZoom[1])
+            {
+                FlyMapController.GetComponent<Mapbox.MeshGeneration.FlyMapController>().setZoom();
+                alreadyUpdateZoom[1] = true;
+            }
+        }
+        else if(transform.position.y > 300)
+        {
+            if(!alreadyUpdateZoom[2])
+            {
+                FlyMapController.GetComponent<Mapbox.MeshGeneration.FlyMapController>().setZoom();
+                alreadyUpdateZoom[2] = true;
+            }
+        }
+        
+    }
 
     void move()
     {
@@ -73,41 +103,9 @@ public class CameraController : MonoBehaviour {
         _charController.Move(movement);
 
         Vector3 newPos = transform.position;
-        if(deltaX!=0 || deltaY != 0)
-        {
-            // TODO: 使用协程实现防止阻塞
-            // UpdateRect(new Vector2(transform.position.x, transform.position.z));
-            // MapController.GetComponent<Mapbox.MeshGeneration.MapController>().UpdateMapMesh(cameraRect);
-            StartCoroutine(UpdateCoroutine());
-        }
+
     }
 
-    IEnumerator UpdateCoroutine()
-    {
-        UpdateRect(new Vector2(transform.position.x, transform.position.z));
-        //MapController.GetComponent<Mapbox.MeshGeneration.MapController>().UpdateMapMesh(cameraRect);
-        MapController.GetComponent<Mapbox.MeshGeneration.MapController>().UpdateMapMesh(cameraRectArray);
-        yield return new WaitForSeconds(0);
-    }
-
-    void CalRange(float height, float viewAngle)
-    {
-        float halfWidth = height * Mathf.Tan(viewAngle*Mathf.PI/180f);  // unity 坐标
-        // unity 坐标转墨卡托坐标
-        float halfWidthMeters = (float)(halfWidth / _worldScaleFactor);
-        // 计算tiles个数     
-        int tileNum = (int)(halfWidthMeters / _referenceTileRect.width);
-
-        SetRange(new Vector4(tileNum, tileNum, tileNum, tileNum));
-
-        Debug.Log("---------");
-        Debug.Log("height:" + height);
-        Debug.Log("reference width:" + _referenceTileRect.width);
-        Debug.Log("half width:" + halfWidth);
-        Debug.Log("view angle:" + viewAngle);
-        Debug.Log("tile num: " + tileNum);
-        Debug.Log("-------------");
-    }
 
     void InitReference()
     {
@@ -117,13 +115,10 @@ public class CameraController : MonoBehaviour {
 
         _worldScaleFactor = Config.tileSize / _referenceTileRect.width;  // 墨卡托坐标转unity
 
-        RectWidth = _referenceTileRect.width/2.0f;
+        RectWidth = _referenceTileRect.width;
     }
 
-    void SetRange(Vector4 myRange)
-    {
-        MapController.GetComponent<Mapbox.MeshGeneration.MapController>().Range = myRange;
-    }
+
 
     // 墨卡托坐标转unity坐标
     Vector3 MetersToUnity(Vector2 posInMeter)
@@ -152,13 +147,10 @@ public class CameraController : MonoBehaviour {
         //positionMeter = _referenceTileRect.center;
         positionMeter = _referenceTileRect.position;
         transform.position = MetersToUnity(positionMeter);                     // 相机在unity中的世界坐标
-       
+
         // 相机的Rect width = 地图tile的Rect width
-        this.cameraRect = new Rect(positionMeter.x, positionMeter.y, RectWidth, RectWidth);     // 相机在墨卡托坐标系下的Rect 用坐上角定义
-        this.cameraRectArray = new Rect[3];
-        this.cameraRectArray[0] = this.cameraRect;
-        this.cameraRectArray[1] = new Rect(this.cameraRect.x - RectWidth / 2.0f, this.cameraRect.y - RectWidth / 2.0f, RectWidth * 2, RectWidth * 2);
-        this.cameraRectArray[2] = new Rect(this.cameraRect.x - RectWidth, this.cameraRect.y - RectWidth, RectWidth * 3, RectWidth * 3);
+        this.cameraRect = new Rect(positionMeter.x, positionMeter.y, RectWidth, -RectWidth);     // 相机在墨卡托坐标系下的Rect 用右下角定义
+
 
     }
 
@@ -166,9 +158,7 @@ public class CameraController : MonoBehaviour {
     {
         positionMeter = UnityToMeters(this.transform.position);  // 相机Rectcenter
         this.cameraRect = new Rect(positionMeter.x - RectWidth / 2.0f, positionMeter.y - RectWidth / 2.0f, RectWidth, RectWidth);  // 新的相机Rect，用左上角定义
-        this.cameraRectArray[0] = this.cameraRect;
-        this.cameraRectArray[1] = new Rect(this.cameraRect.x - RectWidth / 2.0f, this.cameraRect.y - RectWidth / 2.0f, RectWidth * 2, RectWidth * 2);
-        this.cameraRectArray[2] = new Rect(this.cameraRect.x - RectWidth, this.cameraRect.y - RectWidth, RectWidth * 3, RectWidth * 3);
+
         //Vector3 temp = MetersToUnity(cameraRect.center);
         //rectPlane.transform.position = new Vector3(temp.x, 10, temp.z);
 
@@ -179,4 +169,9 @@ public class CameraController : MonoBehaviour {
         float xMove = newPos.x - oldPos.x;
     }
 
+    void UpdateZomm()
+    {
+        Debug.Log("update zoom!");
+        FlyMapController.GetComponent<Mapbox.MeshGeneration.FlyMapController>().setZoom();
+    }
 }

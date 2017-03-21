@@ -63,6 +63,12 @@ public class TerrainController : MonoBehaviour {
         terrainRoot.transform.localScale = Vector3.one * BuildingGeoList.GetWorldScaleFactor(); // ?
     }
 
+    public void UpdateTerrain(Rect[] newRect)
+    {
+        qTree.UpdateSearchTarget(newRect, terrainRoot, planeMeshPrefab);
+        terrainRoot.transform.localScale = Vector3.one * BuildingGeoList.GetWorldScaleFactor(); // ?
+    }
+
     public int getTheTileDepth(GameObject tile)
     {
         if(qTree == null)
