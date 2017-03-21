@@ -6,8 +6,8 @@
     {
 
         #region movemoentControl
-        public float speed = 10.0f;
-        public float gravity = -9.8f;
+        public GameObject cameraRig;
+
         #endregion
 
         private void Start()
@@ -41,6 +41,7 @@
 
             GetComponent<VRTK_ControllerEvents>().TouchpadPressed += new ControllerInteractionEventHandler(DoTouchpadPressed);
             GetComponent<VRTK_ControllerEvents>().TouchpadReleased += new ControllerInteractionEventHandler(DoTouchpadReleased);
+           
 
             GetComponent<VRTK_ControllerEvents>().TouchpadTouchStart += new ControllerInteractionEventHandler(DoTouchpadTouchStart);
             GetComponent<VRTK_ControllerEvents>().TouchpadTouchEnd += new ControllerInteractionEventHandler(DoTouchpadTouchEnd);
@@ -133,37 +134,37 @@
             if(touchPos.y > 0.7f || touchPos.y < -0.7f)
             {
                 // move forward
-                deltaY = touchPos.y * speed;
+                deltaY = touchPos.y;
             }
             if(touchPos.x < -0.7f || touchPos.x > 0.7f)
             {
-                deltaX = touchPos.x * speed;
+                deltaX = touchPos.x;
             }
             movement = new Vector3(deltaX, 0, deltaY);
-            movement = Vector3.ClampMagnitude(movement, speed);
-            movement *= Time.deltaTime;
-            movement = transform.TransformDirection(movement);
+            cameraRig.GetComponent<VRCameraRigOperation>().activeMove(movement);
+           
             
         }
 
         private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
         {
             DebugLogger(e.controllerIndex, "TOUCHPAD", "released", e);
+            cameraRig.GetComponent<VRCameraRigOperation>().inactiveMove();
         }
 
         private void DoTouchpadTouchStart(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "touched", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "touched", e);
         }
 
         private void DoTouchpadTouchEnd(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "untouched", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "untouched", e);
         }
 
         private void DoTouchpadAxisChanged(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "axis changed", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "axis changed", e);
         }
 
         private void DoControllerEnabled(object sender, ControllerInteractionEventArgs e)

@@ -203,6 +203,7 @@
     <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\TileIntro.cs" />
     <Compile Include="Assets\Scripts\TransformDae.cs" />
+    <Compile Include="Assets\Scripts\VRControl\VRCameraRigOperation.cs" />
     <Compile Include="Assets\Scripts\VRControl\VRCityControllerListener.cs" />
     <Compile Include="Assets\Scripts\test\tipShowTest.cs" />
     <Compile Include="Assets\Scripts\texturePacker\textureTest.cs" />
