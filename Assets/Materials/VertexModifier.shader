@@ -1,7 +1,7 @@
 ﻿Shader "Custom/VertexModifier" {
 	Properties{
 		_MainTex("Texture", 2D) = "white" {}
-		_Amount("Height Adjustment", Float) = 0.0
+		_Amount("Height Adjustment", Float) = 13025.33
 		_HeightMap("Height Map",2D) = "black" {}
 		_RelativeScale("Relative Scale",Float) = 0
 	}
