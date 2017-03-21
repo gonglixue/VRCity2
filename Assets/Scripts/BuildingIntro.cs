@@ -32,10 +32,11 @@ public class BuildingIntro : MonoBehaviour {
     {
         Camera mainCamera = Camera.main;
         Object tipPrefab = Resources.Load("tip", typeof(GameObject));
-        Vector3 tipPos = new Vector3(this.transform.position.x, this.transform.position.y + 10, this.transform.position.z);
-        GameObject tip = Instantiate(tipPrefab) as GameObject;
+        Vector3 tipPos = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
+        Quaternion tipQ = Quaternion.Euler(-90, 0, 0);
+        GameObject tip = Instantiate(tipPrefab,tipPos,tipQ) as GameObject;
+        
 
-        tip.transform.up = mainCamera.transform.position - tip.transform.position;
         tip.GetComponent<tipController>().SetText(buildingName);
         thisTip = tip;
     }

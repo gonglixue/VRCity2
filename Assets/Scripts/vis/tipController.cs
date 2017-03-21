@@ -26,11 +26,9 @@ public class tipController : MonoBehaviour {
         }
 
         // look at camera
-        //this.transform.forward = Vector3.up;
-        //this.transform.up = eye.transform.position - this.transform.position;
         Vector3 targetUp = eye.transform.position - this.transform.position;
-        this.transform.up = new Vector3(targetUp.x, this.transform.up.y, targetUp.z);
-        this.transform.localEulerAngles = new Vector3(-90f, this.transform.localEulerAngles.y, this.transform.localEulerAngles.z);
+        Quaternion newQ = Quaternion.LookRotation(Vector3.up, targetUp);
+        this.transform.localRotation = newQ;
 
         
 	}
