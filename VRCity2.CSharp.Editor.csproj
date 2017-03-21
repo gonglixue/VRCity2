@@ -120,6 +120,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2DDynamicClouds\Editor\PerlinNoiseGenerator.cs" />
     <Compile Include="Assets\Editor\TextureImportSetting.cs" />
     <Compile Include="Assets\Mapbox\Examples\Drive\Editor\DirectionsFactoryEditor.cs" />
     <Compile Include="Assets\Mapbox\Scripts\Editor\GeocodeAttributeDrawer.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Assets\Mapbox\Scripts\Editor\MapboxConvenienceEditor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\2DDynamicClouds\Shaders\DynamicClouds.shader" />
     <None Include="Assets\Mapbox\Core\Plugins\link.xml" />
     <None Include="Assets\Mapbox\README.txt" />
     <None Include="Assets\Mapbox\Resources\Fonts\OpenSansLic.txt" />
