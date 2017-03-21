@@ -18,7 +18,7 @@ public class VRCameraRigOperation : MonoBehaviour {
 	void Update () {
 	    if(activeMovement)
         {
-            Debug.Log("move");
+            //Debug.Log("move");
             transform.position += movement;
         }
 	}

@@ -60,72 +60,72 @@
 
         private void DoTriggerPressed(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "pressed", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "pressed", e);
         }
 
         private void DoTriggerReleased(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "released", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "released", e);
         }
 
         private void DoTriggerTouchStart(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "touched", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "touched", e);
         }
 
         private void DoTriggerTouchEnd(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "untouched", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "untouched", e);
         }
 
         private void DoTriggerHairlineStart(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "hairline start", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "hairline start", e);
         }
 
         private void DoTriggerHairlineEnd(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "hairline end", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "hairline end", e);
         }
 
         private void DoTriggerClicked(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "clicked", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "clicked", e);
         }
 
         private void DoTriggerUnclicked(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "unclicked", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "unclicked", e);
         }
 
         private void DoTriggerAxisChanged(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "axis changed", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "axis changed", e);
         }
 
         private void DoApplicationMenuPressed(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "APPLICATION MENU", "pressed down", e);
+            //DebugLogger(e.controllerIndex, "APPLICATION MENU", "pressed down", e);
         }
 
         private void DoApplicationMenuReleased(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "APPLICATION MENU", "released", e);
+            //DebugLogger(e.controllerIndex, "APPLICATION MENU", "released", e);
         }
 
         private void DoGripPressed(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "GRIP", "pressed down", e);
+            //DebugLogger(e.controllerIndex, "GRIP", "pressed down", e);
         }
 
         private void DoGripReleased(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "GRIP", "released", e);
+            //DebugLogger(e.controllerIndex, "GRIP", "released", e);
         }
 
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
             // TODO:
             // Player Move
             Vector2 touchPos = e.touchpadAxis;
@@ -148,7 +148,7 @@
 
         private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "released", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "released", e);
             cameraRig.GetComponent<VRCameraRigOperation>().inactiveMove();
         }
 
@@ -169,12 +169,12 @@
 
         private void DoControllerEnabled(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "CONTROLLER STATE", "ENABLED", e);
+            //DebugLogger(e.controllerIndex, "CONTROLLER STATE", "ENABLED", e);
         }
 
         private void DoControllerDisabled(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "CONTROLLER STATE", "DISABLED", e);
+            //DebugLogger(e.controllerIndex, "CONTROLLER STATE", "DISABLED", e);
         }
     }
 }

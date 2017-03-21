@@ -28,22 +28,34 @@ public class BuildingIntro : MonoBehaviour {
         altitude = _altitude;
     }
 
-    void displayBillBoard()
+    public void displayBillBoard()
     {
-        Camera mainCamera = Camera.main;
-        Object tipPrefab = Resources.Load("tip", typeof(GameObject));
-        Vector3 tipPos = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
-        Quaternion tipQ = Quaternion.Euler(-90, 0, 0);
-        GameObject tip = Instantiate(tipPrefab,tipPos,tipQ) as GameObject;
-        
+        if (!thisTip)
+        {
+            Camera mainCamera = Camera.main;
+            Object tipPrefab = Resources.Load("tip", typeof(GameObject));
+            Vector3 tipPos = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
+            Quaternion tipQ = Quaternion.Euler(-90, 0, 0);
+            GameObject tip = Instantiate(tipPrefab, tipPos, tipQ) as GameObject;
 
-        tip.GetComponent<tipController>().SetText(buildingName);
-        thisTip = tip;
+
+            tip.GetComponent<tipController>().SetText(buildingName);
+            thisTip = tip;
+        }
     }
 
     void OnMouseDown()
     {
         Debug.Log("click " + buildingName);
         displayBillBoard();
+    }
+
+    public void destroyTip()
+    {
+        if(thisTip)
+        {
+            Destroy(thisTip);
+            Debug.Log("distroy tip");
+        }
     }
 }

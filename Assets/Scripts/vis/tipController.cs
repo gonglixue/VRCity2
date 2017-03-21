@@ -10,7 +10,7 @@ public class tipController : MonoBehaviour {
 
     void Awake()
     {
-        eye = GameObject.Find("Camera");
+        eye = GameObject.Find("Camera (eye)");
     }
 	// Use this for initialization
 	void Start () {
