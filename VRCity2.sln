@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRCity2.CSharp.Plugins", "VRCity2.CSharp.Plugins.csproj", "{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRCity2.CSharp", "VRCity2.CSharp.csproj", "{E446F38D-22B3-A475-DCB6-9A17C294C3AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRCity2.CSharp.Editor", "VRCity2.CSharp.Editor.csproj", "{F780B5C7-B0DD-8F39-80BD-8BB1D3511991}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E446F38D-22B3-A475-DCB6-9A17C294C3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E446F38D-22B3-A475-DCB6-9A17C294C3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E446F38D-22B3-A475-DCB6-9A17C294C3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU

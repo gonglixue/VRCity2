@@ -87,6 +87,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="VRCity2.CSharp.Plugins.csproj">
+      <Project>{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}</Project>
+      <Name>VRCity2.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\2DDynamicClouds\Scripts\SimplexNoise.cs" />
     <Compile Include="Assets\Mapbox\Core\Directions\DirectionResource.cs" />
     <Compile Include="Assets\Mapbox\Core\Directions\Directions.cs" />
@@ -442,6 +448,7 @@
     <None Include="Assets\Materials\VertColor.shader" />
     <None Include="Assets\Materials\VertFrag_Diffuse.shader" />
     <None Include="Assets\Materials\VertexModifier.shader" />
+    <None Include="Assets\Plugins\GoKit\easing\easeEquationsLicense.txt" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />

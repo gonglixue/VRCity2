@@ -30,7 +30,7 @@ public class monthDataController : MonoBehaviour {
             
 
             // TODO 
-            // 连线
+            // 等到所有原点移动到正确位置(setvalue完成后）再连线
             if(i > 0)
             {
                 Transform lastChild = this.transform.GetChild(i - 1);

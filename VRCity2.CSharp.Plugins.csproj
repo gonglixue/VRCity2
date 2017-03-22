@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F780B5C7-B0DD-8F39-80BD-8BB1D3511991}</ProjectGuid>
+    <ProjectGuid>{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Editor:5</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.4.1f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -52,44 +52,17 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Advertisements">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.EditorTestsRunner">
-      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.TreeEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.Graphs">
-      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
-      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Mapbox.Json">
       <HintPath>Assets\Mapbox\Core\Plugins\Mapbox.Json.dll</HintPath>
@@ -114,32 +87,70 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="VRCity2.CSharp.Plugins.csproj">
-      <Project>{0A5A5215-D33A-3C60-E10A-5C0E3E69311A}</Project>
-      <Name>VRCity2.CSharp.Plugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRCity2.CSharp.csproj">
-      <Project>{E446F38D-22B3-A475-DCB6-9A17C294C3AF}</Project>
-      <Name>VRCity2.CSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\2DDynamicClouds\Editor\PerlinNoiseGenerator.cs" />
-    <Compile Include="Assets\Editor\TextureImportSetting.cs" />
-    <Compile Include="Assets\Mapbox\Examples\Drive\Editor\DirectionsFactoryEditor.cs" />
-    <Compile Include="Assets\Mapbox\Scripts\Editor\GeocodeAttributeDrawer.cs" />
-    <Compile Include="Assets\Mapbox\Scripts\Editor\GeocodeAttributeSearchWindow.cs" />
-    <Compile Include="Assets\Mapbox\Scripts\Editor\MapboxConvenienceEditor.cs" />
-    <Compile Include="Assets\SteamVR\Editor\SteamVR_Editor.cs" />
-    <Compile Include="Assets\SteamVR\Editor\SteamVR_Preferences.cs" />
-    <Compile Include="Assets\SteamVR\Editor\SteamVR_RenderModelEditor.cs" />
-    <Compile Include="Assets\SteamVR\Editor\SteamVR_Settings.cs" />
-    <Compile Include="Assets\SteamVR\Editor\SteamVR_SkyboxEditor.cs" />
-    <Compile Include="Assets\SteamVR\Editor\SteamVR_Update.cs" />
-    <Compile Include="Assets\VRTK\Editor\VRTK_AdaptiveQualityEditor.cs" />
-    <Compile Include="Assets\VRTK\Editor\VRTK_EditorUtilities.cs" />
-    <Compile Include="Assets\VRTK\Editor\VRTK_InteractableObjectEditor.cs" />
-    <Compile Include="Assets\VRTK\Scripts\Controls\2D\RadialMenu\Editor\RadialMenuInspector.cs" />
+    <Compile Include="Assets\Plugins\GoKit\Go.cs" />
+    <Compile Include="Assets\Plugins\GoKit\GoDummyPath.cs" />
+    <Compile Include="Assets\Plugins\GoKit\GoTween.cs" />
+    <Compile Include="Assets\Plugins\GoKit\GoTweenChain.cs" />
+    <Compile Include="Assets\Plugins\GoKit\GoTweenCollectionConfig.cs" />
+    <Compile Include="Assets\Plugins\GoKit\GoTweenConfig.cs" />
+    <Compile Include="Assets\Plugins\GoKit\GoTweenFlow.cs" />
+    <Compile Include="Assets\Plugins\GoKit\base\AbstractGoTween.cs" />
+    <Compile Include="Assets\Plugins\GoKit\base\AbstractGoTweenCollection.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseBack.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseBounce.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseCircular.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseCubic.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseElastic.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseExponential.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseLinear.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseQuadratic.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseQuartic.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseQuintic.cs" />
+    <Compile Include="Assets\Plugins\GoKit\easing\GoEaseSinusoidal.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoDuplicatePropertyRuleType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoEaseType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoLogLevel.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoLookAtType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoLoopType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoShakeType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoSplineType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoTweenState.cs" />
+    <Compile Include="Assets\Plugins\GoKit\enums\GoUpdateType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\extensions\GoKitTweenExtensions.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\GoTweenUtils.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\abstracts\AbstractColorTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\abstracts\AbstractQuaternionTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\abstracts\AbstractTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\abstracts\AbstractVector3TweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\ColorTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\FloatTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\IGenericProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\IntTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\Vector2TweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\Vector3PathTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\Vector3TweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\Vector3XTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\Vector3YTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\Vector3ZTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\genericTypes\Vector4TweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\smoothing\GoSmoothedQuaternion.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\smoothing\GoSmoothedVector3.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\smoothing\GoSmoothingType.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\EulerAnglesTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\MaterialColorTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\PositionPathTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\PositionTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\RotationQuaternionTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\RotationTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\ScalePathTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\ScaleTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\specificTypes\ShakeTweenProperty.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\splines\AbstractGoSplineSolver.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\splines\GoSpline.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\splines\GoSplineCatmullRomSolver.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\splines\GoSplineCubicBezierSolver.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\splines\GoSplineQuadraticBezierSolver.cs" />
+    <Compile Include="Assets\Plugins\GoKit\properties\splines\GoSplineStraightLineSolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\2DDynamicClouds\Shaders\DynamicClouds.shader" />
