@@ -20,6 +20,8 @@ public class monthDotInfo : MonoBehaviour {
     }
     private ScaleState scaleState = ScaleState.Normal;
     private float originalScaleSize;
+    private GoTween _scaleInTween;  //放大操作
+    private GoTween _scaleOutTween;  //缩小操作
     #endregion
 
 
@@ -62,9 +64,13 @@ public class monthDotInfo : MonoBehaviour {
             .setEaseType(GoEaseType.CubicInOut));
     }
 
+    /// <summary>
+    /// 射线进入本月的圆点
+    /// </summary>
     void PointerInMonth()
     {
         // 点击查看本月详细信息
+        UpdateClassData();
 
         if(scaleState == ScaleState.Normal)
         {
@@ -79,10 +85,14 @@ public class monthDotInfo : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// 射线离开本月的圆点
+    /// </summary>
     void PointerOutMonth()
     {
         if(scaleState == ScaleState.Bigger)
         {
+            StopBiggerTween();
             // 变小
             Go.to(this.transform, 0.8f,
                 new GoTweenConfig()
@@ -93,6 +103,16 @@ public class monthDotInfo : MonoBehaviour {
         
     }
 
+    void StopBiggerTween()
+    {
+        if(_scaleOutTween != null)
+        {
+            _scaleOutTween.complete();
+            _scaleOutTween.destroy();
+            _scaleOutTween = null;
+        }
+    }
+
     public void createVerticalBar()  
     {
         float vBary = 4.0f;
@@ -101,6 +121,11 @@ public class monthDotInfo : MonoBehaviour {
         
         vBar.transform.position = vBarPos;
         vBar.transform.SetParent(this.transform.parent);
+    }
+
+    void UpdateClassData()
+    {
+
     }
 
 }
