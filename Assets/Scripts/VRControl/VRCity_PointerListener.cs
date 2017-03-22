@@ -4,7 +4,8 @@
 
     public class VRCity_PointerListener : MonoBehaviour
     {
-        private Transform currentPointerObj = null;
+        private Transform currentPointerObj = null;   // 当前pointer指向的建筑
+        
 
         private void Start()
         {
@@ -56,7 +57,7 @@
             if(currentPointerObj)
             {
                 BuildingIntro building = currentPointerObj.GetComponent<BuildingIntro>();
-                building.destroyTip();
+                building.destroyTip();   // 清除biilboard
             }
 
             currentPointerObj = null;

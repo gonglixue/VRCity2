@@ -33,10 +33,13 @@ public class BuildingIntro : MonoBehaviour {
         if (!thisTip)
         {
             Camera mainCamera = Camera.main;
-            Object tipPrefab = Resources.Load("tip", typeof(GameObject));
-            Vector3 tipPos = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
+            Object tipPrefab = Resources.Load("pivotTip", typeof(GameObject));
+            Vector3 highestPoint = findMaxHeight();
+            //Vector3 tipPos = new Vector3(this.transform.position.x, highestPoint.y, this.transform.position.z);
+            Vector3 tipPos = highestPoint;
             Quaternion tipQ = Quaternion.Euler(-90, 0, 0);
-            GameObject tip = Instantiate(tipPrefab, tipPos, tipQ) as GameObject;
+          
+            GameObject tip = Instantiate(tipPrefab, tipPos, tipQ) as GameObject;   // use pivot axis to locate the position of billboard
 
 
             tip.GetComponent<tipController>().SetText(buildingName);
@@ -54,8 +57,32 @@ public class BuildingIntro : MonoBehaviour {
     {
         if(thisTip)
         {
-            Destroy(thisTip);
+            // Destroy(thisTip);
+            thisTip.GetComponent<tipController>().hideBillboard();
+            thisTip = null;
             Debug.Log("distroy tip");
         }
+    }
+
+    Vector3 findMaxHeight()
+    {
+        float y;
+        Vector3 highestPoint;
+        Mesh colliderMesh = GetComponent<MeshCollider>().sharedMesh;
+        Vector3[] vertices = colliderMesh.vertices;
+
+        y = vertices[0].y;
+        highestPoint = vertices[0];
+
+        for(int i=1; i<vertices.Length;i++)
+        {
+            if (vertices[i].y > y)
+            {
+                y = vertices[i].y;
+                highestPoint = vertices[i];
+            }
+        }
+
+        return highestPoint;
     }
 }
