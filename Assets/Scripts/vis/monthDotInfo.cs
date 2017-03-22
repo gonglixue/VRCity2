@@ -28,7 +28,7 @@ public class monthDotInfo : MonoBehaviour {
     void Awake()
     {
         originalScaleSize = this.transform.localScale.x;
-        createVerticalBar();
+        
     }
 	// Use this for initialization
 	void Start () {
@@ -52,9 +52,10 @@ public class monthDotInfo : MonoBehaviour {
 
     public void setValue(int v, int max)
     {
+        createVerticalBar();
+
         value = v;
         float newPosY = v*1.0f / max * maxHeight;
-
 
         // ease transformation
         Vector3 newPos = new Vector3(transform.position.x, newPosY, transform.position.z);
