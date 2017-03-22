@@ -7,6 +7,7 @@ public class monthDotInfo : MonoBehaviour {
     public int month;  // 1-12
 
     static float maxHeight = 7.0f;
+    
 
     public GameObject verticalBar;
     public GameObject line;
@@ -22,6 +23,7 @@ public class monthDotInfo : MonoBehaviour {
     private float originalScaleSize;
     private GoTween _scaleInTween;  //放大操作
     private GoTween _scaleOutTween;  //缩小操作
+    static int finishMonth = 0;      //有多少个圆点已位移完毕
     #endregion
 
 
@@ -59,10 +61,25 @@ public class monthDotInfo : MonoBehaviour {
 
         // ease transformation
         Vector3 newPos = new Vector3(transform.position.x, newPosY, transform.position.z);
-        Go.to(this.transform, 1.0f,
-            new GoTweenConfig()
+        GoTweenConfig config = new GoTweenConfig()
             .position(newPos)
-            .setEaseType(GoEaseType.CubicInOut));
+            .setEaseType(GoEaseType.CubicInOut);
+        config.onComplete(delegate (AbstractGoTween obj)
+        {
+            finishSetValue();
+        });
+        Go.to(this.transform, 1.0f, config);
+    }
+
+    public void finishSetValue()
+    {
+        Debug.Log("finish set value" + month);
+        finishMonth++;
+        if(finishMonth == 12)  // 完成最后一个点的位移
+        {
+            Debug.Log("finish all month value setting");
+            this.transform.parent.GetComponent<monthDataController>().JoinLine();
+        }
     }
 
     /// <summary>
