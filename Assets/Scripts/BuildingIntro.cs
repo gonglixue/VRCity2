@@ -35,23 +35,23 @@ public class BuildingIntro : MonoBehaviour {
             Camera mainCamera = Camera.main;
             Object tipPrefab = Resources.Load("pivotTip", typeof(GameObject));
             Vector3 highestPoint = findMaxHeight();
-            //Vector3 tipPos = new Vector3(this.transform.position.x, highestPoint.y, this.transform.position.z);
-            Vector3 tipPos = highestPoint;
-            Quaternion tipQ = Quaternion.Euler(-90, 0, 0);
-          
+            //Vector3 tipPos = new Vector3(this.transform.position.x, highestPoint.y+10, this.transform.position.z);
+            //Vector3 tipPos = transform.localToWorldMatrix * highestPoint;
+            //Vector3 tipPos = highestPoint;
+            Vector3 tipPos = this.transform.localToWorldMatrix.MultiplyPoint(highestPoint);
+            Quaternion tipQ = Quaternion.Euler(-90, 0, 0);          
             GameObject tip = Instantiate(tipPrefab, tipPos, tipQ) as GameObject;   // use pivot axis to locate the position of billboard
-
 
             tip.GetComponent<tipController>().SetText(buildingName);
             thisTip = tip;
         }
     }
 
-    void OnMouseDown()
-    {
-        Debug.Log("click " + buildingName);
-        displayBillBoard();
-    }
+    //void OnMouseDown()
+    //{
+    //    Debug.Log("click " + buildingName);
+    //    displayBillBoard();
+    //}
 
     public void destroyTip()
     {
@@ -66,23 +66,23 @@ public class BuildingIntro : MonoBehaviour {
 
     Vector3 findMaxHeight()
     {
-        float y;
+        float z;
         Vector3 highestPoint;
         Mesh colliderMesh = GetComponent<MeshCollider>().sharedMesh;
         Vector3[] vertices = colliderMesh.vertices;
 
-        y = vertices[0].y;
+        z = vertices[0].z;
         highestPoint = vertices[0];
 
         for(int i=1; i<vertices.Length;i++)
         {
-            if (vertices[i].y > y)
+            if (vertices[i].z >z)
             {
-                y = vertices[i].y;
+                z = vertices[i].z;
                 highestPoint = vertices[i];
             }
         }
-
+        //Debug.Log("highest point is: " + highestPoint);
         return highestPoint;
     }
 }

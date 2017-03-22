@@ -46,7 +46,7 @@
 
         private void DoPointerOut(object sender, DestinationMarkerEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
+            //DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
 
         }
 
@@ -62,6 +62,17 @@
 
             currentPointerObj = null;
             
+        }
+
+        public void ReleaseTriger()
+        {
+            if(currentPointerObj)
+            {
+                Debug.Log("distroy billboard in pointer listener");
+                BuildingIntro building = currentPointerObj.GetComponent<BuildingIntro>();
+                building.destroyTip();
+            }
+            currentPointerObj = null;
         }
     }
 }

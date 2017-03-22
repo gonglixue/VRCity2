@@ -66,6 +66,9 @@
         private void DoTriggerReleased(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TRIGGER", "released", e);
+
+            // 射线消失，destroy billboard
+            this.GetComponent<VRCity_PointerListener>().ReleaseTriger();
         }
 
         private void DoTriggerTouchStart(object sender, ControllerInteractionEventArgs e)

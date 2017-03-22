@@ -47,6 +47,7 @@ public class tipController : MonoBehaviour {
                 // 完成隐藏动画
                 hideAnimation = false;
                 Destroy(this.gameObject);  //完成隐藏动画后销毁billboard object
+                Debug.Log("real destroy finish");
             }
         }
 	    
