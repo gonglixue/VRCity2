@@ -10,10 +10,13 @@ public class tipController : MonoBehaviour {
 
     private bool showAnimation = true;
     private bool hideAnimation = false;
-
+    public bool useVR = false;
     void Awake()
     {
-        eye = GameObject.Find("Camera (eye)");
+        if (useVR)
+            eye = GameObject.Find("Camera (eye)");
+        else
+            eye = GameObject.Find("Main Camera");
     }
 	// Use this for initialization
 	void Start () {
