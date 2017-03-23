@@ -10,6 +10,7 @@
 
         #endregion
 
+
         private void Start()
         {
             if (GetComponent<VRTK_ControllerEvents>() == null)
@@ -134,12 +135,12 @@
             Vector2 touchPos = e.touchpadAxis;
             float deltaX = 0, deltaY = 0;
             Vector3 movement;
-            if(touchPos.y > 0.7f || touchPos.y < -0.7f)
+            if(touchPos.y > 0.3f || touchPos.y < -0.3f)
             {
                 // move forward
                 deltaY = touchPos.y;
             }
-            if(touchPos.x < -0.7f || touchPos.x > 0.7f)
+            if(touchPos.x < -0.3f || touchPos.x > 0.3f)
             {
                 deltaX = touchPos.x;
             }

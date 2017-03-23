@@ -8,8 +8,6 @@ public class CameraController : MonoBehaviour {
     public Vector4 Range;   // 决定当前tile显示范围
     public Vector3 UpMax;
     public Vector3 DownMax;
-    public double longitude = 13.3905676;
-    public double latitude = 52.5387557;
     public float cameraHeightInWorld = 15.0f;
 
     public GameObject MapController;
@@ -21,7 +19,6 @@ public class CameraController : MonoBehaviour {
     private float _height;
 
     private double _worldScaleFactor;
-    private double _scaleFactor;
     // 参考原点tile
     private Vector2 _referencTileMeter;
     private Vector2 _tms;
@@ -172,11 +169,6 @@ public class CameraController : MonoBehaviour {
         //Vector3 temp = MetersToUnity(cameraRect.center);
         //rectPlane.transform.position = new Vector3(temp.x, 10, temp.z);
 
-    }
-
-    void UpdateRect(Vector3 oldPos, Vector3 newPos)
-    {
-        float xMove = newPos.x - oldPos.x;
     }
 
 }
