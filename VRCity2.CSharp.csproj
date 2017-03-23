@@ -218,6 +218,8 @@
     <Compile Include="Assets\Scripts\util\Config.cs" />
     <Compile Include="Assets\Scripts\util\Quadtree.cs" />
     <Compile Include="Assets\Scripts\util\XMLParser.cs" />
+    <Compile Include="Assets\Scripts\vis\baseDataInfo.cs" />
+    <Compile Include="Assets\Scripts\vis\classGroupController.cs" />
     <Compile Include="Assets\Scripts\vis\monthDataController.cs" />
     <Compile Include="Assets\Scripts\vis\monthDotInfo.cs" />
     <Compile Include="Assets\Scripts\vis\tipController.cs" />
