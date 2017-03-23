@@ -220,10 +220,10 @@ public class BuildingGeoList : MonoBehaviour
             buildingInstance.GetComponent<BuildingIntro>().setBuildingInfo(buildingItem.name, buildingItem.latitude, buildingItem.longitude, buildingItem.altitude);
             buildingInstance.AddComponent<MeshCollider>().convex = true;
 
+            // Shader 气象模拟
+
             
             // 获取buildingInstance的texture
-            // TODO: 一个建筑物可能有多个材质，多张贴图
-
             Texture2D singleTexture = (Texture2D)buildingInstance.GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
             atlasTexture[i] = singleTexture;
             i++;

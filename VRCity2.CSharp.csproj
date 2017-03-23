@@ -447,6 +447,7 @@
     <None Include="Assets\Mapbox\Resources\Fonts\OpenSansLic.txt" />
     <None Include="Assets\Materials\EasePointer.shader" />
     <None Include="Assets\Materials\Height.shader" />
+    <None Include="Assets\Materials\SnowSimulation.shader" />
     <None Include="Assets\Materials\VertColor.shader" />
     <None Include="Assets\Materials\VertFrag_Diffuse.shader" />
     <None Include="Assets\Materials\VertexModifier.shader" />

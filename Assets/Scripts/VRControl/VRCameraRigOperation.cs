@@ -25,6 +25,11 @@ public class VRCameraRigOperation : MonoBehaviour {
     public GameObject MapController;
     #endregion
 
+    void Awake()
+    {
+        InitReference();
+        InitCameraAttrib();
+    }
     // Use this for initialization
     void Start () {
         InitReference();
@@ -36,7 +41,7 @@ public class VRCameraRigOperation : MonoBehaviour {
 	    if(activeMovement)
         {
             transform.position += movement;
-            StartCoroutine(UpdateCoroutine());
+            StartCoroutine(UpdateCoroutine());  // 更新四叉树
         }
 	}
 
