@@ -32,7 +32,7 @@ public class BuildingIntro : MonoBehaviour {
     {
         if (!thisTip)
         {
-            Camera mainCamera = Camera.main;
+           
             Object tipPrefab = Resources.Load("pivotTip", typeof(GameObject));
             Vector3 highestPoint = findMaxHeight();
             //Vector3 tipPos = new Vector3(this.transform.position.x, highestPoint.y+10, this.transform.position.z);

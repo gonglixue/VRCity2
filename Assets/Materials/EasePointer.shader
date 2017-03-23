@@ -9,7 +9,12 @@
 
 	SubShader
 	{
-		Tags{ "Queue"="Transparent" }
+		Tags{ 
+			"Queue"="Overlay" 
+			"RenderType" = "Transparent"
+		}
+		Zwrite Off
+		Cull Off
 		LOD 200
 
 		CGPROGRAM
@@ -35,7 +40,8 @@
 			c = (1.0, 1.0, 1.0, 0.0);
 
 		o.Albedo = c.rgb;
-		o.Alpha = c.a;
+		o.Alpha = c.a ;
+		// o.Alpha = 1.0
 	}
 
 	ENDCG

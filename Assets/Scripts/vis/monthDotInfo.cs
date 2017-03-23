@@ -6,6 +6,7 @@ public class monthDotInfo : MonoBehaviour {
     public int value;
     public int month;  // 1-12
 
+
     static float maxHeight = 7.0f;
     
 
@@ -26,10 +27,16 @@ public class monthDotInfo : MonoBehaviour {
     static int finishMonth = 0;      //有多少个圆点已位移完毕
     #endregion
 
+    #region billboard参数
+    private GameObject thisTip;  //和这个圆点关联的billboard
+    Object tipPrefab;
+    #endregion
 
     void Awake()
     {
         originalScaleSize = this.transform.localScale.x;
+        tipPrefab = Resources.Load("pivotTip", typeof(GameObject));
+        thisTip = null;
         
     }
 	// Use this for initialization
@@ -87,8 +94,10 @@ public class monthDotInfo : MonoBehaviour {
     /// </summary>
     void PointerInMonth()
     {
-        // 点击查看本月详细信息
-        UpdateClassData();
+        Debug.Log("pointer in month: " + month);
+        // TODO
+        // display billboard
+        displayBillboard();
 
         if(scaleState == ScaleState.Normal)
         {
@@ -108,6 +117,11 @@ public class monthDotInfo : MonoBehaviour {
     /// </summary>
     void PointerOutMonth()
     {
+        Debug.Log("pointer out month: " + month);
+        // TODO
+        // destroy billboard
+        destroyBillboard();
+
         if(scaleState == ScaleState.Bigger)
         {
             StopBiggerTween();
@@ -141,9 +155,57 @@ public class monthDotInfo : MonoBehaviour {
         vBar.transform.SetParent(this.transform.parent);
     }
 
-    void UpdateClassData()
+    /// <summary>
+    /// trigger use; display class data
+    /// </summary>
+    void triggerUseClassData()
     {
 
+    }
+
+    /// <summary>
+    /// 显示这个圆点关联的billboard
+    /// </summary>
+    void displayBillboard()
+    {
+        if(!thisTip)
+        {
+            GameObject tip = Instantiate(tipPrefab, this.transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
+            string textInfo = getMonthString(month) + ": " + value;
+            tip.GetComponent<tipController>().SetText(textInfo);
+        }
+    }
+
+    void destroyBillboard()
+    {
+        if(thisTip)
+        {
+            thisTip.GetComponent<tipController>().hideBillboard();
+            thisTip = null;
+        }
+    }
+
+    private string getMonthString(int i)
+    {
+        string month = "unknown";
+        switch (i)
+        {
+            case 1: month = "January"; break;
+            case 2: month = "February"; break;
+            case 3: month = "March"; break;
+            case 4: month = "April"; break;
+            case 5: month = "May"; break;
+            case 6: month = "June"; break;
+            case 7: month = "July"; break;
+            case 8: month = "August"; break;
+            case 9: month = "September"; break;
+            case 10: month = "Octobor"; break;
+            case 11: month = "November"; break;
+            case 12: month = "December"; break;
+             
+        }
+
+        return month;
     }
 
 }
