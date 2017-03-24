@@ -212,6 +212,7 @@
     <Compile Include="Assets\Scripts\VRControl\VRCameraRigOperation.cs" />
     <Compile Include="Assets\Scripts\VRControl\VRCityControllerListener.cs" />
     <Compile Include="Assets\Scripts\VRControl\VRCity_PointerListener.cs" />
+    <Compile Include="Assets\Scripts\WeatherController.cs" />
     <Compile Include="Assets\Scripts\test\tipShowTest.cs" />
     <Compile Include="Assets\Scripts\texturePacker\textureTest.cs" />
     <Compile Include="Assets\Scripts\util\CityQuadTree.cs" />

@@ -35,6 +35,11 @@ public class BuildingGeoList : MonoBehaviour
     // 修正高度差
     public float heightCorrect = -8f;
 
+    #region weather
+    public bool toggleSnow = true;
+    public Shader SnowShader;
+    #endregion
+
     void Awake()
     {
         InitReference();
@@ -221,8 +226,11 @@ public class BuildingGeoList : MonoBehaviour
             buildingInstance.AddComponent<MeshCollider>().convex = true;
 
             // Shader 气象模拟
-
-            
+            // 设置buildingInstance的shader
+            if(toggleSnow)
+            {
+                buildingInstance.GetComponent<MeshRenderer>().material.shader = SnowShader;
+            }
             // 获取buildingInstance的texture
             Texture2D singleTexture = (Texture2D)buildingInstance.GetComponent<MeshRenderer>().material.GetTexture("_MainTex");
             atlasTexture[i] = singleTexture;

@@ -4,10 +4,10 @@ Shader "Custom/SnowSimulation" {
 	Properties {
 		_MainTex("Base Texture", 2D) = "white" {}
 		_Bump("Bump", 2D) = "bump" {}  // 法线贴图
-		_Snow("Snow Level", Range(0,1)) = 0
+		_Snow("Snow Level", Range(0,1)) = 0.2
 		_SnowColor("Snow Color", Color) = (1.0, 1.0, 1.0, 1.0)
 		_SnowDirection("Snow Direction", Vector) = (0,1,0)
-		_SnowDepth("Snow Depth", Range(0, 0.3)) = 0.1
+		_SnowDepth("Snow Depth", Range(0, 0.3)) = 0.01
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }
