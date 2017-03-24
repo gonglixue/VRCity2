@@ -31,15 +31,15 @@ public class WeatherController : MonoBehaviour {
     }
     void InitRainySystem()
     {
-
+        rainySystem.SetActive(true);
     }
     void InitSunnySystem()
     {
-
+        sunnySystem.SetActive(true);
     }
     void InitCloudySystem()
     {
-
+        cloudySystem.SetActive(true);
     }
 
     void ChooseWeather()
