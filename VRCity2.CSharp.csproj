@@ -206,6 +206,7 @@
     <Compile Include="Assets\Scripts\InstanceBuilding.cs" />
     <Compile Include="Assets\Scripts\LODTileIntro.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
+    <Compile Include="Assets\Scripts\NetworkService.cs" />
     <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\TileIntro.cs" />
     <Compile Include="Assets\Scripts\TransformDae.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Assets\Scripts\VRControl\VRCity_PointerListener.cs" />
     <Compile Include="Assets\Scripts\WeatherController.cs" />
     <Compile Include="Assets\Scripts\test\tipShowTest.cs" />
+    <Compile Include="Assets\Scripts\test\wwwTest.cs" />
     <Compile Include="Assets\Scripts\texturePacker\textureTest.cs" />
     <Compile Include="Assets\Scripts\util\CityQuadTree.cs" />
     <Compile Include="Assets\Scripts\util\Config.cs" />
