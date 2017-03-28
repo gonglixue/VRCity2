@@ -154,6 +154,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\2DDynamicClouds\Shaders\DynamicClouds.shader" />
+    <None Include="Assets\Earth\EarthRendering Free\Atmosphere.shader" />
+    <None Include="Assets\Earth\EarthRendering Free\Earth.shader" />
     <None Include="Assets\Mapbox\Core\Plugins\link.xml" />
     <None Include="Assets\Mapbox\README.txt" />
     <None Include="Assets\Mapbox\Resources\Fonts\OpenSansLic.txt" />

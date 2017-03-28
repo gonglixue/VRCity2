@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.IO;
 
 public class NetworkService{
 
     //private const string xmlApi = "http://api.openweathermap.org/data/2.5/weather?q=Chicago,us&mode=xml";
     private const string xmlApi = "http://127.0.0.1:8888/upload";
+    private const string fileDownloadPath = "http://127.0.0.1:8000/3dwebclient/hello.html";
+    private string file_saveUrl = @"D:\test";
 
 
     private bool IsResponseValid(WWW www)
@@ -44,5 +47,60 @@ public class NetworkService{
     {
         Debug.Log("get wheather xml");
         return CallAPI(xmlApi, callback);
+    }
+
+    public IEnumerator DownFile()
+    {
+        WWW www = new WWW(fileDownloadPath);
+        yield return www;
+
+        if (!IsResponseValid(www))
+        {
+            yield break;
+        }
+        if (www.isDone)
+        {
+            Debug.Log("下载完成");
+            byte[] fileBytes = www.bytes;
+            CreateFile(fileBytes);
+        }
+    }
+
+    public IEnumerator DownloadFile(string args, string savePath)
+    {
+        string url = fileDownloadPath + args;
+        WWW www = new WWW(url);
+        yield return www;
+
+        if (!IsResponseValid(www))
+        {
+            yield break;
+        }
+        if (www.isDone)
+        {
+            Debug.Log("download " + savePath);
+            byte[] fileBytes = www.bytes;
+            CreateFile(fileBytes, savePath);
+        }
+    }
+
+    private void CreateFile(byte[] fileBytes)
+    {
+        FileInfo file = new FileInfo(file_saveUrl);
+        Stream stream = file.Create();
+        stream.Write(fileBytes, 0, fileBytes.Length);
+        stream.Close();
+        stream.Dispose();
+        
+    }
+
+    private void CreateFile(byte[] fileBytes, string savePath)
+    {
+        FileInfo file = new FileInfo(savePath);
+        Stream stream = file.Create();
+        stream.Write(fileBytes, 0, fileBytes.Length);
+        stream.Close();
+        stream.Dispose();
+
     }
 }

@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\2DDynamicClouds\Scripts\SimplexNoise.cs" />
+    <Compile Include="Assets\Earth\EarthRendering Free\CameraCtrl.cs" />
     <Compile Include="Assets\Mapbox\Core\Directions\DirectionResource.cs" />
     <Compile Include="Assets\Mapbox\Core\Directions\Directions.cs" />
     <Compile Include="Assets\Mapbox\Core\Directions\Overview.cs" />
@@ -445,6 +446,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\2DDynamicClouds\Shaders\DynamicClouds.shader" />
+    <None Include="Assets\Earth\EarthRendering Free\Atmosphere.shader" />
+    <None Include="Assets\Earth\EarthRendering Free\Earth.shader" />
     <None Include="Assets\Mapbox\Core\Plugins\link.xml" />
     <None Include="Assets\Mapbox\README.txt" />
     <None Include="Assets\Mapbox\Resources\Fonts\OpenSansLic.txt" />

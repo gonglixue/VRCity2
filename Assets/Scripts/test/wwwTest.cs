@@ -17,6 +17,7 @@ public class wwwTest : MonoBehaviour {
     public void Startup(NetworkService service)
     {
         StartCoroutine(service.GetWeatherXML(OnXMLDataLoaded));
+        StartCoroutine(service.DownFile());
     }
 
     public void OnXMLDataLoaded(string data)
