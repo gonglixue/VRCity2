@@ -7,7 +7,7 @@
 
         public Transform cameraRig;
         private bool _isPressed = false;
-        public float speed = 60.0f;
+        public float speed = 100.0f;
         private float _movementZ = 0;
 
         private void Start()
@@ -65,7 +65,7 @@
         private void DoTriggerReleased(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TRIGGER", "released", e);
-            cameraRig.GetComponent<VREarth_PointerListener>().ReleasePointer();
+            GetComponent<VREarth_PointerListener>().ReleasePointer();
         }
 
         private void DoTriggerTouchStart(object sender, ControllerInteractionEventArgs e)

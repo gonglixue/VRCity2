@@ -30,6 +30,10 @@
         public bool isPressed = false;
         #endregion
 
+        #region pin
+        public GameObject pinPrefab;
+
+        #endregion
 
         private void Start()
         {
@@ -52,6 +56,7 @@
             Debug.Log("Controller on index '" + index + "' is " + action + " at a distance of " + distance + " on object named " + targetName + " - the pointer tip position is/was: " + tipPosition);
         }
 
+        #region pointer events handler
         private void DoPointerIn(object sender, DestinationMarkerEventArgs e) // pressed
         {
             //DebugLogger(e.controllerIndex, "POINTER IN", e.target, e.distance, e.destinationPosition);
@@ -79,6 +84,7 @@
             DebugLogger(e.controllerIndex, "POINTER DESTINATION", e.target, e.distance, e.destinationPosition);
             this._lastPointerPos = new Vector3(-1000, -1000, -1000);
         }
+        #endregion
 
         private Vector2 GetPointerAxis(Vector3 lastPos, Vector3 curPos)
         {
@@ -124,6 +130,17 @@
         public void ReleasePointer()
         {
             this._lastPointerPos = new Vector3(-1000, -1000, -1000);
+        }
+
+
+        // 放在地球上
+        public void PutPin(Vector3 position)
+        {
+            Quaternion rotation = Quaternion.identity;
+            GameObject pin = Instantiate(pinPrefab, position, rotation, earth) as GameObject;
+            pin.transform.localScale = Vector3.one * 0.1f;
+            pin.transform.up = pin.transform.position;
+
         }
 
     }

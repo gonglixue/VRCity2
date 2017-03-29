@@ -201,6 +201,8 @@
     <Compile Include="Assets\Scripts\BuildingIntro.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CreateMesh\CreateMesh.cs" />
+    <Compile Include="Assets\Scripts\EarthBillboardController.cs" />
+    <Compile Include="Assets\Scripts\FlagBillboardController.cs" />
     <Compile Include="Assets\Scripts\FlyCameraController.cs" />
     <Compile Include="Assets\Scripts\FlyMapController.cs" />
     <Compile Include="Assets\Scripts\GetHightMapTest.cs" />
