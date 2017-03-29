@@ -201,7 +201,7 @@
     <Compile Include="Assets\Scripts\BuildingIntro.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CreateMesh\CreateMesh.cs" />
-    <Compile Include="Assets\Scripts\EarthBillboardController.cs" />
+    <Compile Include="Assets\Scripts\EarthBillboardManager.cs" />
     <Compile Include="Assets\Scripts\FlagBillboardController.cs" />
     <Compile Include="Assets\Scripts\FlyCameraController.cs" />
     <Compile Include="Assets\Scripts\FlyMapController.cs" />
@@ -210,6 +210,7 @@
     <Compile Include="Assets\Scripts\LODTileIntro.cs" />
     <Compile Include="Assets\Scripts\MouseLook.cs" />
     <Compile Include="Assets\Scripts\NetworkService.cs" />
+    <Compile Include="Assets\Scripts\PadScreenController.cs" />
     <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\TileIntro.cs" />
     <Compile Include="Assets\Scripts\TransformDae.cs" />
@@ -461,8 +462,10 @@
     <None Include="Assets\Materials\VertColor.shader" />
     <None Include="Assets\Materials\VertFrag_Diffuse.shader" />
     <None Include="Assets\Materials\VertexModifier.shader" />
+    <None Include="Assets\Materials\default.shader" />
     <None Include="Assets\Materials\depthTest.shader" />
     <None Include="Assets\Materials\newEasePointer.shader" />
+    <None Include="Assets\Materials\outlineShader.shader" />
     <None Include="Assets\Plugins\GoKit\easing\easeEquationsLicense.txt" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />

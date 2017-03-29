@@ -6,7 +6,8 @@
     {
 
         public Transform cameraRig;
-        private bool _isPressed = false;
+        public bool _isPressed = false;  // 大圆
+        public bool gripPressed = false;  // grip
         public float speed = 100.0f;
         private float _movementZ = 0;
 
@@ -116,11 +117,13 @@
         private void DoGripPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "GRIP", "pressed down", e);
+            gripPressed = true;
         }
 
         private void DoGripReleased(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "GRIP", "released", e);
+            gripPressed = false;
         }
 
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)

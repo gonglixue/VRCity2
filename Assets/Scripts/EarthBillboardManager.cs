@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EarthBillboardController : MonoBehaviour {
+public class EarthBillboardManager : MonoBehaviour {
 
     //显示billboard的经纬度点
     public string[] LatLonList;
-    public string[] City;
-    public string[] Country;
+    public string[] CityList;
+    public string[] CountryList;
 
     public float radius = 100;
     public GameObject billboardPrefab;
@@ -18,7 +18,7 @@ public class EarthBillboardController : MonoBehaviour {
 	void Start () {
 	    for(int i=0;i<LatLonList.Length;i++)
         {
-            CreateBillboard(LatLonList[i]);
+            CreateBillboard(LatLonList[i], CityList[i], CountryList[i]);
         }
 	}
 	
@@ -44,14 +44,16 @@ public class EarthBillboardController : MonoBehaviour {
         return worldPos;
     }
 
-    void CreateBillboard(string LatLon)
+    void CreateBillboard(string latLon, string city, string country)
     {
-        Vector3 position = LatLonToUnityCoord(LatLon);
+        Vector3 position = LatLonToUnityCoord(latLon);
         // rotation
         Quaternion rotation = Quaternion.identity;
 
         GameObject billboard = Instantiate(billboardPrefab, position, rotation, this.transform) as GameObject;
-        billboard.transform.localScale = Vector3.one * 0.1f;  // TODO： scale
+        billboard.transform.localScale = Vector3.one * 0.01f;  // TODO： scale
         billboard.transform.up = billboard.transform.position;
+        billboard.GetComponent<FlagBillboardController>().InitInfo(latLon, city, country);
+
     }
 }

@@ -154,8 +154,10 @@
     <None Include="Assets\Materials\VertColor.shader" />
     <None Include="Assets\Materials\VertFrag_Diffuse.shader" />
     <None Include="Assets\Materials\VertexModifier.shader" />
+    <None Include="Assets\Materials\default.shader" />
     <None Include="Assets\Materials\depthTest.shader" />
     <None Include="Assets\Materials\newEasePointer.shader" />
+    <None Include="Assets\Materials\outlineShader.shader" />
     <None Include="Assets\Plugins\GoKit\easing\easeEquationsLicense.txt" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />

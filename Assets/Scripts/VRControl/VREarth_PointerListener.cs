@@ -27,7 +27,7 @@
 
         #region viveController Parameters
         private Vector3 _lastPointerPos = new Vector3(-1000f, -1000f, -1000f);
-        public bool isPressed = false;
+        //public bool isPressed = false;
         #endregion
 
         #region pin
@@ -71,21 +71,54 @@
                 }
                
                 _lastPointerPos = e.destinationPosition; // 上一帧射线射到的位置
+
+                // 如果grip按下，放置大头针
+                if(GetComponent<VREarth_ControllerEventListener>().gripPressed)
+                {
+                    PutPin(e.destinationPosition);
+                }
+            }
+
+            if(e.target.tag == "Flag") //如果射线射到Flag,则激活该Flag
+            {
+                e.target.GetComponent<FlagBillboardController>().ActiveFlag();
+
+                // 如果grip按下，则显示详情UI
+                if(GetComponent<VREarth_ControllerEventListener>().gripPressed)
+                {
+                    e.target.GetComponent<FlagBillboardController>().ChooseFlag();
+                }
             }
         }
 
         private void DoPointerOut(object sender, DestinationMarkerEventArgs e)
         {
             DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
+            // ???
+            if(e.target.tag == "Flag")
+            {
+                e.target.GetComponent<FlagBillboardController>().InActiveFlag();
+            }
         }
 
         private void DoPointerDestinationSet(object sender, DestinationMarkerEventArgs e)  // release
         {
             DebugLogger(e.controllerIndex, "POINTER DESTINATION", e.target, e.distance, e.destinationPosition);
             this._lastPointerPos = new Vector3(-1000, -1000, -1000);
+            // ???
+            if(e.target.tag == "Flag")
+            {
+                e.target.GetComponent<FlagBillboardController>().InActiveFlag();
+            }
         }
         #endregion
 
+        /// <summary>
+        /// 计算得到旋转参数，用Pointer的偏移量计算Axis
+        /// </summary>
+        /// <param name="lastPos"></param>
+        /// <param name="curPos"></param>
+        /// <returns></returns>
         private Vector2 GetPointerAxis(Vector3 lastPos, Vector3 curPos)
         {
 
@@ -133,7 +166,7 @@
         }
 
 
-        // 放在地球上
+        // 把大头针放在地球上
         public void PutPin(Vector3 position)
         {
             Quaternion rotation = Quaternion.identity;
@@ -141,6 +174,9 @@
             pin.transform.localScale = Vector3.one * 0.1f;
             pin.transform.up = pin.transform.position;
 
+            // TODO 放置后获得放置点的经纬度
+            // ...
+            // TODO 跳转
         }
 
     }

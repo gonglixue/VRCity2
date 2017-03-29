@@ -3,10 +3,13 @@ using System.Collections;
 
 public class FlagBillboardController : MonoBehaviour {
     private bool isPointed = false;
-    public Texture2D flagTexture;
-    public Texture2D flagActiveTexture;  // 被选中后的纹理
 
     public Transform eyeCamera;
+    public Transform padScreen;
+
+    private string _city;
+    private string _location;
+    private string _country;
 
 	// Use this for initialization
 	void Start () {
@@ -23,8 +26,16 @@ public class FlagBillboardController : MonoBehaviour {
     /// </summary>
     public void ActiveFlag()
     {
-        this.transform.localScale *= 1.2f;
-        this.GetComponent<MeshRenderer>().material.mainTexture = flagActiveTexture;
+        if(!isPointed)
+        {
+            this.transform.localScale *= 1.2f;
+            isPointed = true;
+            // TODO 高亮
+
+            // TODO 连出一个Billboard
+            // ...
+        }
+
     }
 
     /// <summary>
@@ -32,14 +43,14 @@ public class FlagBillboardController : MonoBehaviour {
     /// </summary>
     public void InActiveFlag()
     {
-        this.transform.localScale /= 1.2f;
-        this.GetComponent<MeshRenderer>().material.mainTexture = flagTexture;
-    }
+        if(isPointed)
+        {
+            this.transform.localScale /= 1.2f;
+            isPointed = false;
+            // TODO 取消高亮
+            // TODO 取消连出的billboard
+        }
 
-    void BillboardFace()
-    {
-        this.transform.up = this.transform.position;
-        this.transform.forward = eyeCamera.position - this.transform.position;
     }
 
     /// <summary>
@@ -47,7 +58,22 @@ public class FlagBillboardController : MonoBehaviour {
     /// </summary>
     public void ChooseFlag()
     {
+        // TODO 显示菜单 菜单放在另一只手？
+        // 在此场景中，左controller为一个小屏幕padScreen
+        padScreen.GetComponent<PadScreenController>().DisplayInfo(_location, _city, _country);
+    }
 
+    /// <summary>
+    /// 初始化该点信息
+    /// </summary>
+    /// <param name="location"></param>
+    /// <param name="city"></param>
+    /// <param name="country"></param>
+    public void InitInfo(string location, string city, string country )
+    {
+        _location = location;
+        _city = city;
+        _country = country;
     }
 
     
