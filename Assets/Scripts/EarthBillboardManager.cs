@@ -41,6 +41,7 @@ public class EarthBillboardManager : MonoBehaviour {
         worldPos.z = radius * Mathf.Cos(Mathf.PI*LatLonVec.x/180) * Mathf.Cos(Mathf.PI*LatLonVec.y/180);
         worldPos.x = radius * Mathf.Cos(Mathf.PI*LatLonVec.x/180) * -Mathf.Sin(Mathf.PI*LatLonVec.y/180);
 
+        Debug.Log("3d position:" + worldPos);
         return worldPos;
     }
 

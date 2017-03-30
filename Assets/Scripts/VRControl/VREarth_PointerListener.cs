@@ -12,6 +12,7 @@
         public Transform eyeCamera = null;
         public Transform cameraRig = null;
         public Transform earth;
+        public Transform padScreen;
         #endregion
 
         #region ctrParameters
@@ -50,6 +51,8 @@
             GetComponent<VRTK_SimplePointer>().DestinationMarkerEnter += new DestinationMarkerEventHandler(DoPointerIn);
             GetComponent<VRTK_SimplePointer>().DestinationMarkerExit += new DestinationMarkerEventHandler(DoPointerOut);
             GetComponent<VRTK_SimplePointer>().DestinationMarkerSet += new DestinationMarkerEventHandler(DoPointerDestinationSet);
+
+            //test();
         }
 
         private void DebugLogger(uint index, string action, Transform target, float distance, Vector3 tipPosition)
@@ -201,11 +204,53 @@
 
             _lastPutPin = Time.time;
 
+            Vector2 LatLon = UnityCoorToLatLon(position);
+            padScreen.GetComponent<PadScreenController>().DisplayPin("(" + LatLon.x + ", " + LatLon.y + ")");
+
             Debug.Log("放置大头针");
-            // TODO 放置后获得放置点的经纬度
-            // ...
-            // TODO 跳转
         }
 
+
+        /// <summary>
+        /// unity坐标转成经纬度
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public Vector2 UnityCoorToLatLon(Vector3 position)
+        {
+            Vector2 LatLon;
+            float sinLat = position.y / EARTH_RADIUS;
+            LatLon.x = Mathf.Asin(sinLat);  // 弧度
+
+            if(sinLat == 1 || sinLat == -1)  // ???sinLat是浮点数
+            {
+                // 点在极点
+                LatLon.x = 180 * LatLon.x / Mathf.PI;
+                LatLon.y = 0;
+                return LatLon;
+            }
+
+            float r2 = Mathf.Cos(LatLon.x) * EARTH_RADIUS;
+            Debug.Log("r2 " + r2);
+            float cosLon = position.z / r2;
+            LatLon.y = Mathf.Acos(cosLon);  // 返回0~pi
+
+            if (position.x > 0)
+                LatLon.y *= -1;
+
+
+            LatLon.x = 180 * LatLon.x / Mathf.PI;
+            LatLon.y = 180 * LatLon.y / Mathf.PI;
+
+            return LatLon;
+        }
+
+        void test()
+        {
+            Vector3 t = new Vector3(-15.0f, 50.0f, 85.3f);
+            Vector2 r = UnityCoorToLatLon(t);
+            Debug.Log("test " + r);
+        }
+            
     }
 }

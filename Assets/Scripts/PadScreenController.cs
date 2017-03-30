@@ -41,4 +41,17 @@ public class PadScreenController : MonoBehaviour {
         CityTransform.GetComponent<TextMesh>().text = cityName;
         CountryTransform.GetComponent<TextMesh>().text = countryName;
     }
+
+    public void DisplayPin(string location)
+    {
+        string context = "You put a pin at\r\n" + 
+            location
+            + "Press the button under the text\r\n"
+            + "And enter the city you choose.";
+        TitleText.SetActive(false);
+        ContentText.SetActive(false);
+        InitialTip.SetActive(true);
+
+        InitialTip.GetComponent<TextMesh>().text = context;
+    }
 }

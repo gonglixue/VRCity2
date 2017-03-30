@@ -21,8 +21,9 @@ public class FlagBillboardController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         eyeCamera = GameObject.Find("Camera (eye)").transform;
-        padScreen = GameObject.Find("PadScreen").transform;
         cameraRig = GameObject.Find("[CameraRig]").transform;
+        padScreen = cameraRig.Find("Controller (right)/PadScreenModel/PadScreen").transform;
+       
 	}
 	
 	// Update is called once per frame
