@@ -11,6 +11,10 @@ public class PadScreenController : MonoBehaviour {
     public Transform CityTransform;
     public Transform CountryTransform;
 
+    public GameObject TitleText;
+    public GameObject ContentText;
+    public GameObject InitialTip;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -26,6 +30,11 @@ public class PadScreenController : MonoBehaviour {
         _latLon = location;
         _city = cityName;
         _country = countryName;
+
+        // 显示ContentText，隐藏InitialTip
+        TitleText.SetActive(true);
+        ContentText.SetActive(true);
+        InitialTip.SetActive(false);
 
         // 设置显示文字 （TODO 文字显示特效）
         LocationTransform.GetComponent<TextMesh>().text = location;

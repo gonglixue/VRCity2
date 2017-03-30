@@ -7,13 +7,19 @@ public class FlagBillboardController : MonoBehaviour {
     public Transform eyeCamera;
     public Transform padScreen;
 
+    #region flag billboard info
+    [SerializeField]
     private string _city;
+    [SerializeField]
     private string _location;
+    [SerializeField]
     private string _country;
+    #endregion
 
-	// Use this for initialization
-	void Start () {
-	
+    // Use this for initialization
+    void Start () {
+        eyeCamera = GameObject.Find("Camera (eye)").transform;
+        padScreen = GameObject.Find("PadScreen").transform;
 	}
 	
 	// Update is called once per frame
@@ -30,6 +36,7 @@ public class FlagBillboardController : MonoBehaviour {
         {
             this.transform.localScale *= 1.2f;
             isPointed = true;
+            Debug.Log("pointer hover flag ");
             // TODO 高亮
 
             // TODO 连出一个Billboard
@@ -47,6 +54,7 @@ public class FlagBillboardController : MonoBehaviour {
         {
             this.transform.localScale /= 1.2f;
             isPointed = false;
+            Debug.Log("pointer leave flag ");
             // TODO 取消高亮
             // TODO 取消连出的billboard
         }
@@ -61,6 +69,7 @@ public class FlagBillboardController : MonoBehaviour {
         // TODO 显示菜单 菜单放在另一只手？
         // 在此场景中，左controller为一个小屏幕padScreen
         padScreen.GetComponent<PadScreenController>().DisplayInfo(_location, _city, _country);
+        Debug.Log("press grip choose flag");
     }
 
     /// <summary>

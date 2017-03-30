@@ -8,7 +8,7 @@
         public Transform cameraRig;
         public bool _isPressed = false;  // 大圆
         public bool gripPressed = false;  // grip
-        public float speed = 100.0f;
+        public float speed = 200.0f;
         private float _movementZ = 0;
 
         private void Start()
@@ -117,13 +117,13 @@
         private void DoGripPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "GRIP", "pressed down", e);
-            gripPressed = true;
+            gripPressed = true;  //按下Grip
         }
 
         private void DoGripReleased(object sender, ControllerInteractionEventArgs e)
         {
-            //DebugLogger(e.controllerIndex, "GRIP", "released", e);
-            gripPressed = false;
+            DebugLogger(e.controllerIndex, "GRIP", "released", e);
+            gripPressed = false;  //松开Grip
         }
 
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)
@@ -136,7 +136,7 @@
 
         private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "released", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "released", e);
             _movementZ = 0;
             _isPressed = false;
         }

@@ -30,9 +30,9 @@
         //public bool isPressed = false;
         #endregion
 
-        #region pin
+        #region pin&billboard
         public GameObject pinPrefab;
-
+        private FlagBillboardController _flagControllerScript = null;
         #endregion
 
         private void Start()
@@ -81,34 +81,47 @@
 
             if(e.target.tag == "Flag") //如果射线射到Flag,则激活该Flag
             {
-                e.target.GetComponent<FlagBillboardController>().ActiveFlag();
+                _flagControllerScript = e.target.GetComponent<FlagBillboardController>();
+                _flagControllerScript.ActiveFlag();
 
                 // 如果grip按下，则显示详情UI
                 if(GetComponent<VREarth_ControllerEventListener>().gripPressed)
                 {
-                    e.target.GetComponent<FlagBillboardController>().ChooseFlag();
+                    _flagControllerScript.ChooseFlag();
+                }
+            }
+            else  // 射线射到的物体不是Flag
+            {
+                if(_flagControllerScript != null)
+                {
+                    _flagControllerScript.InActiveFlag();
+                    _flagControllerScript = null;
                 }
             }
         }
 
         private void DoPointerOut(object sender, DestinationMarkerEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
-            // ???
+            //DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
+            // ??? 好像不起作用
             if(e.target.tag == "Flag")
             {
                 e.target.GetComponent<FlagBillboardController>().InActiveFlag();
+                // ??
+                _flagControllerScript = null;
             }
         }
 
         private void DoPointerDestinationSet(object sender, DestinationMarkerEventArgs e)  // release
         {
-            DebugLogger(e.controllerIndex, "POINTER DESTINATION", e.target, e.distance, e.destinationPosition);
+            //DebugLogger(e.controllerIndex, "POINTER DESTINATION", e.target, e.distance, e.destinationPosition);
             this._lastPointerPos = new Vector3(-1000, -1000, -1000);
-            // ???
-            if(e.target.tag == "Flag")
+            // ??? 好像不起作用
+            if (e.target.tag == "Flag")
             {
                 e.target.GetComponent<FlagBillboardController>().InActiveFlag();
+                // ??
+                _flagControllerScript = null;
             }
         }
         #endregion
@@ -160,9 +173,13 @@
             }
         }
 
-        public void ReleasePointer()
+        public void ReleasePointer()  // 射线消失。在ControllerEventListener中调用
         {
             this._lastPointerPos = new Vector3(-1000, -1000, -1000);
+            if(_flagControllerScript != null)
+            {
+                _flagControllerScript = null;
+            }
         }
 
 
@@ -173,7 +190,7 @@
             GameObject pin = Instantiate(pinPrefab, position, rotation, earth) as GameObject;
             pin.transform.localScale = Vector3.one * 0.1f;
             pin.transform.up = pin.transform.position;
-
+            Debug.Log("放置大头针");
             // TODO 放置后获得放置点的经纬度
             // ...
             // TODO 跳转
