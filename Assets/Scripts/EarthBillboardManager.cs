@@ -51,7 +51,7 @@ public class EarthBillboardManager : MonoBehaviour {
         Quaternion rotation = Quaternion.identity;
 
         GameObject billboard = Instantiate(flagPrefab, position, rotation, this.transform) as GameObject;
-        billboard.transform.localScale = Vector3.one * 0.03f;   // 初始大小是0.03
+        billboard.transform.localScale = Vector3.one * 0.028f;   // 初始大小是0.028
         billboard.transform.up = billboard.transform.position;
         billboard.GetComponent<FlagBillboardController>().InitInfo(latLon, city, country);
 

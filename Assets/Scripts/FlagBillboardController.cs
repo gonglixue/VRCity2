@@ -7,7 +7,7 @@ public class FlagBillboardController : MonoBehaviour {
     public Transform eyeCamera;
     public Transform padScreen;
     public Transform cameraRig;
-    public float scaleFactor = (0.03f - 0.02f) / (800 - 300);
+    public float scaleFactor = (0.028f - 0.02f) / (800 - 300);
 
     #region flag billboard info
     [SerializeField]
