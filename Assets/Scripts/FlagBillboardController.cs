@@ -37,7 +37,8 @@ public class FlagBillboardController : MonoBehaviour {
             this.transform.localScale *= 1.2f;
             isPointed = true;
             Debug.Log("pointer hover flag ");
-            // TODO 高亮
+            // 粒子系统 高亮
+            this.transform.GetChild(0).gameObject.SetActive(true);
 
             // TODO 连出一个Billboard
             // ...
@@ -55,8 +56,10 @@ public class FlagBillboardController : MonoBehaviour {
             this.transform.localScale /= 1.2f;
             isPointed = false;
             Debug.Log("pointer leave flag ");
-            // TODO 取消高亮
+            // 取消高亮
+            this.transform.GetChild(0).gameObject.SetActive(false);
             // TODO 取消连出的billboard
+            // ...
         }
 
     }

@@ -33,6 +33,8 @@
         #region pin&billboard
         public GameObject pinPrefab;
         private FlagBillboardController _flagControllerScript = null;
+        private GameObject _pin = null;
+        private float _lastPutPin = 0;
         #endregion
 
         private void Start()
@@ -43,7 +45,7 @@
                 Debug.LogError("VRTK_ControllerPointerEvents_ListenerExample is required to be attached to a Controller that has the VRTK_SimplePointer script attached to it");
                 return;
             }
-
+            
             //Setup controller event listeners
             GetComponent<VRTK_SimplePointer>().DestinationMarkerEnter += new DestinationMarkerEventHandler(DoPointerIn);
             GetComponent<VRTK_SimplePointer>().DestinationMarkerExit += new DestinationMarkerEventHandler(DoPointerOut);
@@ -75,7 +77,9 @@
                 // 如果grip按下，放置大头针
                 if(GetComponent<VREarth_ControllerEventListener>().gripPressed)
                 {
-                    PutPin(e.destinationPosition);
+                    // 控制大头针放置的频率 （2s间隔时间）
+                    if(Time.time > (_lastPutPin+2))
+                        PutPin(e.destinationPosition);
                 }
             }
 
@@ -156,6 +160,7 @@
         private void Init()
         {
             earthRotation = earth.rotation;  // 初始时旋转状态
+            _lastPutPin = Time.time;
         }
 
         private void RotateEarth(Vector2 axis)
@@ -186,10 +191,16 @@
         // 把大头针放在地球上
         public void PutPin(Vector3 position)
         {
+            if (_pin)
+                Destroy(_pin);  // 只能放置一个大头针
+
             Quaternion rotation = Quaternion.identity;
-            GameObject pin = Instantiate(pinPrefab, position, rotation, earth) as GameObject;
-            pin.transform.localScale = Vector3.one * 0.1f;
-            pin.transform.up = pin.transform.position;
+            _pin = Instantiate(pinPrefab, position, rotation, earth) as GameObject;
+            _pin.transform.localScale = Vector3.one * 0.1f;
+            _pin.transform.up = _pin.transform.position;
+
+            _lastPutPin = Time.time;
+
             Debug.Log("放置大头针");
             // TODO 放置后获得放置点的经纬度
             // ...
