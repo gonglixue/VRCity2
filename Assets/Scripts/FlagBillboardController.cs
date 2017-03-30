@@ -6,6 +6,8 @@ public class FlagBillboardController : MonoBehaviour {
 
     public Transform eyeCamera;
     public Transform padScreen;
+    public Transform cameraRig;
+    public float scaleFactor = (0.03f - 0.02f) / (800 - 300);
 
     #region flag billboard info
     [SerializeField]
@@ -20,11 +22,17 @@ public class FlagBillboardController : MonoBehaviour {
     void Start () {
         eyeCamera = GameObject.Find("Camera (eye)").transform;
         padScreen = GameObject.Find("PadScreen").transform;
+        cameraRig = GameObject.Find("[CameraRig]").transform;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    // Flag的大小随cameraRig距地球的距离而调整
+        if(this.transform.localScale.x > 0.01)
+        {
+            float factor = scaleFactor * (cameraRig.position.z - 300) + 0.01f;
+            this.transform.localScale = Vector3.one * factor;
+        }
 	}
 
     /// <summary>

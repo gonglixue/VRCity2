@@ -9,7 +9,7 @@ public class EarthBillboardManager : MonoBehaviour {
     public string[] CountryList;
 
     public float radius = 100;
-    public GameObject billboardPrefab;
+    public GameObject flagPrefab;
     public GameObject cameraRig;
 
     
@@ -50,8 +50,8 @@ public class EarthBillboardManager : MonoBehaviour {
         // rotation
         Quaternion rotation = Quaternion.identity;
 
-        GameObject billboard = Instantiate(billboardPrefab, position, rotation, this.transform) as GameObject;
-        billboard.transform.localScale = Vector3.one * 0.01f;  // TODO： scale
+        GameObject billboard = Instantiate(flagPrefab, position, rotation, this.transform) as GameObject;
+        billboard.transform.localScale = Vector3.one * 0.03f;   // 初始大小是0.03
         billboard.transform.up = billboard.transform.position;
         billboard.GetComponent<FlagBillboardController>().InitInfo(latLon, city, country);
 
