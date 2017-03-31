@@ -168,7 +168,7 @@
                 // TODO
                 // 变换，颜色变化
                 _padScreenButton.transform.Rotate(10, 0, 0, Space.Self);
-
+                _buttonState = true;
             }
         }
 
@@ -179,7 +179,7 @@
                 // TODO
                 // 复原变换，颜色复原
                 _padScreenButton.transform.Rotate(-10, 0, 0, Space.Self);
-
+                _buttonState = false;
             }
         }
     }

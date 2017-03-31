@@ -36,19 +36,19 @@ public class WeatherController : MonoBehaviour {
     }
     void InitRainySystem()
     {
-        SkyBoxConfig rainSkyConf = new SkyBoxConfig(new Color(3, 30, 49, 255), new Color(75, 86, 86, 255), new Color(167, 168, 168), 0.3f, 0.079f, 0.821f);
+        SkyBoxConfig rainSkyConf = new SkyBoxConfig(new Color(3f/255, 30f/255, 49f/255, 1), new Color(75f/255, 86f/255, 86f/255, 1), new Color(167f/255, 168f/255, 168f/255), 0.3f, 0.079f, 0.821f);
         SetSkyBoxAttrib(rainSkyConf);
         rainySystem.SetActive(true);
     }
     void InitSunnySystem()
     {
-        SkyBoxConfig sunnySkyConf = new SkyBoxConfig(new Color(20, 124, 197, 255), new Color(181, 216, 246, 255), new Color(255, 255, 255), 0.3f, 0.0f, 1.0f);
+        SkyBoxConfig sunnySkyConf = new SkyBoxConfig(new Color(20f/255, 124f/255, 197f/255, 1), new Color(181f/255, 216f/255, 246f/255, 1), new Color(255f/255, 255f/255, 255f/255), 0.3f, 0.0f, 1.0f);
         SetSkyBoxAttrib(sunnySkyConf);
         sunnySystem.SetActive(true);
     }
     void InitCloudySystem()
     {
-        SkyBoxConfig cloudSkyConf = new SkyBoxConfig(new Color(20, 124, 197, 255), new Color(181, 216, 246, 255), new Color(191, 191, 191), 0.3f, 0.0f, 0.32f);
+        SkyBoxConfig cloudSkyConf = new SkyBoxConfig(new Color(20f/255, 124f/255, 197f/255, 1), new Color(181f/255, 216f/255, 246f/255, 1), new Color(191f/255, 191f/255, 191f/255), 0.3f, 0.0f, 0.32f);
         SetSkyBoxAttrib(cloudSkyConf);
         cloudySystem.SetActive(true);
     }
