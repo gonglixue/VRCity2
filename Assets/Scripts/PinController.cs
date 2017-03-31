@@ -15,7 +15,7 @@ public class PinController : MonoBehaviour {
         // 800 -400
         if(cameraRig.transform.position.z >= 400)
         {
-            this.transform.localScale = Vector3.one * cameraRig.position.z / 1000;
+            this.transform.localScale = Vector3.one * cameraRig.position.z / 10000;
         }
 	}
 }
