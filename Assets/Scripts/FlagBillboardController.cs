@@ -47,7 +47,14 @@ public class FlagBillboardController : MonoBehaviour {
             isPointed = true;
             Debug.Log("pointer hover flag ");
             // 粒子系统 高亮
-            this.transform.GetChild(0).gameObject.SetActive(true);
+            //this.transform.GetChild(0).gameObject.SetActive(true);
+            // 显示蓝色外框
+            Transform blueFrameGroup = this.transform.Find("BlueFrameGroup");
+            blueFrameGroup.gameObject.SetActive(true);
+            foreach(Transform frameChild in blueFrameGroup)
+            {
+                frameChild.GetComponent<EaseSpriteFrame>().ActiveFrame();
+            }
 
             // TODO 连出一个Billboard
             // ...
@@ -66,7 +73,15 @@ public class FlagBillboardController : MonoBehaviour {
             isPointed = false;
             Debug.Log("pointer leave flag ");
             // 取消高亮
-            this.transform.GetChild(0).gameObject.SetActive(false);
+            //this.transform.GetChild(0).gameObject.SetActive(false);
+            Transform blueFrameGroup = this.transform.Find("BlueFrameGroup");
+            foreach(Transform frameChild in blueFrameGroup)
+            {
+                frameChild.GetComponent<EaseSpriteFrame>().InactiveFrame();
+            }
+            blueFrameGroup.gameObject.SetActive(false);
+
+
             // TODO 取消连出的billboard
             // ...
         }

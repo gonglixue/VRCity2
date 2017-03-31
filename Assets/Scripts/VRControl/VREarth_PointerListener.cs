@@ -199,7 +199,7 @@
 
             Quaternion rotation = Quaternion.identity;
             _pin = Instantiate(pinPrefab, position, rotation, earth) as GameObject;
-            _pin.transform.localScale = Vector3.one * 0.1f;
+            _pin.transform.localScale = Vector3.one * 0.08f;
             _pin.transform.up = _pin.transform.position;
 
             _lastPutPin = Time.time;
