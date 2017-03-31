@@ -52,6 +52,6 @@ public class PadScreenController : MonoBehaviour {
         ContentText.SetActive(false);
         InitialTip.SetActive(true);
 
-        InitialTip.GetComponent<TextMesh>().text = context;
+        InitialTip.transform.GetChild(0).GetComponent<TextMesh>().text = context;
     }
 }
