@@ -19,6 +19,7 @@ namespace Mapbox.Unity
         public HTTPRequest(MonoBehaviour behaviour, string url, Action<Response> callback)
         {
             this.request = UnityWebRequest.Get(url);
+            //Debug.Log("url:" + url);
             this.callback = callback;
 
             behaviour.StartCoroutine(this.DoRequest());
@@ -26,18 +27,42 @@ namespace Mapbox.Unity
 
         public void Cancel()
         {
+            Debug.Log("http request.cs: cancel()");
             this.request.Abort();
         }
 
         private IEnumerator DoRequest()
         {
-            yield return this.request.Send();
-
+            //Debug.Log("DoRequest");
+            
+            //yield return this.request.Send();
+            /*
             var response = new Response();
             response.Error = this.request.error;
+            Debug.Log("error:"+response.Error);
             response.Data = this.request.downloadHandler.data;
+            this.callback(response);*/
 
-            this.callback(response);
+            
+            WWW www = new WWW(request.url);
+            yield return www;
+
+            if(www.error != null)
+            {
+                Debug.Log("ERROR: " + www.error);
+                yield break;
+            }
+            if(www.isDone)
+            {
+                //Debug.Log("www is donw");
+                var response = new Response();
+                response.Error = www.error;
+                response.Data = www.bytes;
+                this.callback(response);
+            }
+            
+
+
         }
     }
 }

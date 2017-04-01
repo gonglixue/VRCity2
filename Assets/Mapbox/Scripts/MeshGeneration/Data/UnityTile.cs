@@ -21,8 +21,9 @@ namespace Mapbox.MeshGeneration.Data
             set
             {
                 _imageData = value;
+                //Debug.Log("set image data");
                 // TODO: 获取到ImageData, 把ImageData添加给TileIntro
-                Config.AddImageDataForTile(TileCoordinate, value);
+                //Config.AddImageDataForTile(TileCoordinate, value);
                 OnSatelliteDataChanged();
             }
         }
@@ -33,7 +34,7 @@ namespace Mapbox.MeshGeneration.Data
             {
                 _heightData = value;
                 // TODO: 获取到HeightData, 把HeightData添加给TileIntro
-                Config.AddHeightDataForTile(TileCoordinate, value);
+                //Config.AddHeightDataForTile(TileCoordinate, value);
                 OnHeightDataChanged();
             }
         }

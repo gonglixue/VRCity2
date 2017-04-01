@@ -3,7 +3,7 @@
 //     Copyright (c) 2016 Mapbox. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-
+using UnityEngine;
 namespace Mapbox.Map
 {
     using System;
@@ -101,7 +101,7 @@ namespace Mapbox.Map
         public void Initialize(Parameters param, Action callback)
         {
             this.Cancel();
-
+            //Debug.Log("tile.cs: Initialize");
             this.state = State.Loading;
             this.id = param.Id;
             this.request = param.Fs.Request(this.MakeTileResource(param.MapId).GetUrl(), this.HandleTileResponse);

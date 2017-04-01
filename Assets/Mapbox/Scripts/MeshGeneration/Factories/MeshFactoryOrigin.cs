@@ -12,10 +12,11 @@ using Mapbox.MeshGeneration.Interfaces;
 
 namespace Mapbox.MeshGeneration.Factories
 {
-    [CreateAssetMenu(menuName = "Mapbox/Factories/Mesh Factory")]
-    public class MeshFactory : Factory
+    [CreateAssetMenu(menuName = "Mapbox/Factories/Mesh Factory Origin")]
+    public class MeshFactoryOrigin : Factory
     {
-        [SerializeField] private string _mapId = "mapbox.mapbox-streets-v7";
+        [SerializeField]
+        private string _mapId = "mapbox.mapbox-streets-v7";
         public List<LayerVisualizerBase> Visualizers;
 
         private Dictionary<Vector2, UnityTile> _tiles;
@@ -23,13 +24,12 @@ namespace Mapbox.MeshGeneration.Factories
 
         public override void Initialize(MonoBehaviour mb, IFileSource fs)
         {
-            
             base.Initialize(mb, fs);
             _tiles = new Dictionary<Vector2, UnityTile>();
             _layerBuilder = new Dictionary<string, List<LayerVisualizerBase>>();
             foreach (LayerVisualizerBase factory in Visualizers)
             {
-                if(_layerBuilder.ContainsKey(factory.Key))
+                if (_layerBuilder.ContainsKey(factory.Key))
                 {
                     _layerBuilder[factory.Key].Add(factory);
                 }
@@ -42,10 +42,9 @@ namespace Mapbox.MeshGeneration.Factories
 
         public override void Register(UnityTile tile)
         {
-            
+            Debug.Log("Mesh Register");
             base.Register(tile);
-            if(!_tiles.ContainsKey(tile.TileCoordinate))
-                _tiles.Add(tile.TileCoordinate, tile);
+            _tiles.Add(tile.TileCoordinate, tile);
             Run(tile);
         }
 
@@ -101,9 +100,10 @@ namespace Mapbox.MeshGeneration.Factories
                         {
                             if (builder.Active)
                                 builder.Create(vectorTile.Data.GetLayer(layerName), tile);
-                        }                        
+                        }
                     }
                 }
+                Debug.Log("Mesh factory CreateMeshes callback");
             });
         }
     }

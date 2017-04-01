@@ -168,7 +168,9 @@
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\Factory.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\MapImageFactory.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\MeshFactory.cs" />
+    <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\MeshFactoryOrigin.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\TerrainFactory.cs" />
+    <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\TerrainFactoryOrigin.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Filters\FilterBase.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Filters\HeightFilter.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Filters\TypeFilter.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\LayerVisualizers\PoiVisualizer.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\LayerVisualizers\VectorLayerVisualizer.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\MapController.cs" />
+    <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\MapControllerOrigin.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\MapVisualization.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Modifiers\GameObjectModifier.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Modifiers\GameObjectModifiers\TextureModifier.cs" />
