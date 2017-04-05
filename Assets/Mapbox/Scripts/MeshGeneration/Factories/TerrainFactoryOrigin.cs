@@ -18,6 +18,8 @@ namespace Mapbox.MeshGeneration.Factories
         [SerializeField]
         private Material _flatTileMaterial;
         [SerializeField]
+        private Material _StandardMaterial;
+        [SerializeField]
         private bool _createRealTerrain = true;
         [SerializeField]
         private string _mapId;
@@ -142,6 +144,7 @@ namespace Mapbox.MeshGeneration.Factories
             mesh.RecalculateNormals();
             go.GetComponent<MeshFilter>().sharedMesh = mesh;
             go.AddComponent<MeshCollider>();
+            //go.GetComponent<MeshRenderer>().material = _StandardMaterial;
             //go.layer = LayerMask.NameToLayer("terrain");
         }
 

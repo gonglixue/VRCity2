@@ -26,20 +26,32 @@ public static class Config{
 
     public static void AddImageDataForTile(Vector2 tileID, Texture2D ImageData)
     {
-        GameObject tile = tilesDic[tileID];
-        tile.GetComponent<TileIntro>().imageData = ImageData;
+        if(tilesDic.ContainsKey(tileID))
+        {
+            GameObject tile = tilesDic[tileID];
+            tile.GetComponent<TileIntro>().imageData = ImageData;
+        }
+        
     }
 
     public static void AddHeightDataForTile(Vector2 tileID, Texture2D HeightData)
     {
-        GameObject tile = tilesDic[tileID];
-        tile.GetComponent<TileIntro>().heightData = HeightData;
+        if(tilesDic.ContainsKey(tileID))
+        {
+            GameObject tile = tilesDic[tileID];
+            tile.GetComponent<TileIntro>().heightData = HeightData;
+        }
+        
     }
 
     public static void AddVectorDataForTile(Vector2 tileID, Texture2D vectorData)
     {
-        GameObject tile = tilesDic[tileID];
-        tile.GetComponent<TileIntro>().vectorData = vectorData;
+        if(tilesDic.ContainsKey(tileID))
+        {
+            GameObject tile = tilesDic[tileID];
+            tile.GetComponent<TileIntro>().vectorData = vectorData;
+        }
+        
     }
 
 }
