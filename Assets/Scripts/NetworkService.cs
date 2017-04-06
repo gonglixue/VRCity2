@@ -11,6 +11,7 @@ public class NetworkService{
     private string file_saveUrl = @"D:\test";
     private const string loadKMLUrl = "http://127.0.0.1:8888/loadKML";
     private const string loadTileUrl = "http://127.0.0.1:8888/loadTile";
+    private const string host = "http://127.0.0.1:8888";
 
     private bool IsResponseValid(WWW www)
     {
@@ -105,7 +106,7 @@ public class NetworkService{
         }
     }
 
-    public IEnumerator RequestTileKML(string cityName, int idx, int idy, Action<string> callback)
+    public IEnumerator RequestTileKML(string cityName, int idx, int idy, Action<string,int,int> callback)
     {
         string url = loadTileUrl + "?idx=" + idx + "&idy=" + idy;
         WWW www = new WWW(url);
@@ -115,7 +116,29 @@ public class NetworkService{
             yield break;
         if (www.isDone)
         {
-            callback(www.text);
+            callback(www.text,idx, idy);
+        }
+    }
+
+    public IEnumerator DownloadBuilding(string href, Action callback)
+    {
+        string savePath = Application.dataPath + "/Resources/Download" + href;
+        string dirPath = savePath.Substring(0, savePath.LastIndexOf('/'));
+        Debug.Log(dirPath);
+        System.IO.Directory.CreateDirectory(dirPath);  //各级目录必须存在，创建目录
+
+        string url = host + href;
+        Debug.Log("download building url:" + url);
+        WWW www = new WWW(url);
+        yield return www;
+
+        if (!IsResponseValid(www))
+            yield break;
+        if (www.isDone)
+        {
+            byte[] fileBytes = www.bytes;
+            CreateFile(fileBytes, savePath);
+            callback();
         }
     }
 

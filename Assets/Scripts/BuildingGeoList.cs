@@ -57,7 +57,7 @@ public class BuildingGeoList : MonoBehaviour
 
     void Start()
     {
-
+        // Test(); 
     }
 
     // Update is called once per frame
@@ -170,6 +170,7 @@ public class BuildingGeoList : MonoBehaviour
     void drawATile(List<buildingInfo> buildingsOfAtile)
     {
         GameObject tile = new GameObject("Tile-" + _tileCount);
+
         Material buildingMaterial = new Material(buildingShader);
         Texture2D[] atlasTexture = new Texture2D[buildingsOfAtile.Count];
         Rect[] rects = new Rect[buildingsOfAtile.Count];
@@ -191,8 +192,7 @@ public class BuildingGeoList : MonoBehaviour
             Vector3 position = new Vector3((float)(deltax * _worldScaleFactor), posYInUnity, (float)(deltay * _worldScaleFactor));
             Quaternion rotate = Quaternion.AngleAxis(-89.8f, Vector3.right) * (Quaternion.AngleAxis(180, Vector3.forward));
             string path = buildingItem.modelHref.Split('.')[0];
-            path = path.Replace('\\', '/');
-            //Debug.Log(position);
+            //Debug.Log(buildingItem.modelHref); Tiles\0\0/2748/BLDG_0003000f00334f0d.dae
             GameObject buildingInstance = Instantiate(Resources.Load(path, typeof(GameObject)), position, rotate, tile.transform) as GameObject;
             buildingInstance.transform.Translate(new Vector3(0, heightCorrect * (float)_scaleFactor, 0), Space.World);
             // 为创建的GameObject添加组件
@@ -321,11 +321,70 @@ public class BuildingGeoList : MonoBehaviour
             double west = double.Parse(tileNode.SelectSingleNode(".//ns:west", nsMgr).InnerText);
             double east = double.Parse(tileNode.SelectSingleNode(".//ns:east", nsMgr).InnerText);
             string href = tileNode.SelectSingleNode(".//ns:href", nsMgr).InnerText;
+            // parse tile id
+            string[] temp = name.Split('_');
+            int idx = int.Parse(temp[temp.Length - 2]);
+            int idy = int.Parse(temp[temp.Length - 1]);
 
             //Debug.Log(name + ":" + href);
-            TileInfo tile = new TileInfo(name, north, south, east, west, href);
+            TileInfo tile = new TileInfo(name, north, south, east, west, href, idx, idy);
             tileList.Add(tile);
         }
+    }
+    void RequestTileKML(TileInfo singleTile)
+    {
+        NetworkService network = new NetworkService();
+        StartCoroutine(network.RequestTileKML("", singleTile.idx, singleTile.idy, OnTileKMLLoaded));
+    }
+    void OnTileKMLLoaded(string xmlText, int idx, int idy)
+    {
+        ParseTileKML(xmlText,idx, idy);
+
+        // TODO
+        // download collada
+        // ...
+    }
+    void ParseTileKML(string xmlText,int idx, int idy)
+    {
+        List<buildingInfo> buildingsOfATile = new List<buildingInfo>();
+
+
+        XmlDocument xml = new XmlDocument();
+        xml.LoadXml(xmlText);
+
+        XmlReaderSettings set = new XmlReaderSettings();
+        set.IgnoreComments = true;
+        
+
+        // 命名空间设置
+        XmlNamespaceManager nsMgr = new XmlNamespaceManager(xml.NameTable);
+        nsMgr.AddNamespace("ns", "http://www.opengis.net/kml/2.2");
+
+        XmlNode xdn = xml.DocumentElement;
+        XmlNodeList placeMark = xdn.SelectNodes("//ns:Placemark", nsMgr);
+        //Debug.Log("placemark list length: " + placeMark.Count);
+        int length = placeMark.Count;
+
+        //foreach(XmlNode place in placeMark)
+        for (int j = 1; j < length; j++)
+        {
+            // 每次循环读取tile中的某一个模型数据
+            XmlNode place = placeMark[j];
+
+            string name = place.SelectSingleNode(".//ns:name", nsMgr).InnerText;
+            double latitude = double.Parse(place.SelectSingleNode(".//ns:latitude", nsMgr).InnerText);
+            double longitude = double.Parse(place.SelectSingleNode(".//ns:longitude", nsMgr).InnerText);
+            double heading = double.Parse(place.SelectSingleNode(".//ns:heading", nsMgr).InnerText);
+            string modelHref = '/' + idx + '/' + idy + '/' + place.SelectSingleNode(".//ns:href", nsMgr).InnerText;
+            double altitude = double.Parse(place.SelectSingleNode(".//ns:altitude", nsMgr).InnerText);
+
+            buildingInfo building = new buildingInfo(latitude, longitude, heading, name, modelHref, altitude);
+            buildingsOfATile.Add(building);
+        }
+
+        // 每次循环就增加了一个tile信息，即可绘制该tile
+        drawATile(buildingsOfATile);
+        buildingList.Add(buildingsOfATile);
     }
 
     static public Vector2 GetReferenceCenterInMeters()
@@ -349,6 +408,15 @@ public class BuildingGeoList : MonoBehaviour
         return _referenceTileRect;
     }
 
+    void Test()
+    {
+        NetworkService network = new NetworkService();
+        StartCoroutine(network.DownloadBuilding("/0/0/2748/BLDG_0003000f00334f0d.dae", OnTestLoaded));
+    }
+    void OnTestLoaded()
+    {
+        Debug.Log("test callback");
+    }
 }
 
 public struct buildingInfo
@@ -383,7 +451,7 @@ public struct TileInfo
     public int idx;
     public int idy;
 
-    public TileInfo(string _name, double _north, double _south, double _east, double _west, string _href)
+    public TileInfo(string _name, double _north, double _south, double _east, double _west, string _href, int _idx, int _idy)
     {
         name = _name;
         north = _north;
@@ -391,7 +459,7 @@ public struct TileInfo
         east = _east;
         west = _west;
         href = _href;
-        idx = 0;
-        idy = 0;
+        idx = _idx;
+        idy = _idy;
     }
 }
