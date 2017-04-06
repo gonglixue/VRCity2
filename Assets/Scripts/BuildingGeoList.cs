@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Networking;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
@@ -40,19 +42,17 @@ public class BuildingGeoList : MonoBehaviour
     public Shader SnowShader;
     #endregion
 
+    #region network request
+    private string SceneKMLUrl = "http://localhost:127.0.0.1:8888/loadKML";
+
+    #endregion
+
     void Awake()
     {
         InitReference();
         InitRoot();
-        
-        loadKML();  // 加载总的KML数据，解析得到TileList
-        //for (int i = 0; i < tileList.Count; i++)  // 循环每个tile
-        foreach(TileInfo tile in tileList)
-        {
-            loadTileKML(tile);  // 加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
-        }
 
-        
+        loadKML();  // 加载总的KML数据，解析得到TileList
     }
 
     void Start()
@@ -112,18 +112,22 @@ public class BuildingGeoList : MonoBehaviour
 
     void loadTileKML(TileInfo singleTile)
     {
+        // TODO
+        // 请求每个Tile的KML
+        // ...
+
         List<buildingInfo> buildingsOfATile = new List<buildingInfo>();
 
         //TileInfo singleTile = tileList[i];
         string tileColladaKmlPath = "\\" + singleTile.href;
         int lastFolderIndex = singleTile.href.LastIndexOf('\\');
-        string singleTilePathPrefix = singleTile.href.Substring(0,lastFolderIndex);
+        string singleTilePathPrefix = singleTile.href.Substring(0, lastFolderIndex);
         //Debug.Log(singleTilePathPrefix);
 
         XmlDocument xml = new XmlDocument();
         XmlReaderSettings set = new XmlReaderSettings();
         set.IgnoreComments = true;
-        xml.Load(XmlReader.Create((Application.dataPath + "\\Resources"+tileColladaKmlPath), set));
+        xml.Load(XmlReader.Create((Application.dataPath + "\\Resources" + tileColladaKmlPath), set));
 
         // 命名空间设置
         XmlNamespaceManager nsMgr = new XmlNamespaceManager(xml.NameTable);
@@ -158,38 +162,9 @@ public class BuildingGeoList : MonoBehaviour
 
     void loadKML()
     {
-        XmlDocument xml = new XmlDocument();
-        XmlReaderSettings set = new XmlReaderSettings();
-        set.IgnoreComments = true;
-        xml.Load(XmlReader.Create((Application.dataPath + "/data/Layer2.kml"), set));
-
-        // 命名空间设置
-        XmlNamespaceManager nsMgr = new XmlNamespaceManager(xml.NameTable);
-        nsMgr.AddNamespace("ns", "http://www.opengis.net/kml/2.2");
-        nsMgr.AddNamespace("xal", "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0");
-        nsMgr.AddNamespace("atom", "http://www.w3.org/2005/Atom");
-        nsMgr.AddNamespace("gx", "http://www.google.com/kml/ext/2.2");
-
-        XmlNode xdn = xml.DocumentElement;
-
-        //XmlNodeList Folder = xml.GetElementsByTagName("Folder");
-        XmlNodeList Folder = xdn.SelectNodes(".//ns:Folder",nsMgr);
-        //Debug.Log("folderplacemark list length: " + Folder.Count);
-        int length = Folder.Count;
-
-        foreach(XmlNode tileNode in Folder)
-        {
-            string name = tileNode.SelectSingleNode("./ns:name", nsMgr).InnerText;
-            double north = double.Parse(tileNode.SelectSingleNode(".//ns:north", nsMgr).InnerText);
-            double south = double.Parse(tileNode.SelectSingleNode(".//ns:south", nsMgr).InnerText);
-            double west = double.Parse(tileNode.SelectSingleNode(".//ns:west", nsMgr).InnerText);
-            double east = double.Parse(tileNode.SelectSingleNode(".//ns:east", nsMgr).InnerText);
-            string href = tileNode.SelectSingleNode(".//ns:href", nsMgr).InnerText;
-            
-            //Debug.Log(name + ":" + href);
-            TileInfo tile = new TileInfo(name, north, south, east, west, href);
-            tileList.Add(tile);
-        }
+        // 请求场景KML
+        RequestKML();
+       
     }
 
     void drawATile(List<buildingInfo> buildingsOfAtile)
@@ -203,7 +178,7 @@ public class BuildingGeoList : MonoBehaviour
         tile.transform.SetParent(_root.transform);
 
         int i = 0;
-        foreach(buildingInfo buildingItem in buildingsOfAtile)
+        foreach (buildingInfo buildingItem in buildingsOfAtile)
         {
             Vector2 v2 = Mapbox.Conversions.LatLonToMeters(buildingItem.latitude, buildingItem.longitude);
             // 建筑物距离参考tile中点的墨卡托距离
@@ -211,7 +186,7 @@ public class BuildingGeoList : MonoBehaviour
             double deltay = v2.y - _referenceTileRect.center.y;
 
             // TODO：建筑物的高度位置计算， absolute in meters
-            float posYInUnity =(float)( buildingItem.altitude * _worldScaleFactor );
+            float posYInUnity = (float)(buildingItem.altitude * _worldScaleFactor);
 
             Vector3 position = new Vector3((float)(deltax * _worldScaleFactor), posYInUnity, (float)(deltay * _worldScaleFactor));
             Quaternion rotate = Quaternion.AngleAxis(-89.8f, Vector3.right) * (Quaternion.AngleAxis(180, Vector3.forward));
@@ -219,7 +194,7 @@ public class BuildingGeoList : MonoBehaviour
             path = path.Replace('\\', '/');
             //Debug.Log(position);
             GameObject buildingInstance = Instantiate(Resources.Load(path, typeof(GameObject)), position, rotate, tile.transform) as GameObject;
-            buildingInstance.transform.Translate(new Vector3(0, heightCorrect*(float)_scaleFactor, 0), Space.World);
+            buildingInstance.transform.Translate(new Vector3(0, heightCorrect * (float)_scaleFactor, 0), Space.World);
             // 为创建的GameObject添加组件
             buildingInstance.AddComponent<BuildingIntro>();  // 添加脚本
             buildingInstance.GetComponent<BuildingIntro>().setBuildingInfo(buildingItem.name, buildingItem.latitude, buildingItem.longitude, buildingItem.altitude);
@@ -227,7 +202,7 @@ public class BuildingGeoList : MonoBehaviour
 
             // Shader 气象模拟
             // 设置buildingInstance的shader
-            if(toggleSnow)
+            if (toggleSnow)
             {
                 buildingInstance.GetComponent<MeshRenderer>().material.shader = SnowShader;
             }
@@ -239,22 +214,22 @@ public class BuildingGeoList : MonoBehaviour
 
         // TODO：生成atlas
         if (useAtlas)
-        {       
+        {
             // 需要修改Texture import setting!!!
             Texture2D atlas = new Texture2D(512, 512);
             rects = atlas.PackTextures(atlasTexture, 0, 512, false);
 
             // TODO: 材质合并
             // 遍历该tile下的每个building，重新设置他们的material；
-        
+
             int j = 0;
-            foreach(Transform childTransform in tile.transform)
+            foreach (Transform childTransform in tile.transform)
             {
                 childTransform.GetComponent<MeshRenderer>().materials = new Material[1];
 
                 childTransform.GetComponent<MeshRenderer>().sharedMaterial = buildingMaterial;
                 Material m = childTransform.GetComponent<MeshRenderer>().material;
-            
+
                 Rect r = rects[j];
                 Debug.Log(m.name);
                 m.mainTexture = atlas;
@@ -289,7 +264,7 @@ public class BuildingGeoList : MonoBehaviour
     {
         _root = new GameObject("Building-Root");
         _root.transform.localScale = Vector3.one * (float)_scaleFactor;
-        
+
     }
 
     // 计算数据库tileSize / MapboxTileSize
@@ -299,6 +274,58 @@ public class BuildingGeoList : MonoBehaviour
         var south_west = Mapbox.Conversions.LatLonToMeters(south, west);
         double factor = (north_east.y - south_west.y) / referenceTileRect.width;
         return factor;
+    }
+
+    void RequestKML()
+    {
+        NetworkService network = new NetworkService();
+        StartCoroutine(network.RequestKML("", OnKMLLoaded));
+    }
+    void OnKMLLoaded(string xmlText)
+    {
+        Debug.Log("kml callback");
+        ParseKML(xmlText);
+        foreach (TileInfo tile in tileList)
+        {
+            loadTileKML(tile);  // 加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
+        }
+    }
+    void ParseKML(string xmlText)
+    {
+        XmlDocument xml = new XmlDocument();
+        xml.LoadXml(xmlText);
+
+        XmlReaderSettings set = new XmlReaderSettings();
+        set.IgnoreComments = true;
+
+
+        // 命名空间设置
+        XmlNamespaceManager nsMgr = new XmlNamespaceManager(xml.NameTable);
+        nsMgr.AddNamespace("ns", "http://www.opengis.net/kml/2.2");
+        nsMgr.AddNamespace("xal", "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0");
+        nsMgr.AddNamespace("atom", "http://www.w3.org/2005/Atom");
+        nsMgr.AddNamespace("gx", "http://www.google.com/kml/ext/2.2");
+
+        XmlNode xdn = xml.DocumentElement;
+
+        //XmlNodeList Folder = xml.GetElementsByTagName("Folder");
+        XmlNodeList Folder = xdn.SelectNodes(".//ns:Folder", nsMgr);
+        //Debug.Log("folderplacemark list length: " + Folder.Count);
+        int length = Folder.Count;
+
+        foreach (XmlNode tileNode in Folder)
+        {
+            string name = tileNode.SelectSingleNode("./ns:name", nsMgr).InnerText;
+            double north = double.Parse(tileNode.SelectSingleNode(".//ns:north", nsMgr).InnerText);
+            double south = double.Parse(tileNode.SelectSingleNode(".//ns:south", nsMgr).InnerText);
+            double west = double.Parse(tileNode.SelectSingleNode(".//ns:west", nsMgr).InnerText);
+            double east = double.Parse(tileNode.SelectSingleNode(".//ns:east", nsMgr).InnerText);
+            string href = tileNode.SelectSingleNode(".//ns:href", nsMgr).InnerText;
+
+            //Debug.Log(name + ":" + href);
+            TileInfo tile = new TileInfo(name, north, south, east, west, href);
+            tileList.Add(tile);
+        }
     }
 
     static public Vector2 GetReferenceCenterInMeters()
@@ -321,6 +348,7 @@ public class BuildingGeoList : MonoBehaviour
     {
         return _referenceTileRect;
     }
+
 }
 
 public struct buildingInfo
@@ -352,6 +380,8 @@ public struct TileInfo
     public double east;
     public double west;
     public string href;  // look up certain tile kml;
+    public int idx;
+    public int idy;
 
     public TileInfo(string _name, double _north, double _south, double _east, double _west, string _href)
     {
@@ -361,5 +391,7 @@ public struct TileInfo
         east = _east;
         west = _west;
         href = _href;
+        idx = 0;
+        idy = 0;
     }
 }

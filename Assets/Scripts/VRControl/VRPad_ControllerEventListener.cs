@@ -1,6 +1,7 @@
 ﻿namespace VRTK.Examples
 {
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     public class VRPad_ControllerEventListener : MonoBehaviour
     {
@@ -165,9 +166,10 @@
         {
             if(!_buttonState)
             {
-                // TODO
                 // 变换，颜色变化
                 _padScreenButton.transform.Rotate(10, 0, 0, Space.Self);
+                _padScreenButton.GetComponent<MeshRenderer>().material.color = new Color(92 / 255f, 225 / 255f, 231 / 255f, 1.0f); // 92 225 231
+
                 _buttonState = true;
             }
         }
@@ -176,10 +178,13 @@
         {
             if(_buttonState)
             {
-                // TODO
                 // 复原变换，颜色复原
                 _padScreenButton.transform.Rotate(-10, 0, 0, Space.Self);
+                _padScreenButton.GetComponent<MeshRenderer>().material.color = new Color(149 / 255f, 149 / 255f, 149 / 255f, 1.0f);
                 _buttonState = false;
+
+                Debug.Log("按钮release，跳转");
+                SceneManager.LoadScene("MeshGenerationOrigin");
             }
         }
     }

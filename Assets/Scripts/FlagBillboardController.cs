@@ -96,6 +96,10 @@ public class FlagBillboardController : MonoBehaviour {
         // TODO 显示菜单 菜单放在另一只手？
         // 在此场景中，左controller为一个小屏幕padScreen
         padScreen.GetComponent<PadScreenController>().DisplayInfo(_location, _city, _country);
+        // 设置Bridge
+        Bridge.latitude = double.Parse(_location.Split(',')[0]);
+        Bridge.longitude = double.Parse(_location.Split(',')[1]);
+
         Debug.Log("press grip choose flag");
     }
 

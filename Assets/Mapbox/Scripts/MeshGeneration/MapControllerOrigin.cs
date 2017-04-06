@@ -28,6 +28,7 @@ namespace Mapbox.MeshGeneration
 
         public void Awake()
         {
+            GetBridgeData();
             _fileSource = MapboxConvenience.Instance.FileSource;
             MapVisualization.Initialize(this, _fileSource);
             _tiles = new Dictionary<Vector2, UnityTile>();
@@ -122,6 +123,11 @@ namespace Mapbox.MeshGeneration
                                                            tile.Rect.center.y - ReferenceTileRect.center.y);
                 MapVisualization.ShowTile(tile);
             }
+        }
+
+        public void GetBridgeData()
+        {
+            this.LatLng = Bridge.latitude + "," + Bridge.longitude;
         }
     }
 }

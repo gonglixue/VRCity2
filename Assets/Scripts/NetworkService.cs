@@ -9,7 +9,8 @@ public class NetworkService{
     private const string xmlApi = "http://127.0.0.1:8888/upload";
     private const string fileDownloadPath = "http://127.0.0.1:8000/3dwebclient/hello.html";
     private string file_saveUrl = @"D:\test";
-
+    private const string loadKMLUrl = "http://127.0.0.1:8888/loadKML";
+    private const string loadTileUrl = "http://127.0.0.1:8888/loadTile";
 
     private bool IsResponseValid(WWW www)
     {
@@ -81,6 +82,40 @@ public class NetworkService{
             Debug.Log("download " + savePath);
             byte[] fileBytes = www.bytes;
             CreateFile(fileBytes, savePath);
+        }
+    }
+
+    public IEnumerator RequestKML(string args, Action<string> callback)
+    {
+        string url = loadKMLUrl + args;
+        WWW www = new WWW(url);
+        yield return www;
+
+        if (!IsResponseValid(www))
+        {
+            yield break;
+        }
+        if (www.isDone)
+        {
+            //string content = www.text;
+            //byte[] fileBytes = System.Text.Encoding.Default.GetBytes(content);
+            //CreateFile(fileBytes);
+            Debug.Log("www.isdonw");
+            callback(www.text);
+        }
+    }
+
+    public IEnumerator RequestTileKML(string cityName, int idx, int idy, Action<string> callback)
+    {
+        string url = loadTileUrl + "?idx=" + idx + "&idy=" + idy;
+        WWW www = new WWW(url);
+        yield return www;
+
+        if (!IsResponseValid(www))
+            yield break;
+        if (www.isDone)
+        {
+            callback(www.text);
         }
     }
 

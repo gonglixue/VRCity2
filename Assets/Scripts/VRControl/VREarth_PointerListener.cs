@@ -215,6 +215,9 @@
 
             Vector2 LatLon = UnityCoorToLatLon(position);
             padScreen.GetComponent<PadScreenController>().DisplayPin("(" + LatLon.x + ", " + LatLon.y + ")");
+            // 设置bridge 经纬度
+            Bridge.latitude = LatLon.x;
+            Bridge.longitude = LatLon.y;
 
             Debug.Log("放置大头针");
         }
