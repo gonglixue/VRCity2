@@ -10,7 +10,7 @@ public class NetworkService{
     private const string fileDownloadPath = "http://127.0.0.1:8000/3dwebclient/hello.html";
     private string file_saveUrl = @"D:\test";
     private const string loadKMLUrl = "http://127.0.0.1:8888/loadKML";
-    private const string loadTileUrl = "http://127.0.0.1:8888/loadTile";
+    private const string loadTileUrl = "http://127.0.0.1:8888/loadTileKML";
     private const string host = "http://127.0.0.1:8888";
 
     private bool IsResponseValid(WWW www)
@@ -101,7 +101,7 @@ public class NetworkService{
             //string content = www.text;
             //byte[] fileBytes = System.Text.Encoding.Default.GetBytes(content);
             //CreateFile(fileBytes);
-            Debug.Log("www.isdonw");
+            Debug.Log("request kml isdown");
             callback(www.text);
         }
     }
@@ -116,6 +116,7 @@ public class NetworkService{
             yield break;
         if (www.isDone)
         {
+            Debug.Log("request tile kml is down");
             callback(www.text,idx, idy);
         }
     }
