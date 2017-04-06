@@ -12,6 +12,7 @@ public class NetworkService{
     private const string loadKMLUrl = "http://127.0.0.1:8888/loadKML";
     private const string loadTileUrl = "http://127.0.0.1:8888/loadTileKML";
     private const string host = "http://127.0.0.1:8888";
+    private const string loadTextureUrl = "http://127.0.0.1:8888/texture";
 
     private bool IsResponseValid(WWW www)
     {
@@ -121,7 +122,7 @@ public class NetworkService{
         }
     }
 
-    public IEnumerator DownloadBuilding(string href, Action callback)
+    public IEnumerator DownloadBuilding(string href, Action<string> callback)
     {
         string savePath = Application.dataPath + "/Resources/Download" + href;
         string dirPath = savePath.Substring(0, savePath.LastIndexOf('/'));
@@ -134,12 +135,37 @@ public class NetworkService{
         yield return www;
 
         if (!IsResponseValid(www))
+        {
+            Debug.Log("DownloadBuilding response is not valid");
             yield break;
+        }
+            
         if (www.isDone)
         {
             byte[] fileBytes = www.bytes;
             CreateFile(fileBytes, savePath);
-            callback();
+            callback(href);
+        }
+    }
+
+    public IEnumerator DownloadTexture(string href, Action<string> callback)
+    {
+        string savePath = Application.dataPath + "/Resources/Download" + href;
+
+        string url = loadTextureUrl + href;
+        WWW www = new WWW(url);
+        yield return www;
+
+        if (!IsResponseValid(www))
+        {
+            Debug.Log("DownloadTexture response is not valud");
+            yield break;
+        }
+        if (www.isDone)
+        {
+            byte[] fileBytes = www.bytes;
+            CreateFile(fileBytes, savePath);
+            callback(href);
         }
     }
 

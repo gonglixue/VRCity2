@@ -180,6 +180,12 @@ public class BuildingGeoList : MonoBehaviour
         int i = 0;
         foreach (buildingInfo buildingItem in buildingsOfAtile)
         {
+            string path = "Tiles" + buildingItem.modelHref.Split('.')[0];
+            //Debug.Log(buildingItem.modelHref); Tiles\0\0/2748/BLDG_0003000f00334f0d.dae
+            Debug.Log(path);
+            // TODO: Download File
+            RequestBuildingFile(path);
+
             Vector2 v2 = Mapbox.Conversions.LatLonToMeters(buildingItem.latitude, buildingItem.longitude);
             // 建筑物距离参考tile中点的墨卡托距离
             double deltax = v2.x - _referenceTileRect.center.x;
@@ -190,9 +196,10 @@ public class BuildingGeoList : MonoBehaviour
 
             Vector3 position = new Vector3((float)(deltax * _worldScaleFactor), posYInUnity, (float)(deltay * _worldScaleFactor));
             Quaternion rotate = Quaternion.AngleAxis(-89.8f, Vector3.right) * (Quaternion.AngleAxis(180, Vector3.forward));
-            string path = "Tiles" + buildingItem.modelHref.Split('.')[0];
-            //Debug.Log(buildingItem.modelHref); Tiles\0\0/2748/BLDG_0003000f00334f0d.dae
-            Debug.Log(path);
+            
+
+            
+
             GameObject buildingInstance = Instantiate(Resources.Load(path, typeof(GameObject)), position, rotate, tile.transform) as GameObject;
             buildingInstance.transform.Translate(new Vector3(0, heightCorrect * (float)_scaleFactor, 0), Space.World);
             // 为创建的GameObject添加组件
@@ -289,6 +296,7 @@ public class BuildingGeoList : MonoBehaviour
         {
             //loadTileKML(tile);  // 加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
             RequestTileKML(tile);
+            break;
         }
     }
     void ParseKML(string xmlText)
@@ -341,9 +349,7 @@ public class BuildingGeoList : MonoBehaviour
     {
         ParseTileKML(xmlText,idx, idy);
         Debug.Log("on tile kml loaded");
-        // TODO
-        // download collada
-        // ...
+        
     }
     void ParseTileKML(string xmlText,int idx, int idy)
     {
@@ -387,6 +393,23 @@ public class BuildingGeoList : MonoBehaviour
         drawATile(buildingsOfATile);
         buildingList.Add(buildingsOfATile);
     }
+    void RequestBuildingFile(string path)
+    {
+        NetworkService network = new NetworkService();
+        StartCoroutine(network.DownloadBuilding("/" + path + ".dae", OnBuildingModelLoaded));
+        
+    }
+    void OnBuildingModelLoaded(string path)
+    {
+        //NetworkService network = new NetworkService();
+        //StartCoroutine(network.DownloadTexture("/" + path + ".dae", OnBuildingTextureLoaded));
+    }
+    void OnBuildingTextureLoaded(string path)
+    {
+        // TODO
+        // 实例化一个模型
+
+    }
 
     static public Vector2 GetReferenceCenterInMeters()
     {
@@ -409,15 +432,6 @@ public class BuildingGeoList : MonoBehaviour
         return _referenceTileRect;
     }
 
-    void Test()
-    {
-        NetworkService network = new NetworkService();
-        StartCoroutine(network.DownloadBuilding("/0/0/2748/BLDG_0003000f00334f0d.dae", OnTestLoaded));
-    }
-    void OnTestLoaded()
-    {
-        Debug.Log("test callback");
-    }
 }
 
 public struct buildingInfo
