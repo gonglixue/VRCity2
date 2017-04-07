@@ -1,7 +1,7 @@
 ﻿Shader "Custom/newEasePointer" {
 	Properties {
 		_MainTex("Base (RGB)", 2D) = "white" {}
-		_Factor("show speed", Range(0,10)) = 10
+		_Factor("visible percent", Range(0,10)) = 10
 	}
 
 	SubShader{

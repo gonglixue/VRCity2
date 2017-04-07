@@ -14,7 +14,7 @@ public class monthDotInfo : MonoBehaviour {
     public GameObject line;
 
     #region 交互响应参数
-    public float scaleFactor = 1.2f;   // 点击时变大倍数
+    public float scaleFactor = 1.4f;   // 点击时变大倍数
     public enum ScaleState
     {
         Normal = 0,
@@ -47,12 +47,12 @@ public class monthDotInfo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(Input.GetMouseButtonDown(0) && month == 1)
+        if(Input.GetMouseButtonDown(0) && month == 5)
         {
             Debug.Log("mouse down:" + month);
             PointerInMonth();
         }
-        if(Input.GetMouseButtonUp(0) && month == 1)
+        if(Input.GetMouseButtonUp(0) && month == 5)
         {
             Debug.Log("mouse up:" + month);
             PointerOutMonth();
@@ -80,7 +80,7 @@ public class monthDotInfo : MonoBehaviour {
 
     public void finishSetValue()
     {
-        Debug.Log("finish set value" + month);
+        //Debug.Log("finish set value" + month);
         finishMonth++;
         if(finishMonth == 12)  // 完成最后一个点的位移
         {
@@ -102,7 +102,7 @@ public class monthDotInfo : MonoBehaviour {
         if(scaleState == ScaleState.Normal)
         {
             // 变大
-            Go.to(this.transform, 0.8f,
+            _scaleOutTween = Go.to(this.transform, 0.8f,
                 new GoTweenConfig()
                 .scale(originalScaleSize * scaleFactor)
                 .setEaseType(GoEaseType.CubicInOut));
@@ -139,6 +139,7 @@ public class monthDotInfo : MonoBehaviour {
     {
         if(_scaleOutTween != null)
         {
+            Debug.Log("stop bigger tween");
             _scaleOutTween.complete();
             _scaleOutTween.destroy();
             _scaleOutTween = null;

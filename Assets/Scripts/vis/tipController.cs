@@ -72,5 +72,6 @@ public class tipController : MonoBehaviour {
     public void hideBillboard()
     {
         hideAnimation = true;
+        showAnimation = false;
     }
 }

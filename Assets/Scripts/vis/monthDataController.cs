@@ -48,7 +48,7 @@ public class monthDataController : MonoBehaviour {
                 max = monthData[j];
         }
 
-        // 设置高度
+        // 设置12个散点的高度
         int i = 0;
 
         foreach (Transform child in monthTransformList)
