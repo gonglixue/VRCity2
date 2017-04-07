@@ -7,7 +7,7 @@ public class baseDataInfo : MonoBehaviour {
 
     static float maxHeight = 25f;
 
-    private int _value;
+    private float _value;
     public GameObject cylinderPrefab;
 
 	// Use this for initialization
@@ -20,15 +20,15 @@ public class baseDataInfo : MonoBehaviour {
 	
 	}
 
-    public void InitData(int data)
+    public void InitData(float data)
     {
         _value = data;
         CreateCylinder(data);
     }
 
-    void CreateCylinder(int data)
+    void CreateCylinder(float data)
     {
-        Vector3 cylinderLocalPos = this.transform.parent.localToWorldMatrix.MultiplyPoint(localPosition);
+        Vector3 cylinderLocalPos = this.transform.parent.localToWorldMatrix.MultiplyPoint(this.transform.position);
         GameObject cylinder = Instantiate(cylinderPrefab, cylinderLocalPos, Quaternion.identity, this.transform) as GameObject;
         float scaleY = maxHeight / this.transform.parent.GetComponent<classGroupController>().maxBaseData * data;
         cylinder.transform.localScale = new Vector3(localScale.x, scaleY, localScale.z);
