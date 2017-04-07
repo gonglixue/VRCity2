@@ -301,7 +301,7 @@ public class BuildingGeoList : MonoBehaviour
     void OnTileKMLLoaded(string xmlText, int idx, int idy)
     {
         ParseTileKML(xmlText,idx, idy);
-        Debug.Log("on tile kml loaded");
+        //Debug.Log("on tile kml loaded");
         
     }
     void ParseTileKML(string xmlText,int idx, int idy)
@@ -394,7 +394,7 @@ public class BuildingGeoList : MonoBehaviour
 
     void OnTextureLoaded(string path)
     {
-        Debug.Log("on texture loaded");
+        //Debug.Log("on texture loaded");
     }
 
     static public Vector2 GetReferenceCenterInMeters()
