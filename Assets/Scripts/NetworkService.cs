@@ -8,11 +8,12 @@ public class NetworkService{
     //private const string xmlApi = "http://api.openweathermap.org/data/2.5/weather?q=Chicago,us&mode=xml";
     private const string xmlApi = "http://127.0.0.1:8888/upload";
     private const string fileDownloadPath = "http://127.0.0.1:8000/3dwebclient/hello.html";
-    private string file_saveUrl = @"D:\test";
+    private string file_saveUrl = @"D:\temp";
     private const string loadKMLUrl = "http://127.0.0.1:8888/loadKML";
     private const string loadTileUrl = "http://127.0.0.1:8888/loadTileKML";
     private const string host = "http://127.0.0.1:8888";
     private const string loadTextureUrl = "http://127.0.0.1:8888/texture";
+    private const string downloadFilePath = @"D:/temp/";
 
     private bool IsResponseValid(WWW www)
     {
@@ -102,7 +103,7 @@ public class NetworkService{
             //string content = www.text;
             //byte[] fileBytes = System.Text.Encoding.Default.GetBytes(content);
             //CreateFile(fileBytes);
-            Debug.Log("request kml isdown");
+            //Debug.Log("request kml isdown");
             callback(www.text);
         }
     }
@@ -117,20 +118,20 @@ public class NetworkService{
             yield break;
         if (www.isDone)
         {
-            Debug.Log("request tile kml is down");
+            //Debug.Log("request tile kml is down");
             callback(www.text,idx, idy);
         }
     }
 
-    public IEnumerator DownloadBuilding(string href, Action<string> callback)
+    public IEnumerator DownloadBuilding(string href, Action<string,string> callback)
     {
-        string savePath = Application.dataPath + "/Resources/Download" + href;
+        string savePath = downloadFilePath + "/Resources/Download" + href;
         string dirPath = savePath.Substring(0, savePath.LastIndexOf('/'));
         Debug.Log(dirPath);
         System.IO.Directory.CreateDirectory(dirPath);  //各级目录必须存在，创建目录
 
         string url = host + href;
-        Debug.Log("download building url:" + url);
+        //Debug.Log("download building url:" + url);
         WWW www = new WWW(url);
         yield return www;
 
@@ -144,15 +145,16 @@ public class NetworkService{
         {
             byte[] fileBytes = www.bytes;
             CreateFile(fileBytes, savePath);
-            callback(href);
+            callback(href,www.text);
         }
     }
 
     public IEnumerator DownloadTexture(string href, Action<string> callback)
     {
-        string savePath = Application.dataPath + "/Resources/Download" + href;
+        string savePath = downloadFilePath + "/Resources/Download" + href;
 
         string url = loadTextureUrl + href;
+        Debug.Log("download texture url:" + url);
         WWW www = new WWW(url);
         yield return www;
 

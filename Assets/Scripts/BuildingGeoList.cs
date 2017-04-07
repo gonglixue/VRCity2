@@ -65,55 +65,8 @@ public class BuildingGeoList : MonoBehaviour
 
     }
 
-
-
-    void loadTileKML()
-    {
-        List<buildingInfo> buildingsOfATile = new List<buildingInfo>();
-
-        XmlDocument xml = new XmlDocument();
-        XmlReaderSettings set = new XmlReaderSettings();
-        set.IgnoreComments = true;
-        //xml.Load(XmlReader.Create((Application.dataPath + "/data/tile88.kml"), set));
-        xml.Load(XmlReader.Create((Application.dataPath + "/data/Layer22.kml"), set));
-
-        // 命名空间设置
-        XmlNamespaceManager nsMgr = new XmlNamespaceManager(xml.NameTable);
-        nsMgr.AddNamespace("ns", "http://www.opengis.net/kml/2.2");
-
-        XmlNode xdn = xml.DocumentElement;
-
-        //XmlNodeList placeMark = xml.GetElementsByTagName("kml:Placemark");
-        XmlNodeList placeMark = xdn.SelectNodes("//ns:Placemark", nsMgr);
-        Debug.Log("placemark list length: " + placeMark.Count);
-        int length = placeMark.Count;
-
-        //foreach(XmlNode place in placeMark)
-        for (int i = 0; i < length; i++)
-        {
-            XmlNode place = placeMark[i];
-            //Debug.Log(place.InnerXml);
-
-            string name = place.SelectSingleNode(".//ns:name", nsMgr).InnerText;
-            double latitude = double.Parse(place.SelectSingleNode(".//ns:latitude", nsMgr).InnerText);
-            double longitude = double.Parse(place.SelectSingleNode(".//ns:longitude", nsMgr).InnerText);
-            double heading = double.Parse(place.SelectSingleNode(".//ns:heading", nsMgr).InnerText);
-            string modelHref = place.SelectSingleNode(".//ns:href", nsMgr).InnerText;
-            double altitude = double.Parse(place.SelectSingleNode(".//ns:altitude", nsMgr).InnerText);
-            Debug.Log(name);
-
-            buildingInfo building = new buildingInfo(latitude, longitude, heading, name, modelHref, altitude);
-            buildingsOfATile.Add(building);
-        }
-
-        buildingList.Add(buildingsOfATile);
-    }
-
     void loadTileKML(TileInfo singleTile)
     {
-        // TODO
-        // 请求每个Tile的KML
-        // ...
 
         List<buildingInfo> buildingsOfATile = new List<buildingInfo>();
 
@@ -296,7 +249,7 @@ public class BuildingGeoList : MonoBehaviour
         {
             //loadTileKML(tile);  // 加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
             RequestTileKML(tile);
-            break;
+            //break;
         }
     }
     void ParseKML(string xmlText)
@@ -399,16 +352,49 @@ public class BuildingGeoList : MonoBehaviour
         StartCoroutine(network.DownloadBuilding("/" + path + ".dae", OnBuildingModelLoaded));
         
     }
-    void OnBuildingModelLoaded(string path)
+    //文件地址，返回的collada xml
+    void OnBuildingModelLoaded(string path, string xml)
     {
-        //NetworkService network = new NetworkService();
-        //StartCoroutine(network.DownloadTexture("/" + path + ".dae", OnBuildingTextureLoaded));
+        ParseColladaXML(xml, path);
     }
-    void OnBuildingTextureLoaded(string path)
-    {
-        // TODO
-        // 实例化一个模型
 
+    void ParseColladaXML(string xmlText,string path)
+    {
+        //"Tiles\0\0 / 2748 / BLDG_0003000f00334f0d.dae"
+        string textureDir = path.Substring(0, path.LastIndexOf('/'));
+        XmlDocument xml = new XmlDocument();
+        xml.LoadXml(xmlText);
+        XmlReaderSettings set = new XmlReaderSettings();
+        set.IgnoreComments = true;
+
+        XmlNamespaceManager nsMgr = new XmlNamespaceManager(xml.NameTable);
+        nsMgr.AddNamespace("ns", "http://www.collada.org/2005/11/COLLADASchema");
+
+        XmlNode xdn = xml.DocumentElement;
+        //XmlNode collada = xdn.SelectSingleNode("COLLADA");
+        //Debug.Log(xdn.InnerXml);
+        XmlNode library_images = xdn.SelectSingleNode("./ns:library_images",nsMgr);
+        //Debug.Log(library_images.InnerXml);
+        XmlNodeList images = library_images.SelectNodes(".//ns:init_from",nsMgr);
+
+        for(int i = 0; i < images.Count; i++)
+        {
+            XmlNode singleImage = images[i];
+            string textureName = singleImage.InnerText;
+            string href = textureDir + "/" + textureName;
+            //Debug.Log("parse texture href:" + href);  //parse texture href: /Tiles\0\0\2748textureAtlas_300009164_0.jpeg
+            href = href.Replace('\\', '/');
+
+            // TODO 请求纹理文件
+            NetworkService network = new NetworkService();
+            StartCoroutine(network.DownloadTexture(href, OnTextureLoaded));
+        }
+
+    }
+
+    void OnTextureLoaded(string path)
+    {
+        Debug.Log("on texture loaded");
     }
 
     static public Vector2 GetReferenceCenterInMeters()
@@ -430,6 +416,11 @@ public class BuildingGeoList : MonoBehaviour
     static public Rect GetRerenceRect()
     {
         return _referenceTileRect;
+    }
+
+    void OnDestroy()
+    {
+        Debug.Log("退出");
     }
 
 }
