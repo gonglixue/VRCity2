@@ -96,6 +96,7 @@ public class NetworkService{
 
         if (!IsResponseValid(www))
         {
+            Debug.Log("request KML error");
             yield break;
         }
         if (www.isDone)
@@ -111,14 +112,26 @@ public class NetworkService{
     public IEnumerator RequestTileKML(string cityName, int idx, int idy, Action<string,int,int> callback)
     {
         string url = loadTileUrl + "?idx=" + idx + "&idy=" + idy;
+
+        // 适当延时，避免too many open connection
+        System.Random ran = new System.Random();
+        int ranNum = ran.Next(50, 150);
+        float delay = (float)ranNum / 100.0f;
+
+        yield return new WaitForSeconds(delay);
+
         WWW www = new WWW(url);
         yield return www;
 
         if (!IsResponseValid(www))
+        {
+            Debug.Log("request tile KML error");
             yield break;
+        }
+            
         if (www.isDone)
         {
-            //Debug.Log("request tile kml is down");
+            Debug.Log("request tile kml is down");
             callback(www.text,idx, idy);
         }
     }

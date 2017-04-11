@@ -72,6 +72,7 @@ public class BuildingGeoList : MonoBehaviour
 
         //TileInfo singleTile = tileList[i];
         string tileColladaKmlPath = "\\" + singleTile.href;
+        singleTile.href = singleTile.href.Replace('/', '\\');
         int lastFolderIndex = singleTile.href.LastIndexOf('\\');
         string singleTilePathPrefix = singleTile.href.Substring(0, lastFolderIndex);
         //Debug.Log(singleTilePathPrefix);
@@ -133,11 +134,13 @@ public class BuildingGeoList : MonoBehaviour
         int i = 0;
         foreach (buildingInfo buildingItem in buildingsOfAtile)
         {
-            string path = "Tiles" + buildingItem.modelHref.Split('.')[0];
+            string path =   buildingItem.modelHref.Split('.')[0];
             //Debug.Log(buildingItem.modelHref); Tiles\0\0/2748/BLDG_0003000f00334f0d.dae
+            //path = "Tiles" + path;
             Debug.Log(path);
+            
             // TODO: Download File
-            RequestBuildingFile(path);
+            // RequestBuildingFile(path);
 
             Vector2 v2 = Mapbox.Conversions.LatLonToMeters(buildingItem.latitude, buildingItem.longitude);
             // 建筑物距离参考tile中点的墨卡托距离
@@ -149,11 +152,19 @@ public class BuildingGeoList : MonoBehaviour
 
             Vector3 position = new Vector3((float)(deltax * _worldScaleFactor), posYInUnity, (float)(deltay * _worldScaleFactor));
             Quaternion rotate = Quaternion.AngleAxis(-89.8f, Vector3.right) * (Quaternion.AngleAxis(180, Vector3.forward));
-            
 
-            
 
-            GameObject buildingInstance = Instantiate(Resources.Load(path, typeof(GameObject)), position, rotate, tile.transform) as GameObject;
+            GameObject buildingInstance = null;
+            try
+            {
+                buildingInstance = Instantiate(Resources.Load(path, typeof(GameObject)), position, rotate, tile.transform) as GameObject;
+            }
+            catch(Exception e)
+            {
+                Debug.Log("instantiate error"+e + "//path:" + path);
+                continue;
+            }
+            
             buildingInstance.transform.Translate(new Vector3(0, heightCorrect * (float)_scaleFactor, 0), Space.World);
             // 为创建的GameObject添加组件
             buildingInstance.AddComponent<BuildingIntro>();  // 添加脚本
@@ -247,8 +258,8 @@ public class BuildingGeoList : MonoBehaviour
         ParseKML(xmlText);
         foreach (TileInfo tile in tileList)
         {
-            //loadTileKML(tile);  // 加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
-            RequestTileKML(tile);
+            //loadTileKML(tile);  // 本地加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
+            RequestTileKML(tile);  // 网络加载Tile
             //break;
         }
     }
@@ -301,7 +312,7 @@ public class BuildingGeoList : MonoBehaviour
     void OnTileKMLLoaded(string xmlText, int idx, int idy)
     {
         ParseTileKML(xmlText,idx, idy);
-        //Debug.Log("on tile kml loaded");
+        Debug.Log("on tile kml loaded");
         
     }
     void ParseTileKML(string xmlText,int idx, int idy)
@@ -325,6 +336,12 @@ public class BuildingGeoList : MonoBehaviour
         //Debug.Log("placemark list length: " + placeMark.Count);
         int length = placeMark.Count;
 
+        if(length <= 1)
+        {
+            Debug.Log("empty tile");
+            return;
+        }
+
         //foreach(XmlNode place in placeMark)
         for (int j = 1; j < length; j++)
         {
@@ -335,7 +352,7 @@ public class BuildingGeoList : MonoBehaviour
             double latitude = double.Parse(place.SelectSingleNode(".//ns:latitude", nsMgr).InnerText);
             double longitude = double.Parse(place.SelectSingleNode(".//ns:longitude", nsMgr).InnerText);
             double heading = double.Parse(place.SelectSingleNode(".//ns:heading", nsMgr).InnerText);
-            string modelHref = "\\" + idx + "\\" + idy + "\\" + place.SelectSingleNode(".//ns:href", nsMgr).InnerText;
+            string modelHref = "Tiles\\" + idx + "\\" + idy + "\\" + place.SelectSingleNode(".//ns:href", nsMgr).InnerText;
             double altitude = double.Parse(place.SelectSingleNode(".//ns:altitude", nsMgr).InnerText);
 
             buildingInfo building = new buildingInfo(latitude, longitude, heading, name, modelHref, altitude);
