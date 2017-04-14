@@ -42,7 +42,7 @@ namespace Mapbox.MeshGeneration.Factories
 
         public override void Register(UnityTile tile)
         {
-            Debug.Log("Mesh Register");
+            //Debug.Log("Mesh Register");
             base.Register(tile);
             _tiles.Add(tile.TileCoordinate, tile);
             Run(tile);
@@ -103,7 +103,7 @@ namespace Mapbox.MeshGeneration.Factories
                         }
                     }
                 }
-                Debug.Log("Mesh factory CreateMeshes callback");
+                //Debug.Log("Mesh factory CreateMeshes callback");
             });
         }
     }

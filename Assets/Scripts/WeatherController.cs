@@ -29,7 +29,7 @@ public class WeatherController : MonoBehaviour {
 
     void InitSnowySystem()
     {
-        SkyBoxConfig snowSkyConf = new SkyBoxConfig(new Color(3, 30, 49, 255), new Color(75, 86, 86, 255), new Color(167, 168, 168), 0.3f, 0.079f, 0.821f);
+        SkyBoxConfig snowSkyConf = new SkyBoxConfig(new Color(3f/255, 30f/255, 49f/255, 1), new Color(75f/255, 86f/255, 86f/255, 1), new Color(167f/255, 168f/255, 168f/255), 0.3f, 0.079f, 0.821f);
         SetSkyBoxAttrib(snowSkyConf);
 
         snowySystem.SetActive(true);  // 开启粒子系统

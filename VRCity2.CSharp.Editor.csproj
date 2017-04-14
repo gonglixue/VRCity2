@@ -158,6 +158,7 @@
     <None Include="Assets\Materials\depthTest.shader" />
     <None Include="Assets\Materials\newEasePointer.shader" />
     <None Include="Assets\Materials\outlineShader.shader" />
+    <None Include="Assets\Materials\surfSnowShader.shader" />
     <None Include="Assets\Plugins\GoKit\easing\easeEquationsLicense.txt" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\Silhouette.shader" />

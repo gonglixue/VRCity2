@@ -60,6 +60,18 @@ namespace Mapbox.MeshGeneration.Data
 		public float RelativeScale { get; set;}
         public int depth;
 
+        #region custom
+        public string CenterMercatorString;
+        public string CenterLatLonString;
+        public Mapbox.GeoCoordinate CenterLatLon { get; set; }  // custom
+        public float tileX;
+        public float tileY;
+        public float LatLonWidth;
+        public string MercatorRectPos;
+        public string startLatLonPos;
+        public string endLatLonPos;
+        #endregion
+
         public float QueryHeightData(float x, float y)  // 参数是纹理坐标
         {
             if(HeightData != null)

@@ -12,6 +12,10 @@ public class monthDotInfo : MonoBehaviour {
 
     public GameObject verticalBar;
     public GameObject line;
+    public GameObject classGroup;
+    private const int BASE_NUM = 8;
+    [SerializeField]
+    private float[] classData = new float[BASE_NUM];
 
     #region 交互响应参数
     public float scaleFactor = 1.4f;   // 点击时变大倍数
@@ -41,7 +45,8 @@ public class monthDotInfo : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-	    
+        RandomInitClassData();
+        classGroup = GameObject.Find("classGroup");
 	}
 	
 	// Update is called once per frame
@@ -57,6 +62,7 @@ public class monthDotInfo : MonoBehaviour {
             Debug.Log("mouse up:" + month);
             PointerOutMonth();
         }
+        Test();
     }
 
     public void setValue(int v, int max)
@@ -157,11 +163,13 @@ public class monthDotInfo : MonoBehaviour {
     }
 
     /// <summary>
-    /// trigger use; display class data
+    /// trigger use; display class data,显示柱状图
     /// </summary>
     void triggerUseClassData()
     {
-
+        // 对classGroupController进行操作
+        classGroup.GetComponent<classGroupController>().SetClassData(this.classData);
+        classGroup.GetComponent<classGroupController>().StartElevation();
     }
 
     /// <summary>
@@ -209,6 +217,25 @@ public class monthDotInfo : MonoBehaviour {
         }
 
         return month;
+    }
+
+    void RandomInitClassData()
+    {
+        for(int i = 0; i < BASE_NUM; i++)
+        {
+            System.Random ran = new System.Random();
+            int ranNum = ran.Next(5, 30);
+            classData[i] = ranNum;
+            Debug.Log("init random:" + classData[i]);
+        }
+    }
+
+    void Test()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            triggerUseClassData();
+        }
     }
 
 }

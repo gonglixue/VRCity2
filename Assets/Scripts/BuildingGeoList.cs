@@ -258,8 +258,8 @@ public class BuildingGeoList : MonoBehaviour
         ParseKML(xmlText);
         foreach (TileInfo tile in tileList)
         {
-            //loadTileKML(tile);  // 本地加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
-            RequestTileKML(tile);  // 网络加载Tile
+            loadTileKML(tile);  // 本地加载一个Tile的KML，解析得到buildingList[i],并绘制该tile
+            //RequestTileKML(tile);  // 网络加载Tile
             //break;
         }
     }

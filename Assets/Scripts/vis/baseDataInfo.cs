@@ -9,6 +9,7 @@ public class baseDataInfo : MonoBehaviour {
 
     private float _value;
     public GameObject cylinderPrefab;
+    private GameObject _cylinderRefer = null;
 
 	// Use this for initialization
 	void Start () {
@@ -28,9 +29,28 @@ public class baseDataInfo : MonoBehaviour {
 
     void CreateCylinder(float data)
     {
-        Vector3 cylinderLocalPos = this.transform.parent.localToWorldMatrix.MultiplyPoint(this.transform.position);
-        GameObject cylinder = Instantiate(cylinderPrefab, cylinderLocalPos, Quaternion.identity, this.transform) as GameObject;
+        //Vector3 cylinderLocalPos = this.transform.parent.localToWorldMatrix.MultiplyPoint(this.transform.position);
+        Vector3 cylinderLocalPos = this.transform.localToWorldMatrix.MultiplyPoint(localPosition);
+        if(!_cylinderRefer)
+        {
+            _cylinderRefer = Instantiate(cylinderPrefab, cylinderLocalPos, Quaternion.identity, this.transform) as GameObject;
+        }
+        
         float scaleY = maxHeight / this.transform.parent.GetComponent<classGroupController>().maxBaseData * data;
-        cylinder.transform.localScale = new Vector3(localScale.x, scaleY, localScale.z);
+        _cylinderRefer.transform.localScale = new Vector3(localScale.x, 0, localScale.z);
+
+        GoTweenConfig config = new GoTweenConfig()
+            .scale(new Vector3(localScale.x, scaleY, localScale.z))
+            .setEaseType(GoEaseType.CubicInOut);
+
+        Go.to(_cylinderRefer.transform, 1.0f, config);
+    }
+
+    public void HideCylinder()
+    {
+        GoTweenConfig config = new GoTweenConfig()
+            .scale(new Vector3(localScale.x, 0, localScale.z))
+            .setEaseType(GoEaseType.CubicInOut);
+        Go.to(_cylinderRefer.transform, 1.0f, config);
     }
 }

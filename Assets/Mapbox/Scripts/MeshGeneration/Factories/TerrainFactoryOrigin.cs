@@ -37,7 +37,7 @@ namespace Mapbox.MeshGeneration.Factories
         public override void Register(UnityTile tile)
         {
             base.Register(tile);
-            Debug.Log("terrain register");
+            //Debug.Log("terrain register");
             if (_createRealTerrain)
             {
                 _tiles.Add(tile.TileCoordinate, tile);
@@ -54,7 +54,7 @@ namespace Mapbox.MeshGeneration.Factories
 
         private void Run(UnityTile tile)
         {
-            Debug.Log("terrain factory: Run(UnityTile)");
+            //Debug.Log("terrain factory: Run(UnityTile)");
             var parameters = new Tile.Parameters
             {
                 Fs = this.FileSource,
@@ -80,7 +80,7 @@ namespace Mapbox.MeshGeneration.Factories
                 texture.LoadImage(pngRasterTile.Data);
                 CreateTerrain(tile, texture);
 
-                Debug.Log("terrainFactoryOrigin texture: " + texture.height);
+                //Debug.Log("terrainFactoryOrigin texture: " + texture.height);
                 tile.HeightData = texture;
                 tile.HeightDataState = TilePropertyState.Loaded;
 

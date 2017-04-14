@@ -88,9 +88,21 @@ namespace Mapbox.MeshGeneration
                     tile.Zoom = zoom;
                     tile.RelativeScale = Conversions.GetTileScaleInMeters(0, Zoom) / Conversions.GetTileScaleInMeters((float)lat, Zoom);
                     tile.TileCoordinate = new Vector2(i, j);
-                    tile.Rect = Conversions.TileBounds(tile.TileCoordinate, zoom);
+                    tile.Rect = Conversions.TileBounds(tile.TileCoordinate, zoom);  // Mercator Rect
                     tile.transform.position = new Vector3(tile.Rect.center.x - ReferenceTileRect.center.x, 0, tile.Rect.center.y - ReferenceTileRect.center.y);
                     tile.transform.SetParent(_root.transform, false);
+
+                    #region custom
+                    tile.CenterMercatorString = tile.Rect.center.ToString();
+                    tile.CenterLatLon = Conversions.MetersToLatLon(tile.Rect.center);  // 类型是MapBox.geocoordinate
+                    tile.CenterLatLonString = Conversions.MetersToLatLon(tile.Rect.center).ToString();
+                    tile.tileX = tile.TileCoordinate.x;
+                    tile.tileY = tile.TileCoordinate.y;
+                    tile.MercatorRectPos = tile.Rect.position.ToString();
+                    tile.startLatLonPos = Conversions.MetersToLatLon(tile.Rect.position).ToString();
+                    tile.endLatLonPos = Conversions.MetersToLatLon(tile.Rect.position + new Vector2(tile.Rect.width, tile.Rect.height)).ToString();
+                    #endregion
+
                     MapVisualization.ShowTile(tile);
                 }
             }
@@ -121,6 +133,10 @@ namespace Mapbox.MeshGeneration
                 tile.transform.localPosition = new Vector3(tile.Rect.center.x - ReferenceTileRect.center.x,
                                                            0,
                                                            tile.Rect.center.y - ReferenceTileRect.center.y);
+                #region custom
+                tile.CenterLatLon = Conversions.MetersToLatLon(tile.Rect.center);  // 类型是MapBox.geocoordinate
+                tile.CenterLatLonString = Conversions.MetersToLatLon(tile.Rect.center).ToString();
+                #endregion
                 MapVisualization.ShowTile(tile);
             }
         }

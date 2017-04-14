@@ -5,7 +5,7 @@ public class classGroupController : MonoBehaviour {
     private const int BASE_NUM = 8;
 
     public float maxBaseData;
-    private float[] classData = new float[8];
+    private float[] classData = new float[BASE_NUM];
     public Transform[] baseTransform = new Transform[BASE_NUM];
 
 	// Use this for initialization
@@ -19,6 +19,7 @@ public class classGroupController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Test();
+        Test2();
 	}
 
     public void SetClassData(float[] data_in)
@@ -43,8 +44,14 @@ public class classGroupController : MonoBehaviour {
             // 在每一个base下创建cylinder
             baseTransform[i].GetComponent<baseDataInfo>().InitData(classData[i]);
         }
+    }
 
-
+    public void HideCylinder()
+    {
+        for(int i = 0; i < BASE_NUM; i++)
+        {
+            baseTransform[i].GetComponent<baseDataInfo>().HideCylinder();
+        }
     }
 
     void Test()
@@ -53,9 +60,17 @@ public class classGroupController : MonoBehaviour {
         {
             Debug.Log("press a");
             float[] temp = { 10, 9, 10, 8, 14, 13, 10, 8 };
-            Debug.Log(temp[0]);
+            //Debug.Log(temp[0]);
             SetClassData(temp);
             StartElevation();
+        }
+    }
+    void Test2()
+    {
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            Debug.Log("press b");
+            HideCylinder();
         }
     }
 }
