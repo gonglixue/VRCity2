@@ -25,6 +25,8 @@ public class VRCameraRigOperation : MonoBehaviour {
     public GameObject MapController;
     #endregion
 
+    public bool updateQuadTree = true;
+
     void Awake()
     {
         InitReference();
@@ -41,7 +43,8 @@ public class VRCameraRigOperation : MonoBehaviour {
 	    if(activeMovement)
         {
             transform.position += movement;
-            StartCoroutine(UpdateCoroutine());  // 更新四叉树
+            if(updateQuadTree)
+                StartCoroutine(UpdateCoroutine());  // 更新四叉树
         }
 	}
 

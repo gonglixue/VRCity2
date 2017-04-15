@@ -68,9 +68,29 @@ public class BuildingIntro : MonoBehaviour {
     {
         float z;
         Vector3 highestPoint;
+
         Mesh colliderMesh = GetComponent<MeshCollider>().sharedMesh;
         Vector3[] vertices = colliderMesh.vertices;
 
+        //在google earth场景下
+        if(this.transform.tag == "ge")
+        {
+            Debug.Log("google earth scene;");
+            z = vertices[0].y;
+            highestPoint = vertices[0];
+
+            for(int i = 1; i < vertices.Length; i++)
+            {
+                if(vertices[i].y > z)
+                {
+                    z = vertices[i].y;
+                    highestPoint = vertices[i];
+                }
+            }
+            return highestPoint;
+        }
+
+        //在kml场景下，模型坐标系不一样
         z = vertices[0].z;
         highestPoint = vertices[0];
 
