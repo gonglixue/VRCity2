@@ -46,7 +46,7 @@ public class PadScreenController : MonoBehaviour {
     {
         string context = "You put a pin at\r\n" + 
             location
-            + "Press the button under the text\r\n"
+            + "\r\nPress the button under the text\r\n"
             + "And enter the city you choose.";
         TitleText.SetActive(false);
         ContentText.SetActive(false);

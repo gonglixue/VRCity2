@@ -7,6 +7,7 @@
         [SerializeField]
         private float _startTouchAngle;
         public GameObject worldRoot = null;
+        public bool grip = false;
 
         private void Start()
         {
@@ -113,11 +114,13 @@
         private void DoGripPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "GRIP", "pressed down", e);
+            grip = true;
         }
 
         private void DoGripReleased(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "GRIP", "released", e);
+            grip = false;
         }
 
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)
@@ -150,7 +153,7 @@
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "axis changed", e);
             //TODO 控制沙盘旋转
             float rotateAngle = e.touchpadAngle - _startTouchAngle;
-            worldRoot.transform.Rotate(new Vector3(0, rotateAngle/2.0f, 0), Space.Self);
+            worldRoot.transform.Rotate(new Vector3(0, rotateAngle, 0), Space.Self);
         }
 
         private void DoControllerEnabled(object sender, ControllerInteractionEventArgs e)
