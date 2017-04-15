@@ -13,8 +13,13 @@ public class DirectionsHelper : MonoBehaviour
 	void Start ()
 	{
 		// draw directions path at start
-		Query ();
+		// Query ();
 	}
+
+    void Update()
+    {
+        Test();
+    }
 
     public void Query()
     {
@@ -25,6 +30,15 @@ public class DirectionsHelper : MonoBehaviour
         }
 
         Directions.Query(waypoints);
+    }
+
+    void Test()
+    {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Debug.Log("space key down");
+            Query();
+        }
     }
 
 

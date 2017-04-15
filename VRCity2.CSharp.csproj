@@ -163,6 +163,7 @@
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Data\MeshData.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Data\UnityTile.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Data\VectorFeatureUnity.cs" />
+    <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\DriveMapController.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Enums\TilePropertyState.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\DirectionsFactory.cs" />
     <Compile Include="Assets\Mapbox\Scripts\MeshGeneration\Factories\Factory.cs" />
@@ -217,6 +218,8 @@
     <Compile Include="Assets\Scripts\NetworkService.cs" />
     <Compile Include="Assets\Scripts\PadScreenController.cs" />
     <Compile Include="Assets\Scripts\PinController.cs" />
+    <Compile Include="Assets\Scripts\SandBox\SanxboxBillboardController.cs" />
+    <Compile Include="Assets\Scripts\SandBox\VR_SandboxControllerListener.cs" />
     <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\TileIntro.cs" />
     <Compile Include="Assets\Scripts\TransformDae.cs" />

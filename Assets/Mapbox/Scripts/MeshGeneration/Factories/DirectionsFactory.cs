@@ -38,7 +38,7 @@ namespace Mapbox.MeshGeneration.Factories
         void HandleDirectionsResponse(DirectionsResponse response)
         {
             var meshData = new MeshData();
-
+            Debug.Log(response.Routes[0]);
             foreach (var leg in response.Routes[0].Legs)
             {
                 foreach (var step in leg.Steps)
