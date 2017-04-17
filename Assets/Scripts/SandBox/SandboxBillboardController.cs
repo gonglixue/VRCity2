@@ -17,7 +17,9 @@ public class SandboxBillboardController : MonoBehaviour {
         Vector3 forward = eye.position - this.transform.position;
         forward = new Vector3(forward.x, 0, forward.z);
         Quaternion newQ = Quaternion.LookRotation(-forward, Vector3.up);
-        this.transform.localRotation = newQ;
+        Vector3 parentRotEuler = this.transform.parent.localEulerAngles;
+        Quaternion reverseParentRot = Quaternion.AngleAxis(-parentRotEuler.y, Vector3.up);
+        this.transform.localRotation = reverseParentRot * newQ;
 	}
 
     // 射线选择该billboard，

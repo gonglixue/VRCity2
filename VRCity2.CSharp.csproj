@@ -220,8 +220,12 @@
     <Compile Include="Assets\Scripts\PinController.cs" />
     <Compile Include="Assets\Scripts\SandBox\AllBillboardManager.cs" />
     <Compile Include="Assets\Scripts\SandBox\SandboxBillboardController.cs" />
+    <Compile Include="Assets\Scripts\SandBox\Sandbox_CubeMenuController.cs" />
+    <Compile Include="Assets\Scripts\SandBox\Sandbox_CubeMenuItemController.cs" />
+    <Compile Include="Assets\Scripts\SandBox\Sandbox_RightCtr.cs" />
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxControllerListener.cs" />
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxPointerListener.cs" />
+    <Compile Include="Assets\Scripts\SandBox\VR_SandboxRctrListener.cs" />
     <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\TileIntro.cs" />
     <Compile Include="Assets\Scripts\TransformDae.cs" />
