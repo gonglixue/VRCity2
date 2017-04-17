@@ -17,8 +17,19 @@ public class WeatherController : MonoBehaviour {
 
     public GameObject skyBox;
 
-	// Use this for initialization
-	void Start () {
+    #region snowMat
+    public Material f1m;
+    public Material f2m;
+    public Material f3m;
+    public Material f4m;
+    public Material f5m;
+    public Material f6m;
+
+    public GameObject[] matHostGameObject;
+    #endregion
+
+    // Use this for initialization
+    void Start () {
         ChooseWeather();
 	}
 	
@@ -42,6 +53,7 @@ public class WeatherController : MonoBehaviour {
     }
     void InitSunnySystem()
     {
+        CancelSnowMat();
         SkyBoxConfig sunnySkyConf = new SkyBoxConfig(new Color(20f/255, 124f/255, 197f/255, 1), new Color(181f/255, 216f/255, 246f/255, 1), new Color(255f/255, 255f/255, 255f/255), 0.3f, 0.0f, 1.0f);
         SetSkyBoxAttrib(sunnySkyConf);
         //sunnySystem.SetActive(true);
@@ -75,6 +87,24 @@ public class WeatherController : MonoBehaviour {
         m.SetFloat("_Emptiness", config.emptiness);
         m.SetFloat("_Sharpness", config.sharpness);
 
+    }
+
+    void CancelSnowMat()
+    {
+        foreach(GameObject tileObj in matHostGameObject)
+        {
+            Material snowMat = tileObj.GetComponent<MeshRenderer>().sharedMaterial;
+            snowMat.SetFloat("_Snow", 0);
+        }
+    }
+
+    void ActiveSnowMat()
+    {
+        foreach(GameObject tileObj in matHostGameObject)
+        {
+            Material snowMat = tileObj.GetComponent<MeshRenderer>().sharedMaterial;
+            snowMat.SetFloat("_Snow", 0.003f);
+        }
     }
 }
 

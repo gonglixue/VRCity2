@@ -7,6 +7,7 @@
         [SerializeField]
         private float _startTouchAngle;
         public GameObject worldRoot = null;
+        public GameObject customWorldRoot;
         public bool grip = false;
 
         private void Start()
@@ -154,6 +155,7 @@
             //TODO 控制沙盘旋转
             float rotateAngle = e.touchpadAngle - _startTouchAngle;
             worldRoot.transform.Rotate(new Vector3(0, rotateAngle, 0), Space.Self);
+            customWorldRoot.transform.Rotate(new Vector3(0, rotateAngle, 0), Space.Self);
         }
 
         private void DoControllerEnabled(object sender, ControllerInteractionEventArgs e)
