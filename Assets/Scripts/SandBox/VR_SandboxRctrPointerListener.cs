@@ -46,6 +46,9 @@
                         status++;
                         readyToPlace = null;
                         Debug.Log("确认放置");
+                        // 更改Tooltips
+                        VRTK.VRTK_ControllerTooltips RctrTooltipsController = this.transform.Find("ControllerTooltips").GetComponent<VRTK_ControllerTooltips>();
+                        RctrTooltipsController.touchpadText = "Place Target";
                     }
                 }
                 if(status == 1)
@@ -83,6 +86,8 @@
         void AfterPlaceEndPoint()
         {
             this.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().LeaveNaviMode();
+            // 隐藏 tool tip
+            this.transform.Find("ControllerTooltips").gameObject.SetActive(false);
         }
 
         // 判断是否是可放置路标的合法点

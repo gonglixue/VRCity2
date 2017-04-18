@@ -13,6 +13,7 @@
         private Vector2 _touchPadAxis;
         private float _touchStartX;
 
+        public GameObject ControllerTooltipsObj;
 
         private void Start()
         {
@@ -206,6 +207,16 @@
             this.GetComponent<VRTK.VRTK_SimplePointer>().enabled = true;
             this.GetComponent<VRTK.Examples.VR_SandboxRctrPointerListener>().enabled = true;
             HideCubeMenu();  // 进入路径选择模式，隐藏菜单
+
+            // 显示right Controller Tool Tip
+            // trigger 激发射线
+            // touchpad 放置
+            ControllerTooltipsObj.SetActive(true);
+            VRTK.VRTK_ControllerTooltips RctrTooltipsController = ControllerTooltipsObj.GetComponent<VRTK.VRTK_ControllerTooltips>();
+            RctrTooltipsController.triggerText = "Active Pointer";
+            RctrTooltipsController.touchpadText = "Place Start Point";
+
+
         }
 
         public void LeaveNaviMode()
