@@ -7,9 +7,14 @@ public class SandboxBillboardController : MonoBehaviour {
     public Transform border;
     public Transform board;
     private bool _isFocus = false;
+    private Vector3 _originScale;
+
+    private GoTween _biggerTween = null;
+    private GoTween _smallerTween = null;
+
 	// Use this for initialization
 	void Start () {
-	    
+        _originScale = board.localScale;
 	}
 	
 	// Update is called once per frame
@@ -28,31 +33,40 @@ public class SandboxBillboardController : MonoBehaviour {
         if(!_isFocus)
         {
             _isFocus = true;
+            if (_biggerTween != null)  //已经正在变大
+                return;
+
             border.gameObject.SetActive(false);
             GoTweenConfig config = new GoTweenConfig().
-            scale(board.localScale * 4)
+            scale( _originScale * 4)
             .setEaseType(GoEaseType.CubicInOut);
 
             config.onComplete(delegate (AbstractGoTween obj)
             {             
                 HideOthers();
+                _biggerTween = null;
             });
-            Go.to(board, 0.8f, config);
+            _biggerTween = Go.to(board, 0.8f, config);
         }
         else
         {
             // cancel focus
             _isFocus = false;
+
+            if (_smallerTween != null)
+                return;
             GoTweenConfig config = new GoTweenConfig()
-                .scale(border.localScale / 4.0f)
+                .scale(_originScale)
                 .setEaseType(GoEaseType.CubicInOut);
 
             config.onComplete(delegate (AbstractGoTween obj)
             {
                 // 其他复原
-                
+                ShowOthers();
+                _smallerTween = null;
             });
-            Go.to(board, 0.8f, config);
+
+            _smallerTween = Go.to(board, 0.8f, config);
         }
         
     }

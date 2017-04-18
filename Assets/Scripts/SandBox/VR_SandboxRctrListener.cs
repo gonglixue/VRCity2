@@ -7,6 +7,9 @@
         public GameObject cubeMenu;
         public float cubeMenuPosFactor = 0.4f;
 
+        public bool allowCubeMenu = true;
+        public bool touchPadPressDown = false;
+
         private void Start()
         {
             if (GetComponent<VRTK_ControllerEvents>() == null)
@@ -82,13 +85,13 @@
         private void DoTriggerHairlineEnd(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TRIGGER", "hairline end", e);
-            
         }
 
         private void DoTriggerClicked(object sender, ControllerInteractionEventArgs e)
         {
             DebugLogger(e.controllerIndex, "TRIGGER", "clicked", e);
-            ShowCubeMenu();
+            if(allowCubeMenu)
+                ShowCubeMenu();
         }
 
         private void DoTriggerUnclicked(object sender, ControllerInteractionEventArgs e)
@@ -125,11 +128,13 @@
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
+            touchPadPressDown = true;
         }
 
         private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "released", e);
+            touchPadPressDown = false;
         }
 
         private void DoTouchpadTouchStart(object sender, ControllerInteractionEventArgs e)
@@ -166,6 +171,21 @@
         void HideCubeMenu()
         {
             cubeMenu.SetActive(false);
+        }
+
+        public void EnterNaviMode()
+        {
+            allowCubeMenu = false;
+            this.GetComponent<VRTK.VRTK_SimplePointer>().enabled = true;
+            this.GetComponent<VRTK.Examples.VR_SandboxRctrPointerListener>().enabled = true;
+            HideCubeMenu();  // 进入路径选择模式，隐藏菜单
+        }
+
+        public void LeaveNaviMode()
+        {
+            allowCubeMenu = true;
+            this.GetComponent<VRTK.VRTK_SimplePointer>().enabled = false;
+            this.GetComponent<VRTK.Examples.VR_SandboxRctrPointerListener>().enabled = false;
         }
     }
 }

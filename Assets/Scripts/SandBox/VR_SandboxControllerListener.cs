@@ -127,6 +127,13 @@
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
+            // trick
+            GoTweenConfig rotConfig = new GoTweenConfig()
+                .localEulerAngles(Vector3.up * 30, true)
+                .setEaseType(GoEaseType.Linear);
+            Go.to(worldRoot.transform, 0.8f, rotConfig);
+            Go.to(customWorldRoot.transform, 0.8f, rotConfig);
+
         }
 
         private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
@@ -153,21 +160,21 @@
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "axis changed", e);
             //TODO 控制沙盘旋转
-            float rotateAngle;
-            if(_startTouchAngle > 0.1f)
-            {
-                rotateAngle = e.touchpadAngle - _startTouchAngle;
-                worldRoot.transform.Rotate(new Vector3(0, rotateAngle, 0), Space.Self); // 旋转了rotateAngle
-                customWorldRoot.transform.Rotate(new Vector3(0, rotateAngle, 0), Space.Self);
+            //float rotateAngle;
+            //if(_startTouchAngle > 0.1f)
+            //{
+            //    rotateAngle = e.touchpadAngle - _startTouchAngle;
+            //    worldRoot.transform.Rotate(new Vector3(0, rotateAngle, 0), Space.Self); // 旋转了rotateAngle
+            //    customWorldRoot.transform.Rotate(new Vector3(0, rotateAngle, 0), Space.Self);
 
-                /*
-                GoTweenConfig rotConfig = new GoTweenConfig()
-                    .localEulerAngles(worldRoot.transform.localEulerAngles + Vector3.up * rotateAngle,true)
-                    .setEaseType(GoEaseType.Linear);
-                Go.to(worldRoot.transform, 0.3f, rotConfig);
-                Go.to(customWorldRoot.transform, 0.3f, rotConfig);
-                */
-            }
+            //    /*
+            //    GoTweenConfig rotConfig = new GoTweenConfig()
+            //        .localEulerAngles(worldRoot.transform.localEulerAngles + Vector3.up * rotateAngle,true)
+            //        .setEaseType(GoEaseType.Linear);
+            //    Go.to(worldRoot.transform, 0.3f, rotConfig);
+            //    Go.to(customWorldRoot.transform, 0.3f, rotConfig);
+            //    */
+            //}
           
         }
 

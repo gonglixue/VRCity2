@@ -22,6 +22,8 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
 
     private bool bHover = false;
 
+    public GameObject RightController;
+
 	// Use this for initialization
 	void Start () {
         _originSprite = this.GetComponent<SpriteRenderer>().sprite;
@@ -94,7 +96,24 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
         pendingTransform.localScale = _originPendingScale;
         pendingBarBack.SetActive(false);
 
-        // TODO 选择菜单项后
+        // TODO 选择菜单项后, 执行相应的处理程序
+        switch(this.menuItemName)
+        {
+            case ItemName.Home:
+                break;
+            case ItemName.Return:
+                // TODO 放置导航标志
+                RightController.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().EnterNaviMode();
+                break;
+            case ItemName.Refresh:
+                break;
+            case ItemName.Bulb:
+                // TODO 
+                // 显示VR帮助菜单
+
+                break;
+        }
+
     }
 
     void Test()

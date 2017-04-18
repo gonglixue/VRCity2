@@ -36,6 +36,7 @@ namespace Mapbox.MeshGeneration
         public void Start()
         {
             Execute();
+            
         }
 
         public void Update()
@@ -50,6 +51,7 @@ namespace Mapbox.MeshGeneration
                     _snapYToZero = false;
                 }
             }
+            _root.transform.position = new Vector3(0, 0.199f, 0);
         }
 
         public void Execute()
@@ -93,6 +95,8 @@ namespace Mapbox.MeshGeneration
                     MapVisualization.ShowTile(tile);
                 }
             }
+
+            
         }
 
         public void Execute(double lat, double lng, int zoom, Vector2 frame)

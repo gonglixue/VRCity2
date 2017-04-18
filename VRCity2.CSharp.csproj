@@ -226,6 +226,7 @@
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxControllerListener.cs" />
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxPointerListener.cs" />
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxRctrListener.cs" />
+    <Compile Include="Assets\Scripts\SandBox\VR_SandboxRctrPointerListener.cs" />
     <Compile Include="Assets\Scripts\TerrainController.cs" />
     <Compile Include="Assets\Scripts\TileIntro.cs" />
     <Compile Include="Assets\Scripts\TransformDae.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Assets\Scripts\VRControl\VREarth_PointerListener.cs" />
     <Compile Include="Assets\Scripts\VRControl\VRPad_ControllerEventListener.cs" />
     <Compile Include="Assets\Scripts\WeatherController.cs" />
+    <Compile Include="Assets\Scripts\test\configTest.cs" />
     <Compile Include="Assets\Scripts\test\frameTest.cs" />
     <Compile Include="Assets\Scripts\test\tipShowTest.cs" />
     <Compile Include="Assets\Scripts\test\wwwTest.cs" />
