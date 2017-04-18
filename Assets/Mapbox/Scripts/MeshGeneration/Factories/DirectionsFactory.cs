@@ -78,6 +78,7 @@ namespace Mapbox.MeshGeneration.Factories
 
             mesh.RecalculateNormals();
             go.AddComponent<MeshRenderer>().material = _material;
+            Debug.Log("direction waypoint triangle count: " + mesh.vertices.Length);
             return go;
         }
     }

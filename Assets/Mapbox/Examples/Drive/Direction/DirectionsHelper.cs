@@ -13,7 +13,7 @@ public class DirectionsHelper : MonoBehaviour
 	void Start ()
 	{
 		// draw directions path at start
-		// Query ();
+		Query ();
 	}
 
     void Update()
@@ -26,7 +26,8 @@ public class DirectionsHelper : MonoBehaviour
         var waypoints = new List<GeoCoordinate>();
         foreach (var wp in Waypoints)
         {
-            waypoints.Add(wp.transform.GetGeoPosition());
+            waypoints.Add(wp.transform.GetDriveGeoPosition());
+            Debug.Log("drive waypoints:" + wp.transform.GetDriveGeoPosition());
         }
 
         Directions.Query(waypoints);

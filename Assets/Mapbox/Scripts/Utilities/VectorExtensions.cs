@@ -43,12 +43,22 @@ namespace Mapbox.Scripts.Utilities
         public static GeoCoordinate GetGeoPosition(this Transform t)
         {
             // HACK: prevent NaN in case of temporal coupling.
+            
             if (MapController.WorldScaleFactor <= 0)
             {
                 return new GeoCoordinate();
             }
 
             var pos = MapController.ReferenceTileRect.center.ToVector3xz() + (t.position / MapController.WorldScaleFactor);
+            return Conversions.MetersToLatLon(pos.ToVector2xz());
+        }
+
+        public static GeoCoordinate GetDriveGeoPosition(this Transform t)
+        {
+            if (DriveMapController.WorldScaleFactor <= 0)
+                return new GeoCoordinate();
+
+            var pos = DriveMapController.ReferenceTileRect.center.ToVector3xz() + (t.position / DriveMapController.WorldScaleFactor);
             return Conversions.MetersToLatLon(pos.ToVector2xz());
         }
 

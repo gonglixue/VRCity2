@@ -15,6 +15,8 @@ public class NetworkService{
     private const string loadTextureUrl = "http://127.0.0.1:8888/texture";
     private const string downloadFilePath = @"D:/temp/";
 
+    
+
     private bool IsResponseValid(WWW www)
     {
         if(www.error != null)
