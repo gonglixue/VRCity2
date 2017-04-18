@@ -61,6 +61,8 @@
                         status=0;
                         readyToPlace = null;
 
+                        // TODO显示 路径
+
                         Debug.Log("确认放置");
                         AfterPlaceEndPoint();
                     }

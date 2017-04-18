@@ -129,7 +129,7 @@
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
             // trick
             GoTweenConfig rotConfig = new GoTweenConfig()
-                .localEulerAngles(Vector3.up * 30, true)
+                .localEulerAngles(Vector3.up * 30 * e.touchpadAxis.x, true)
                 .setEaseType(GoEaseType.Linear);
             Go.to(worldRoot.transform, 0.8f, rotConfig);
             Go.to(customWorldRoot.transform, 0.8f, rotConfig);
