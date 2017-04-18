@@ -8,7 +8,11 @@
         public float cubeMenuPosFactor = 0.4f;
 
         public bool allowCubeMenu = true;
-        public bool touchPadPressDown = false;
+        public bool touchPadPressDown = false; // 用于放置Navi标记
+
+        private Vector2 _touchPadAxis;
+        private float _touchStartX;
+
 
         private void Start()
         {
@@ -59,12 +63,12 @@
 
         private void DoTriggerPressed(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "pressed", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "pressed", e);
         }
 
         private void DoTriggerReleased(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "released", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "released", e);
         }
 
         private void DoTriggerTouchStart(object sender, ControllerInteractionEventArgs e)
@@ -89,14 +93,14 @@
 
         private void DoTriggerClicked(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "clicked", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "clicked", e);
             if(allowCubeMenu)
                 ShowCubeMenu();
         }
 
         private void DoTriggerUnclicked(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TRIGGER", "unclicked", e);
+            //DebugLogger(e.controllerIndex, "TRIGGER", "unclicked", e);
             HideCubeMenu();
         }
 
@@ -128,7 +132,16 @@
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
-            touchPadPressDown = true;
+            touchPadPressDown = true; 
+
+            if(e.touchpadAxis.x < -0.3f)
+            {
+                cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeLeft();
+            }
+            else if(e.touchpadAxis.x > 0.3f)
+            {
+                cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeRight();
+            }
         }
 
         private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
@@ -139,12 +152,26 @@
 
         private void DoTouchpadTouchStart(object sender, ControllerInteractionEventArgs e)
         {
-            //DebugLogger(e.controllerIndex, "TOUCHPAD", "touched", e);
+            DebugLogger(e.controllerIndex, "TOUCHPAD", "touched", e);
+            _touchStartX = e.touchpadAxis.x;
         }
 
         private void DoTouchpadTouchEnd(object sender, ControllerInteractionEventArgs e)
         {
-            //DebugLogger(e.controllerIndex, "TOUCHPAD", "untouched", e);
+            DebugLogger(e.controllerIndex, "TOUCHPAD", "untouched", e);
+            float touchOffset = e.touchpadAxis.x - _touchStartX;
+            if(touchOffset < -1.0f)
+            {
+                Debug.Log("controller swipe left");
+                // swipe left
+                cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeLeft();  // 滑动cube菜单
+            }
+            else if(touchOffset > 1.0f)
+            {
+                Debug.Log("controller swipe right");
+                // swipe right
+                cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeRight(); // 滑动cube菜单
+            }
         }
 
         private void DoTouchpadAxisChanged(object sender, ControllerInteractionEventArgs e)
