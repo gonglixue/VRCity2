@@ -23,6 +23,7 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
     private bool bHover = false;
 
     public GameObject RightController;
+    public GameObject CameraRig;
 
 	// Use this for initialization
 	void Start () {
@@ -100,10 +101,15 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
         switch(this.menuItemName)
         {
             case ItemName.Home:
+                // TODO: 控制VRMenu的渐变
+                // 。。。
+                CameraRig.transform.position = new Vector3(36.53f, 0, -0.15f);
                 break;
             case ItemName.Return:
-                // TODO 放置导航标志
+                // 放置导航标志模式
                 RightController.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().EnterNaviMode();
+                // sprite复原
+                this.transform.GetComponent<SpriteRenderer>().sprite = _originSprite;
                 break;
             case ItemName.Refresh:
                 break;

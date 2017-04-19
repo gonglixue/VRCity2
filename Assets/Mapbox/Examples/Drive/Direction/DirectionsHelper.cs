@@ -13,7 +13,7 @@ public class DirectionsHelper : MonoBehaviour
 	void Start ()
 	{
 		// draw directions path at start
-		Query ();
+		// Query ();
 	}
 
     void Update()

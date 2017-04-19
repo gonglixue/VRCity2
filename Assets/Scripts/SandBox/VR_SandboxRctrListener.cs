@@ -15,6 +15,14 @@
 
         public GameObject ControllerTooltipsObj;
 
+        #region pendingBar
+        private GoTween _pendingTween = null;
+        private GoTweenConfig _pendingTweenConfig;
+        private Vector3 _originPendingScale;
+        public Transform pendingTransform;
+        public GameObject pendingBarBack;
+        #endregion
+
         private void Start()
         {
             if (GetComponent<VRTK_ControllerEvents>() == null)
@@ -54,6 +62,8 @@
 
             GetComponent<VRTK_ControllerEvents>().ControllerEnabled += new ControllerInteractionEventHandler(DoControllerEnabled);
             GetComponent<VRTK_ControllerEvents>().ControllerDisabled += new ControllerInteractionEventHandler(DoControllerDisabled);
+
+            
         }
 
         private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)
