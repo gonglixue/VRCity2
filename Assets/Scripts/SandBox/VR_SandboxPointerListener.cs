@@ -42,6 +42,12 @@
 
                 lastFocusBillboard = e.target;
             }
+
+            if(e.target.tag == "Menu")
+            {
+                e.target.GetComponent<Sandbox_VRMenuItem>().OnHover();
+
+            }
         }
 
         private void DoPointerOut(object sender, DestinationMarkerEventArgs e)
@@ -50,6 +56,10 @@
             if (e.target.GetComponent<SandboxBillboardController>())
             {
                 e.target.GetComponent<SandboxBillboardController>().Leave();
+            }
+            if(e.target.tag == "Menu")
+            {
+                e.target.GetComponent<Sandbox_VRMenuItem>().OnLeave();
             }
         }
 

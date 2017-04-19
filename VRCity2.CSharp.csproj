@@ -223,6 +223,7 @@
     <Compile Include="Assets\Scripts\SandBox\Sandbox_CubeMenuController.cs" />
     <Compile Include="Assets\Scripts\SandBox\Sandbox_CubeMenuItemController.cs" />
     <Compile Include="Assets\Scripts\SandBox\Sandbox_RightCtr.cs" />
+    <Compile Include="Assets\Scripts\SandBox\Sandbox_VRMenuItem.cs" />
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxControllerListener.cs" />
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxPointerListener.cs" />
     <Compile Include="Assets\Scripts\SandBox\VR_SandboxRctrListener.cs" />

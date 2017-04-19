@@ -63,7 +63,7 @@
             GetComponent<VRTK_ControllerEvents>().ControllerEnabled += new ControllerInteractionEventHandler(DoControllerEnabled);
             GetComponent<VRTK_ControllerEvents>().ControllerDisabled += new ControllerInteractionEventHandler(DoControllerDisabled);
 
-            
+
         }
 
         private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)

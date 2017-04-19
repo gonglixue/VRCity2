@@ -100,7 +100,7 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
         // TODO 选择菜单项后, 执行相应的处理程序
         switch(this.menuItemName)
         {
-            case ItemName.Home:
+            case ItemName.Home: // 主菜单
                 // TODO: 控制VRMenu的渐变
                 // 。。。
                 CameraRig.transform.position = new Vector3(36.53f, 0, -0.15f);

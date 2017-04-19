@@ -14,6 +14,7 @@
         private Transform _endTransform;
 
         public GameObject DirectionHelperObj;
+        public GameObject customRoot;
 
         private void Start()
         {
@@ -45,6 +46,8 @@
                     if (readyToPlace == null)
                     {
                         readyToPlace = Instantiate(startPrefab, e.destinationPosition, Quaternion.Euler(90, 0, 0)) as GameObject;
+                        // 放在customRoot下
+                        readyToPlace.transform.parent = customRoot.transform;
                         _startTransform = readyToPlace.transform;
                     }
                     else
@@ -70,6 +73,8 @@
                     if (readyToPlace == null)
                     {
                         readyToPlace = Instantiate(endPrefab, e.destinationPosition, Quaternion.Euler(90, 0, 0)) as GameObject;
+                        // 放在customRoot下
+                        readyToPlace.transform.parent = customRoot.transform;
                         _endTransform = readyToPlace.transform;
                     }
                     else
@@ -128,7 +133,7 @@
 
             DirectionHelperObj.GetComponent<DirectionsHelper>().Waypoints = temp;
 
-            DirectionHelperObj.GetComponent<DirectionsHelper>().Query();
+            DirectionHelperObj.GetComponent<DirectionsHelper>().Query();  // 请求的路径放在customRoot下
             Debug.Log("controller请求路径");
         }
     }
