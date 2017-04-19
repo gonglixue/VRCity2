@@ -1,6 +1,7 @@
 ﻿namespace VRTK.Examples
 {
     using UnityEngine;
+    using System.Collections.Generic;
 
     public class VR_SandboxRctrPointerListener : MonoBehaviour
     {
@@ -8,6 +9,11 @@
         public GameObject startPrefab;
         public GameObject endPrefab;
         public GameObject readyToPlace = null;
+
+        private Transform _startTransform;  //引用transfrom，用于路径请求
+        private Transform _endTransform;
+
+        public GameObject DirectionHelperObj;
 
         private void Start()
         {
@@ -37,24 +43,35 @@
                 if(status == 0) // 放置起点
                 {
                     if (readyToPlace == null)
-                        readyToPlace = Instantiate(startPrefab, e.destinationPosition, Quaternion.Euler(90,0,0)) as GameObject;
+                    {
+                        readyToPlace = Instantiate(startPrefab, e.destinationPosition, Quaternion.Euler(90, 0, 0)) as GameObject;
+                        _startTransform = readyToPlace.transform;
+                    }
                     else
                         readyToPlace.transform.position = e.destinationPosition;
 
                     if(this.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().touchPadPressDown)
                     {
-                        status++;
+                        //status++;
+                        status = -1;
+                        // 1s 过后设置status = 1;
+                        Invoke("DelayStatusTo1", 1.0f);
                         readyToPlace = null;
-                        Debug.Log("确认放置");
+                        Debug.Log("确认放置1");
                         // 更改Tooltips
-                        VRTK.VRTK_ControllerTooltips RctrTooltipsController = this.transform.Find("ControllerTooltips").GetComponent<VRTK_ControllerTooltips>();
-                        RctrTooltipsController.touchpadText = "Place Target";
+                        //VRTK.VRTK_ControllerTooltips RctrTooltipsController = this.transform.Find("ControllerTooltips").GetComponent<VRTK_ControllerTooltips>();
+                        //RctrTooltipsController.touchpadText = "Place Target";
+                        this.transform.Find("ControllerToolTtips").Find("TouchpadTooltip").GetComponent<VRTK_ObjectTooltip>().displayText = "Place Target";
+
                     }
                 }
                 if(status == 1)
                 {
                     if (readyToPlace == null)
+                    {
                         readyToPlace = Instantiate(endPrefab, e.destinationPosition, Quaternion.Euler(90, 0, 0)) as GameObject;
+                        _endTransform = readyToPlace.transform;
+                    }
                     else
                         readyToPlace.transform.position = e.destinationPosition;
 
@@ -65,8 +82,10 @@
                         readyToPlace = null;
 
                         // TODO显示 路径
+                        // 请求:
+                        QueryDirection(_startTransform, _endTransform);
 
-                        Debug.Log("确认放置");
+                        Debug.Log("确认放置2");
                         AfterPlaceEndPoint();
                     }
                 }
@@ -75,12 +94,12 @@
 
         private void DoPointerOut(object sender, DestinationMarkerEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
+            //DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
         }
 
         private void DoPointerDestinationSet(object sender, DestinationMarkerEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "POINTER DESTINATION", e.target, e.distance, e.destinationPosition);
+            //DebugLogger(e.controllerIndex, "POINTER DESTINATION", e.target, e.distance, e.destinationPosition);
         }
 
         void AfterPlaceEndPoint()
@@ -94,6 +113,23 @@
         bool TrafficTargetIsValid(Transform pointerTarget)
         {
             return pointerTarget.name == "NaviPlane";
+        }
+
+        void DelayStatusTo1()
+        {
+            status = 1;
+        }
+
+        void QueryDirection(Transform start, Transform end)
+        {
+            List<Transform> temp = new List<Transform>();
+            temp.Add(start);
+            temp.Add(end);
+
+            DirectionHelperObj.GetComponent<DirectionsHelper>().Waypoints = temp;
+
+            DirectionHelperObj.GetComponent<DirectionsHelper>().Query();
+            Debug.Log("controller请求路径");
         }
     }
 }

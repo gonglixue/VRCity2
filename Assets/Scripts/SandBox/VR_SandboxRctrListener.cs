@@ -135,14 +135,18 @@
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
             touchPadPressDown = true; 
 
-            if(e.touchpadAxis.x < -0.3f)
+            if(allowCubeMenu)
             {
-                cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeLeft();
+                if (e.touchpadAxis.x < -0.3f)
+                {
+                    cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeLeft();
+                }
+                else if (e.touchpadAxis.x > 0.3f)
+                {
+                    cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeRight();
+                }
             }
-            else if(e.touchpadAxis.x > 0.3f)
-            {
-                cubeMenu.GetComponent<Sandbox_CubeMenuController>().SwipeRight();
-            }
+            
         }
 
         private void DoTouchpadReleased(object sender, ControllerInteractionEventArgs e)
@@ -153,13 +157,13 @@
 
         private void DoTouchpadTouchStart(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "touched", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "touched", e);
             _touchStartX = e.touchpadAxis.x;
         }
 
         private void DoTouchpadTouchEnd(object sender, ControllerInteractionEventArgs e)
         {
-            DebugLogger(e.controllerIndex, "TOUCHPAD", "untouched", e);
+            //DebugLogger(e.controllerIndex, "TOUCHPAD", "untouched", e);
             float touchOffset = e.touchpadAxis.x - _touchStartX;
             if(touchOffset < -1.0f)
             {
@@ -216,6 +220,7 @@
             RctrTooltipsController.triggerText = "Active Pointer";
             RctrTooltipsController.touchpadText = "Place Start Point";
 
+            this.GetComponent<BoxCollider>().enabled = false;
 
         }
 
@@ -224,6 +229,7 @@
             allowCubeMenu = true;
             this.GetComponent<VRTK.VRTK_SimplePointer>().enabled = false;
             this.GetComponent<VRTK.Examples.VR_SandboxRctrPointerListener>().enabled = false;
+            this.GetComponent<BoxCollider>().enabled = true;
         }
     }
 }

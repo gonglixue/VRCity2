@@ -45,7 +45,7 @@ namespace Mapbox.MeshGeneration.Factories
                 {
                     var pos = Conversions.LatLonToMeters(step.Maneuver.Location.Latitude, step.Maneuver.Location.Longitude) - DriveMapController.ReferenceTileRect.center;
                     meshData.Vertices.Add(pos.ToVector3xz() * DriveMapController.WorldScaleFactor);
-                    Debug.Log(pos.ToVector3xz());
+                    //Debug.Log(pos.ToVector3xz());
                     
                 }
             }
