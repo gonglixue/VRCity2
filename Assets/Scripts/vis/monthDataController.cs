@@ -9,10 +9,11 @@ public class monthDataController : MonoBehaviour {
     public Transform screen;
 
     public Transform[] monthTransformList;
+
+    private bool _isFullDrop = false;
 	// Use this for initialization
 	void Start () {
-        DropDownScreen();
-        //Invoke("JoinLine", 2.5f);
+        //DropDownScreen();
     }
 	
 	// Update is called once per frame
@@ -20,7 +21,7 @@ public class monthDataController : MonoBehaviour {
 	
 	}
 
-    void DropDownScreen()
+    public void DropDownScreen()
     {
         var config = new GoTweenConfig()
             .scale(new Vector3(screen.localScale.x, 4.0f, screen.localScale.z))
@@ -29,15 +30,32 @@ public class monthDataController : MonoBehaviour {
         config.onComplete(delegate (AbstractGoTween obj)
         {
             BeginSetValue();
+            _isFullDrop = true;
         });
         var tween = Go.to(screen, 1.5f, config);
+    }
 
+    public void HideScreen()
+    {
+        if(_isFullDrop)
+        {
+            GoTweenConfig config = new GoTweenConfig()
+            .scale(new Vector3(screen.localScale.x, 0.0f, screen.localScale.z))
+            .setEaseType(GoEaseType.CubicInOut);
+            config.onComplete(delegate (AbstractGoTween obj)
+            {
+                this.gameObject.SetActive(false);
+            });
+            Go.to(screen, 1.0f, config);
+
+            _isFullDrop = false;
+        }
+        
     }
 
     void BeginSetValue()
     {
         Debug.Log("begin set value");
-        // TODO
         // 完成屏幕下降后，设置month dot位置
 
         // find max
@@ -48,7 +66,7 @@ public class monthDataController : MonoBehaviour {
                 max = monthData[j];
         }
 
-        // 设置12个散点的高度
+        // 设置散点的高度
         int i = 0;
 
         foreach (Transform child in monthTransformList)

@@ -61,6 +61,13 @@ namespace Mapbox.MeshGeneration.Factories
         private GameObject CreateGameObject(MeshData data)
         {
             var go = new GameObject("direction waypoint " + " entity");
+            // go 放在customRoot下
+            GameObject customRoot = GameObject.Find("customWorldRoot");
+            if(customRoot)
+            {
+                go.transform.parent = customRoot.transform;
+            }
+
             var mesh = go.AddComponent<MeshFilter>().mesh;
             mesh.subMeshCount = data.Triangles.Count;
 
@@ -79,7 +86,7 @@ namespace Mapbox.MeshGeneration.Factories
 
             mesh.RecalculateNormals();
             go.AddComponent<MeshRenderer>().material = _material;
-            Debug.Log("direction waypoint triangle count: " + mesh.vertices.Length);
+            //Debug.Log("direction waypoint triangle count: " + mesh.vertices.Length);
             return go;
         }
     }

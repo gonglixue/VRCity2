@@ -46,7 +46,14 @@
             if(e.target.tag == "Menu")
             {
                 e.target.GetComponent<Sandbox_VRMenuItem>().OnHover();
-
+            }
+            else if(e.target.tag == "VisDot")
+            {
+                e.target.GetComponent<monthDotInfo>().PointerInMonth();
+                if(_thisControllerListener.grip)
+                {
+                    e.target.GetComponent<monthDotInfo>().triggerUseClassData();
+                }
             }
         }
 
@@ -61,6 +68,10 @@
             {
                 e.target.GetComponent<Sandbox_VRMenuItem>().OnLeave();
             }
+            else if(e.target.tag == "VisDot")
+            {
+                e.target.GetComponent<monthDotInfo>().PointerOutMonth();
+            }
         }
 
         private void DoPointerDestinationSet(object sender, DestinationMarkerEventArgs e)  // release
@@ -69,6 +80,10 @@
             if(e.target.GetComponent<SandboxBillboardController>())
             {
                 e.target.GetComponent<SandboxBillboardController>().FocusThis();
+            }
+            if(e.target.tag == "VisDot")
+            {
+                e.target.GetComponent<monthDotInfo>().PointerOutMonth();
             }
         }
     }

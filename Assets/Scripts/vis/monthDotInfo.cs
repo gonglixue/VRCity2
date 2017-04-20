@@ -11,14 +11,14 @@ public class monthDotInfo : MonoBehaviour {
     
 
     public GameObject verticalBar;
-    public GameObject line;
+    //public GameObject line;
     public GameObject classGroup;
     private const int BASE_NUM = 8;
     [SerializeField]
     private float[] classData = new float[BASE_NUM];
 
     #region 交互响应参数
-    public float scaleFactor = 1.4f;   // 点击时变大倍数
+    public float scaleFactor = 2.0f;   // 点击时变大倍数
     public enum ScaleState
     {
         Normal = 0,
@@ -96,9 +96,9 @@ public class monthDotInfo : MonoBehaviour {
     }
 
     /// <summary>
-    /// 射线进入本月的圆点
+    /// 射线进入圆点
     /// </summary>
-    void PointerInMonth()
+    public void PointerInMonth()
     {
         Debug.Log("pointer in month: " + month);
         // TODO
@@ -119,9 +119,9 @@ public class monthDotInfo : MonoBehaviour {
     }
 
     /// <summary>
-    /// 射线离开本月的圆点
+    /// 射线离开圆点
     /// </summary>
-    void PointerOutMonth()
+    public void PointerOutMonth()
     {
         Debug.Log("pointer out month: " + month);
         // TODO
@@ -165,7 +165,7 @@ public class monthDotInfo : MonoBehaviour {
     /// <summary>
     /// trigger use; display class data,显示柱状图
     /// </summary>
-    void triggerUseClassData()
+    public void triggerUseClassData()
     {
         // 对classGroupController进行操作
         classGroup.GetComponent<classGroupController>().SetClassData(this.classData);

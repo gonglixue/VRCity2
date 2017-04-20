@@ -24,6 +24,7 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
 
     public GameObject RightController;
     public GameObject CameraRig;
+    public GameObject ChartScrenn;
 
 	// Use this for initialization
 	void Start () {
@@ -97,28 +98,63 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
         pendingTransform.localScale = _originPendingScale;
         pendingBarBack.SetActive(false);
 
+        this.gameObject.SetActive(false);
+
         // TODO 选择菜单项后, 执行相应的处理程序
         switch(this.menuItemName)
         {
             case ItemName.Home: // 主菜单
-                // TODO: 控制VRMenu的渐变
-                // 。。。
-                CameraRig.transform.position = new Vector3(36.53f, 0, -0.15f);
+                HandleChooseHome();
                 break;
             case ItemName.Return:
-                // 放置导航标志模式
-                RightController.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().EnterNaviMode();
-                // sprite复原
-                this.transform.GetComponent<SpriteRenderer>().sprite = _originSprite;
+                HandleChooseReturn();
                 break;
             case ItemName.Refresh:
+                HandleChooseRefresh();
                 break;
             case ItemName.Bulb:
                 // TODO 
                 // 显示VR帮助菜单
-
+                HandleChooseBulb();
                 break;
         }
+
+        // sprite复原
+        this.transform.GetComponent<SpriteRenderer>().sprite = _originSprite;
+    }
+
+
+    void HandleChooseHome()
+    {
+        // TODO: 控制VRMenu的渐变
+        // ...
+        CameraRig.transform.position = new Vector3(36.53f, 0, -0.15f);
+
+    }
+
+    void HandleChooseRefresh()
+    {
+        // 交互式图表
+        if (!ChartScrenn.activeSelf)
+        {
+            ChartScrenn.SetActive(true);
+            ChartScrenn.GetComponent<monthDataController>().DropDownScreen();
+        }
+        else
+        {
+            ChartScrenn.GetComponent<monthDataController>().HideScreen();
+        }
+    }
+
+    void HandleChooseReturn()
+    {
+        // 放置导航标志模式
+        RightController.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().EnterNaviMode();
+        
+    }
+
+    void HandleChooseBulb()
+    {
 
     }
 
@@ -139,6 +175,8 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
         }
         
     }
+
+
 
 
 }
