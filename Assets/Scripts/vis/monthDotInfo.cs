@@ -226,7 +226,7 @@ public class monthDotInfo : MonoBehaviour {
             System.Random ran = new System.Random();
             int ranNum = ran.Next(5, 30);
             classData[i] = ranNum;
-            Debug.Log("init random:" + classData[i]);
+            //Debug.Log("init random:" + classData[i]);
         }
     }
 

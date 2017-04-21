@@ -98,7 +98,6 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
         pendingTransform.localScale = _originPendingScale;
         pendingBarBack.SetActive(false);
 
-        this.gameObject.SetActive(false);
 
         // TODO 选择菜单项后, 执行相应的处理程序
         switch(this.menuItemName)
@@ -138,11 +137,11 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
         if (!ChartScrenn.activeSelf)
         {
             ChartScrenn.SetActive(true);
-            ChartScrenn.GetComponent<monthDataController>().DropDownScreen();
+            ChartScrenn.transform.Find("monthDot").GetComponent<monthDataController>().DropDownScreen();
         }
         else
         {
-            ChartScrenn.GetComponent<monthDataController>().HideScreen();
+            ChartScrenn.transform.Find("monthDot").GetComponent<monthDataController>().HideScreen();
         }
     }
 
