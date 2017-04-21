@@ -78,6 +78,7 @@ public class Sandbox_VRMenuItem : MonoBehaviour {
         switch(this.menuItemName)
         {
             case VRMenuItemName.Earth:
+
                 break;
             case VRMenuItemName.Sandbox:
                 cameraRig.transform.position = new Vector3(0, 0, -2.7f);

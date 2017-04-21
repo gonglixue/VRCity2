@@ -18,13 +18,6 @@ public class WeatherController : MonoBehaviour {
     public GameObject skyBox;
 
     #region snowMat
-    public Material f1m;
-    public Material f2m;
-    public Material f3m;
-    public Material f4m;
-    public Material f5m;
-    public Material f6m;
-
     public GameObject[] matHostGameObject;
     #endregion
 

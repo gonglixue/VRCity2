@@ -7,6 +7,7 @@ public class monthDataController : MonoBehaviour {
 
     public GameObject linePrefab;
     public Transform screen;
+    public GameObject classDataGroup;
 
     public Transform[] monthTransformList;
 
@@ -44,7 +45,10 @@ public class monthDataController : MonoBehaviour {
             .setEaseType(GoEaseType.CubicInOut);
             config.onComplete(delegate (AbstractGoTween obj)
             {
-                this.gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
+                this.transform.parent.gameObject.SetActive(false);
+                // 隐藏柱状图
+                classDataGroup.GetComponent<classGroupController>().HideCylinder();
             });
             Go.to(screen, 1.0f, config);
 

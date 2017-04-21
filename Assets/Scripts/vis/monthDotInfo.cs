@@ -18,7 +18,7 @@ public class monthDotInfo : MonoBehaviour {
     private float[] classData = new float[BASE_NUM];
 
     #region 交互响应参数
-    public float scaleFactor = 2.0f;   // 点击时变大倍数
+    public float scaleFactor = 4.0f;   // 点击时变大倍数
     public enum ScaleState
     {
         Normal = 0,

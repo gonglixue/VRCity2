@@ -45,13 +45,18 @@
                 {
                     if (readyToPlace == null)
                     {
-                        readyToPlace = Instantiate(startPrefab, e.destinationPosition, Quaternion.Euler(90, 0, 0)) as GameObject;
+                        Vector3 placePosition = new Vector3(e.destinationPosition.x, 0.315f, e.destinationPosition.z);
+                        readyToPlace = Instantiate(startPrefab, placePosition, Quaternion.Euler(90, 0, 0)) as GameObject;
+                        
                         // 放在customRoot下
                         readyToPlace.transform.parent = customRoot.transform;
                         _startTransform = readyToPlace.transform;
                     }
                     else
-                        readyToPlace.transform.position = e.destinationPosition;
+                    {
+                        readyToPlace.transform.position = new Vector3(e.destinationPosition.x, 0.315f, e.destinationPosition.z);
+                    }
+                        
 
                     if(this.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().touchPadPressDown)
                     {
@@ -64,7 +69,8 @@
                         // 更改Tooltips
                         //VRTK.VRTK_ControllerTooltips RctrTooltipsController = this.transform.Find("ControllerTooltips").GetComponent<VRTK_ControllerTooltips>();
                         //RctrTooltipsController.touchpadText = "Place Target";
-                        this.transform.Find("ControllerToolTtips").Find("TouchpadTooltip").GetComponent<VRTK_ObjectTooltip>().displayText = "Place Target";
+                        
+                        this.transform.Find("ControllerTooltips").Find("TouchpadTooltip").GetComponent<VRTK_ObjectTooltip>().displayText = "Place Target";
 
                     }
                 }
@@ -72,13 +78,17 @@
                 {
                     if (readyToPlace == null)
                     {
-                        readyToPlace = Instantiate(endPrefab, e.destinationPosition, Quaternion.Euler(90, 0, 0)) as GameObject;
+                        Vector3 placePosition = new Vector3(e.destinationPosition.x, 0.315f, e.destinationPosition.z);
+                        readyToPlace = Instantiate(endPrefab, placePosition, Quaternion.Euler(90, 0, 0)) as GameObject;
                         // 放在customRoot下
                         readyToPlace.transform.parent = customRoot.transform;
                         _endTransform = readyToPlace.transform;
                     }
                     else
-                        readyToPlace.transform.position = e.destinationPosition;
+                    {
+                        readyToPlace.transform.position = new Vector3(e.destinationPosition.x, 0.315f, e.destinationPosition.z);
+                    }
+                        
 
                     if(this.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().touchPadPressDown)
                     {

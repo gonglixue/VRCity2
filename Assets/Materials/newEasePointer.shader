@@ -7,19 +7,29 @@
 	SubShader{
 		Tags {
 			"RenderType" = "Transparent"
-			"Queue" = "Transparent"
+			"Queue" = "Overlay"
 			"IgnoreProjector" = "True"
 			"PreviewType" = "Plane"
 		}
 		LOD 200
-		Cull Off
-		Lighting Off
-		ZWrite Off
-		ZTest Always
-		Blend SrcAlpha OneMinusSrcAlpha
+
+		//ZWrite On
+		//ZTest Always
+
+		//Blend One One
+		//Blend SrcAlpha One
+		//Blend Off
+
 
 		Pass
 		{
+			Cull Off
+			Lighting Off
+			//ZWrite On
+			ZTest Always
+			ZWrite Off
+			Blend SrcAlpha OneMinusSrcAlpha
+
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
@@ -59,7 +69,10 @@
 				if (i.texcoord.x <= threshold)
 				{
 					color = tex2D(_MainTex, i.texcoord);
-					color.a *= 0.8;
+					//color.a *= 0.8;
+					//color.a = 1.0;
+					if (color.a > 0.5)
+						color.a = 1.0;
 				}
 				else
 					color = (1.0, 1.0, 1.0, 0.0);
