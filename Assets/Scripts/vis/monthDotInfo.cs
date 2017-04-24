@@ -29,6 +29,7 @@ public class monthDotInfo : MonoBehaviour {
     private GoTween _scaleInTween;  //放大操作
     private GoTween _scaleOutTween;  //缩小操作
     static int finishMonth = 0;      //有多少个圆点已位移完毕
+    public GameObject focusSprite;
     #endregion
 
     #region billboard参数
@@ -63,6 +64,7 @@ public class monthDotInfo : MonoBehaviour {
             PointerOutMonth();
         }
         Test();
+
     }
 
     public void setValue(int v, int max)
@@ -113,6 +115,8 @@ public class monthDotInfo : MonoBehaviour {
                 .scale(originalScaleSize * scaleFactor)
                 .setEaseType(GoEaseType.CubicInOut));
             scaleState = ScaleState.Bigger;
+
+            focusSprite.SetActive(true);
         }
         
 
@@ -137,6 +141,8 @@ public class monthDotInfo : MonoBehaviour {
                 .scale(originalScaleSize)
                 .setEaseType(GoEaseType.CubicInOut));
             scaleState = ScaleState.Normal;
+
+            focusSprite.SetActive(false);
         }
         
     }
@@ -235,7 +241,11 @@ public class monthDotInfo : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.C))
         {
             triggerUseClassData();
+
+
         }
+
+        
     }
 
 }

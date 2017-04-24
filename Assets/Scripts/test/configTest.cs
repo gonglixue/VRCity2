@@ -12,7 +12,9 @@ public class configTest : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
             Test();
-	}
+
+        this.transform.localEulerAngles = this.transform.localEulerAngles + new Vector3(0, 0, 1);
+    }
 
     void Test()
     {
