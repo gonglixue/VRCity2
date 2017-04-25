@@ -26,7 +26,7 @@ namespace Mapbox.MeshGeneration.Factories
 
         private Dictionary<Vector2, UnityTile> _tiles;
         [SerializeField]
-        private int sampleCount = 40;
+        private int sampleCount = 10;
 
         public override void Initialize(MonoBehaviour mb, IFileSource fs)
         {

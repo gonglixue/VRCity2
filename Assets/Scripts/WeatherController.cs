@@ -37,6 +37,14 @@ public class WeatherController : MonoBehaviour {
         SetSkyBoxAttrib(snowSkyConf);
 
         snowySystem.SetActive(true);  // 开启粒子系统
+
+        // 设置材质
+        foreach(GameObject tileObject in matHostGameObject)
+        {
+            Material m = tileObject.GetComponent<MeshRenderer>().sharedMaterial;
+            m.SetFloat("_Snow", 0.003f);
+            m.SetFloat("_SnowDepth", 0.032f);
+        }
     }
     void InitRainySystem()
     {
@@ -97,6 +105,16 @@ public class WeatherController : MonoBehaviour {
         {
             Material snowMat = tileObj.GetComponent<MeshRenderer>().sharedMaterial;
             snowMat.SetFloat("_Snow", 0.003f);
+        }
+    }
+
+    void ClearSnowMat()
+    {
+        foreach (GameObject tileObject in matHostGameObject)
+        {
+            Material m = tileObject.GetComponent<MeshRenderer>().sharedMaterial;
+            m.SetFloat("_Snow", 0);
+            m.SetFloat("_SnowDepth", 0);
         }
     }
 }
