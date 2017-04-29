@@ -84,6 +84,8 @@
                     if(Time.time > (_lastPutPin+2))
                         PutPin(e.destinationPosition);
                 }
+
+
             }
 
             if(e.target.tag == "Flag") //如果射线射到Flag,则激活该Flag
@@ -110,13 +112,14 @@
         private void DoPointerOut(object sender, DestinationMarkerEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "POINTER OUT", e.target, e.distance, e.destinationPosition);
-            // ??? 好像不起作用
+
             if(e.target.tag == "Flag")
             {
                 e.target.GetComponent<FlagBillboardController>().InActiveFlag();
                 // ??
                 _flagControllerScript = null;
             }
+
         }
 
         private void DoPointerDestinationSet(object sender, DestinationMarkerEventArgs e)  // release

@@ -18,8 +18,9 @@ public class spriteColorTest : MonoBehaviour {
 
     void Colortransform()
     {
+        Debug.Log("change color");
         GoTweenConfig testConf = new GoTweenConfig()
-            .colorProp("Color", new Color(0, 0, 0))
+            .colorProp("color", new Color(0, 0, 0))
             .setEaseType(GoEaseType.Linear);
 
         Go.to(this.GetComponent<SpriteRenderer>(), 2.0f, testConf);

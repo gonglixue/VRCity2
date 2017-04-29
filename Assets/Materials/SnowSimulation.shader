@@ -37,7 +37,7 @@ Shader "Custom/SnowSimulation" {
 		{
 			// snowDirection 转世界坐标
 			float4 sn = mul(transpose(unity_ObjectToWorld), _SnowDirection);
-			// ? v.normal是世界坐标系法向量吗？
+			
 			if (dot(v.normal, sn.xyz) >= lerp(1, -1, (_Snow * 2) / 3))
 			{
 				v.vertex.xyz += (sn.xyz + v.normal) * _SnowDepth * _Snow;
@@ -52,6 +52,8 @@ Shader "Custom/SnowSimulation" {
 			if (dot(WorldNormalVector(IN, o.Normal), _SnowDirection.xyz) > lerp(1, -1, _Snow))
 			{
 				o.Albedo = _SnowColor.rgb;
+				//o.Albedo = c.rgb + (_SnowColor * _Snow);
+				//o.Albedo = c.rgb + dot(WorldNormalVector(IN, o.Normal), _SnowDirection.xyz)*_Snow;
 			}
 			else {
 				o.Albedo = c.rgb;

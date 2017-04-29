@@ -207,6 +207,8 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CreateMesh\CreateMesh.cs" />
     <Compile Include="Assets\Scripts\EarthBillboardManager.cs" />
+    <Compile Include="Assets\Scripts\Earth_Text_Change.cs" />
+    <Compile Include="Assets\Scripts\Earth_UI_Interactions.cs" />
     <Compile Include="Assets\Scripts\EaseSpriteFrame.cs" />
     <Compile Include="Assets\Scripts\FlagBillboardController.cs" />
     <Compile Include="Assets\Scripts\FlyCameraController.cs" />
@@ -239,6 +241,8 @@
     <Compile Include="Assets\Scripts\VRControl\VREarth_PointerListener.cs" />
     <Compile Include="Assets\Scripts\VRControl\VRPad_ControllerEventListener.cs" />
     <Compile Include="Assets\Scripts\WeatherController.cs" />
+    <Compile Include="Assets\Scripts\test\MoviteTextureTest.cs" />
+    <Compile Include="Assets\Scripts\test\UI_Interactions_t.cs" />
     <Compile Include="Assets\Scripts\test\configTest.cs" />
     <Compile Include="Assets\Scripts\test\frameTest.cs" />
     <Compile Include="Assets\Scripts\test\spriteColorTest.cs" />

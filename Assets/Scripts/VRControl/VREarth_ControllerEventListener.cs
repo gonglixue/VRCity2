@@ -6,6 +6,8 @@
     {
 
         public Transform cameraRig;
+        public Transform UILayer;
+
         public bool _isPressed = false;  // 大圆
         public bool gripPressed = false;  // grip
         public float speed = 200.0f;
@@ -66,7 +68,7 @@
         private void DoTriggerReleased(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TRIGGER", "released", e);
-            GetComponent<VREarth_PointerListener>().ReleasePointer();
+            //GetComponent<VREarth_PointerListener>().ReleasePointer();
         }
 
         private void DoTriggerTouchStart(object sender, ControllerInteractionEventArgs e)
@@ -178,7 +180,10 @@
                 float m = _movementZ * speed * Time.deltaTime;
 
                 cameraRig.position += cameraRig.TransformDirection(new Vector3(0, 0, m));
+                UILayer.position = UILayer.TransformDirection(new Vector3(0, 0, m));
+
             }
+
 
         }
     }
