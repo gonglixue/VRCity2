@@ -16,11 +16,11 @@
         public GameObject ControllerTooltipsObj;
 
         #region pendingBar
-        private GoTween _pendingTween = null;
-        private GoTweenConfig _pendingTweenConfig;
-        private Vector3 _originPendingScale;
-        public Transform pendingTransform;
-        public GameObject pendingBarBack;
+        //private GoTween _pendingTween = null;
+        //private GoTweenConfig _pendingTweenConfig;
+        //private Vector3 _originPendingScale;
+        //public Transform pendingTransform;
+        //public GameObject pendingBarBack;
         #endregion
 
         private void Start()

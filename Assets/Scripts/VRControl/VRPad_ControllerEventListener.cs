@@ -7,6 +7,7 @@
     {
         public Transform padScreen;
         private Transform _padScreenButton;
+        private GameObject _PressEnterTip;
         private bool _buttonState = false;  // 原始位置
 
         private void Start()
@@ -50,6 +51,7 @@
             GetComponent<VRTK_ControllerEvents>().ControllerDisabled += new ControllerInteractionEventHandler(DoControllerDisabled);
 
             _padScreenButton = padScreen.Find("PadButton"); // 找到button
+            _PressEnterTip = _padScreenButton.Find("PadToolTip").gameObject;
         }
 
         private void DebugLogger(uint index, string button, string action, ControllerInteractionEventArgs e)
@@ -140,11 +142,13 @@
         private void DoTouchpadTouchStart(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "touched", e);
+            touchButton();
         }
 
         private void DoTouchpadTouchEnd(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "untouched", e);
+            untouchButton();
         }
 
         private void DoTouchpadAxisChanged(object sender, ControllerInteractionEventArgs e)
@@ -186,6 +190,23 @@
                 Debug.Log("按钮release，跳转");
                 SceneManager.LoadScene("MeshGenerationOrigin");
             }
+        }
+
+        void touchButton()
+        {
+            // touch
+            _padScreenButton.GetComponent<MeshRenderer>().material.color = new Color(92 / 255f, 1.0f, 1.0f, 1.0f);
+            // TODO
+            // 显示press to enter提示;
+            _PressEnterTip.SetActive(true);
+        }
+
+        void untouchButton()
+        {
+            // 颜色复原
+            _padScreenButton.GetComponent<MeshRenderer>().material.color = new Color(149 / 255f, 149 / 255f, 149 / 255f, 1.0f);
+            // 隐藏press to enter提示；
+            _PressEnterTip.SetActive(false);
         }
     }
 }
