@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class classGroupController : MonoBehaviour {
-    private const int BASE_NUM = 8;
+    private const int BASE_NUM = 4;
 
     public float maxBaseData;
+    public float minBaseData;
     private float[] classData = new float[BASE_NUM];
     public Transform[] baseTransform = new Transform[BASE_NUM];
 
@@ -25,15 +26,18 @@ public class classGroupController : MonoBehaviour {
     public void SetClassData(float[] data_in)
     {
         float max = 0;
+        float min = 0;
 
         for(int i=0;i<classData.Length;i++)
         {
             classData[i] = data_in[i];
             if (classData[i] > max)
                 max = classData[i];
+            if (classData[i] < min)
+                min = classData[i];
         }
         this.maxBaseData = max;
-
+        this.minBaseData = min;
 
     }
 

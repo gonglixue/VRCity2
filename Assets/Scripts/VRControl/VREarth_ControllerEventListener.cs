@@ -183,8 +183,6 @@
                 UILayer.position = UILayer.TransformDirection(new Vector3(0, 0, m));
 
             }
-
-
         }
     }
 }

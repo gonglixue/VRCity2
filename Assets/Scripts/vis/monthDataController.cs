@@ -64,10 +64,13 @@ public class monthDataController : MonoBehaviour {
 
         // find max
         int max = monthData[0];
+        int min = monthData[0];
         for (int j = 1; j < monthData.Length; j++)
         {
             if (monthData[j] > max)
                 max = monthData[j];
+            if (monthData[j] < min)
+                min = monthData[j];
         }
 
         // 设置散点的高度
@@ -79,7 +82,7 @@ public class monthDataController : MonoBehaviour {
                 break;
 
             //Debug.Log(child.name);
-            child.GetComponent<monthDotInfo>().setValue(monthData[i], max);
+            child.GetComponent<monthDotInfo>().setValue(monthData[i], max, min);
             i++;
         }
     }

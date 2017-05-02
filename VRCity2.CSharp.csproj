@@ -242,6 +242,7 @@
     <Compile Include="Assets\Scripts\VRControl\VRPad_ControllerEventListener.cs" />
     <Compile Include="Assets\Scripts\WeatherController.cs" />
     <Compile Include="Assets\Scripts\test\MoviteTextureTest.cs" />
+    <Compile Include="Assets\Scripts\test\TransformFindTest.cs" />
     <Compile Include="Assets\Scripts\test\UI_Interactions_t.cs" />
     <Compile Include="Assets\Scripts\test\configTest.cs" />
     <Compile Include="Assets\Scripts\test\frameTest.cs" />

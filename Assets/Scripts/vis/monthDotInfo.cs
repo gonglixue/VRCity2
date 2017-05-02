@@ -8,12 +8,13 @@ public class monthDotInfo : MonoBehaviour {
 
 
     static float maxHeight = 7.0f;
+    static float minHeight = 0.8f;
     
 
     public GameObject verticalBar;
     //public GameObject line;
     public GameObject classGroup;
-    private const int BASE_NUM = 8;
+    private const int BASE_NUM = 4;
     [SerializeField]
     private float[] classData = new float[BASE_NUM];
 
@@ -34,6 +35,7 @@ public class monthDotInfo : MonoBehaviour {
 
     #region billboard参数
     private GameObject thisTip;  //和这个圆点关联的billboard
+    [SerializeField]
     Object tipPrefab;
     #endregion
 
@@ -46,7 +48,7 @@ public class monthDotInfo : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-        RandomInitClassData();
+        //RandomInitClassData();
         classGroup = GameObject.Find("classGroup");
 	}
 	
@@ -75,6 +77,23 @@ public class monthDotInfo : MonoBehaviour {
         float newPosY = v*1.0f / max * maxHeight;
 
         // ease transformation
+        Vector3 newPos = new Vector3(transform.position.x, newPosY, transform.position.z);
+        GoTweenConfig config = new GoTweenConfig()
+            .position(newPos)
+            .setEaseType(GoEaseType.CubicInOut);
+        config.onComplete(delegate (AbstractGoTween obj)
+        {
+            finishSetValue();
+        });
+        Go.to(this.transform, 1.0f, config);
+    }
+
+    public void setValue(int v, int max, int min)
+    {
+        createVerticalBar();
+        value = v;
+        float newPosY = (v * 1.0f - min) / (max - min) * (maxHeight - minHeight) + minHeight;
+
         Vector3 newPos = new Vector3(transform.position.x, newPosY, transform.position.z);
         GoTweenConfig config = new GoTweenConfig()
             .position(newPos)
