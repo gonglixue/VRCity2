@@ -149,6 +149,7 @@
     <None Include="Assets\Mapbox\Core\Plugins\link.xml" />
     <None Include="Assets\Mapbox\README.txt" />
     <None Include="Assets\Mapbox\Resources\Fonts\OpenSansLic.txt" />
+    <None Include="Assets\Materials\ChartScreenBg.shader" />
     <None Include="Assets\Materials\EasePointer.shader" />
     <None Include="Assets\Materials\Height.shader" />
     <None Include="Assets\Materials\SnowSimulation.shader" />

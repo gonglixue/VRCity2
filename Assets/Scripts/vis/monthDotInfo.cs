@@ -205,8 +205,9 @@ public class monthDotInfo : MonoBehaviour {
         if(!thisTip)
         {
             GameObject tip = Instantiate(tipPrefab, this.transform.position, Quaternion.Euler(-90, 0, 0)) as GameObject;
-            tip.transform.localScale *= 0.4f;
-            string textInfo = getMonthString(month) + ": " + value;
+            tip.transform.localScale *= 1.0f;
+            string textInfo = getMonthString(month) + ": " + value + " ℃";
+
             tip.GetComponent<tipController>().SetText(textInfo);
             thisTip = tip;
         }

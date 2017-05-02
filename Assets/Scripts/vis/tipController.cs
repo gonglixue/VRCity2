@@ -4,13 +4,13 @@ using System.Collections;
 public class tipController : MonoBehaviour {
 
     private Material m;
-    public float speed = 8.0f;
+    public float speed = 10.0f;
     private float threshold = 0.0f;
     public GameObject eye;
 
     private bool showAnimation = true;
     private bool hideAnimation = false;
-    public bool useVR = false;
+    public bool useVR = true;
     void Awake()
     {
         if (useVR)

@@ -1,6 +1,7 @@
 ﻿Shader "Custom/newEasePointer" {
 	Properties {
 		_MainTex("Base (RGB)", 2D) = "white" {}
+		_Color("Color", Color) = (1,1,1,1)
 		_Factor("visible percent", Range(0,10)) = 10
 	}
 
@@ -52,6 +53,7 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			float _Factor;
+			fixed4 _Color;
 
 			v2f vert(appdata_t v)
 			{
@@ -69,10 +71,14 @@
 				if (i.texcoord.x <= threshold)
 				{
 					color = tex2D(_MainTex, i.texcoord);
+					half3 color_rgb = _Color.rgb;
 					//color.a *= 0.8;
 					//color.a = 1.0;
 					if (color.a > 0.5)
-						color.a = 1.0;
+						color.a = _Color.a;
+
+					color = fixed4(color_rgb, color.a);
+					//color = fixed4(color_rgb, _Color.a);
 				}
 				else
 					color = (1.0, 1.0, 1.0, 0.0);
