@@ -39,6 +39,8 @@ public class monthDotInfo : MonoBehaviour {
     Object tipPrefab;
     #endregion
 
+    private static int verticalBarOrder = 0;
+
     void Awake()
     {
         originalScaleSize = this.transform.localScale.x;
@@ -179,12 +181,18 @@ public class monthDotInfo : MonoBehaviour {
 
     public void createVerticalBar()  
     {
-        float vBary = 4.0f;
+        float vBary = 3.8f;
         Vector3 vBarPos = new Vector3(this.transform.position.x, vBary, this.transform.position.z);
         GameObject vBar = Instantiate(verticalBar) as GameObject;
         
         vBar.transform.position = vBarPos;
         vBar.transform.SetParent(this.transform.parent);
+
+        verticalBarOrder++;
+        if(verticalBarOrder%2 == 0)
+        {
+            vBar.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        }
     }
 
     /// <summary>

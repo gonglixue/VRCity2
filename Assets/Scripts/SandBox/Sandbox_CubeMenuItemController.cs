@@ -5,8 +5,8 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
     public enum ItemName
     {
         Home = 0,
-        Return = 1,
-        Refresh = 2,
+        NaviMode = 1,
+        DataVis = 2,
         Bulb = 3
     }
 
@@ -105,10 +105,10 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
             case ItemName.Home: // 主菜单
                 HandleChooseHome();
                 break;
-            case ItemName.Return:
+            case ItemName.NaviMode:
                 HandleChooseReturn();
                 break;
-            case ItemName.Refresh:
+            case ItemName.DataVis:
                 HandleChooseRefresh();
                 break;
             case ItemName.Bulb:
@@ -171,7 +171,12 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
                 Debug.Log("menu item on trigger leave");
                 OnLeave();
             }
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                HandleChooseRefresh();
+            }
         }
+        
         
     }
 

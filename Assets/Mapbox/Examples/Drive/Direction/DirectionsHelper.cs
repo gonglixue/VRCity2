@@ -18,7 +18,7 @@ public class DirectionsHelper : MonoBehaviour
 
     void Update()
     {
-        Test();
+       
     }
 
     public void Query()
