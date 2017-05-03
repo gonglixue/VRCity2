@@ -11,6 +11,7 @@ public class monthDataController : MonoBehaviour {
     public Transform[] monthTransformList;
 
     private bool _isFullDrop = false;
+    private bool _firstDrop = true;
 
     #region 点排列
     [SerializeField]
@@ -44,8 +45,10 @@ public class monthDataController : MonoBehaviour {
         // 设置屏幕下降的回调
         config.onComplete(delegate (AbstractGoTween obj)
         {
-            //BeginSetValue();
-            BeginSetValue_Align();
+            if (_firstDrop)
+                BeginSetValue_Align();
+            else
+                BeginSetValue();
             _isFullDrop = true;
         });
         var tween = Go.to(screen, 1.5f, config);
