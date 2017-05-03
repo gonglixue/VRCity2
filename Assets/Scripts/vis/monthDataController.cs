@@ -49,7 +49,10 @@ public class monthDataController : MonoBehaviour {
         config.onComplete(delegate (AbstractGoTween obj)
         {
             if (_firstDrop)
+            {
                 BeginSetValue_Align();
+                _firstDrop = false;
+            }                
             else
                 BeginSetValue();
             _isFullDrop = true;

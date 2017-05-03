@@ -31,6 +31,7 @@ public class monthDotInfo : MonoBehaviour {
     private GoTween _scaleOutTween;  //缩小操作
     static int finishMonth = 0;      //有多少个圆点已位移完毕
     public GameObject focusSprite;
+    private bool _displayClassData = false;  //当前是否显示柱状图
     #endregion
 
     #region billboard参数
@@ -214,9 +215,19 @@ public class monthDotInfo : MonoBehaviour {
     /// </summary>
     public void triggerUseClassData()
     {
-        // 对classGroupController进行操作
-        classGroup.GetComponent<classGroupController>().SetClassData(this.classData);
-        classGroup.GetComponent<classGroupController>().StartElevation();
+        if(!_displayClassData)
+        {
+            // 对classGroupController进行操作
+            classGroup.GetComponent<classGroupController>().SetClassData(this.classData);
+            classGroup.GetComponent<classGroupController>().StartElevation();
+            _displayClassData = true;
+        }
+        else
+        {
+            classGroup.GetComponent<classGroupController>().HideCylinder();
+            _displayClassData = false;
+        }
+        
     }
 
     /// <summary>
