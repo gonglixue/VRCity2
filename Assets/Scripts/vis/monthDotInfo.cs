@@ -8,7 +8,7 @@ public class monthDotInfo : MonoBehaviour {
 
 
     static float maxHeight = 7.0f;
-    static float minHeight = 0.8f;
+    static float minHeight = 1.1f;
     
 
     public GameObject verticalBar;

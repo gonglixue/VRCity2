@@ -173,6 +173,7 @@ public class Sandbox_CubeMenuItemController : MonoBehaviour {
             }
             if(Input.GetKeyDown(KeyCode.Space))
             {
+                Debug.Log("choose menu item refresh");
                 HandleChooseRefresh();
             }
         }

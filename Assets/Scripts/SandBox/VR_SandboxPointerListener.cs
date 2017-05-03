@@ -55,6 +55,14 @@
                     e.target.GetComponent<monthDotInfo>().triggerUseClassData();
                 }
             }
+            else if(e.target.tag == "SpriteUI")
+            {
+                e.target.GetComponent<SpriteTriggerReceiver>().OnHover();
+                if(_thisControllerListener.grip)
+                {
+                    e.target.GetComponent<SpriteTriggerReceiver>().TriggerUse();
+                }
+            }
         }
 
         private void DoPointerOut(object sender, DestinationMarkerEventArgs e)
@@ -72,6 +80,10 @@
             {
                 e.target.GetComponent<monthDotInfo>().PointerOutMonth();
             }
+            else if(e.target.tag == "SpriteUI")
+            {
+                e.target.GetComponent<SpriteTriggerReceiver>().OnLeave();
+            }
         }
 
         private void DoPointerDestinationSet(object sender, DestinationMarkerEventArgs e)  // release
@@ -84,6 +96,10 @@
             if(e.target.tag == "VisDot")
             {
                 e.target.GetComponent<monthDotInfo>().PointerOutMonth();
+            }
+            if(e.target.tag == "SpriteUI")
+            {
+                e.target.GetComponent<SpriteTriggerReceiver>().OnLeave();
             }
         }
     }

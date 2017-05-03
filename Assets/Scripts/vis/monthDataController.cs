@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class monthDataController : MonoBehaviour {
-    const float maxHeight = 7;
     public int[] monthData;
 
     public GameObject linePrefab;
@@ -12,9 +11,24 @@ public class monthDataController : MonoBehaviour {
     public Transform[] monthTransformList;
 
     private bool _isFullDrop = false;
-	// Use this for initialization
-	void Start () {
+
+    #region 点排列
+    [SerializeField]
+    private Vector3 AlignCenter;
+    [SerializeField]
+    private float AlignRadius;
+    
+    private float AlignDegree = -30f;
+    private float AlignStep;
+    [SerializeField]
+    private GameObject monthDotEntityPrefab;
+    #endregion
+
+    // Use this for initialization
+    void Start () {
         //DropDownScreen();
+        AlignStep = Mathf.Abs(AlignDegree) * 2 / (monthData.Length - 1);
+        monthTransformList = new Transform[12];       
     }
 	
 	// Update is called once per frame
@@ -30,7 +44,8 @@ public class monthDataController : MonoBehaviour {
         // 设置屏幕下降的回调
         config.onComplete(delegate (AbstractGoTween obj)
         {
-            BeginSetValue();
+            //BeginSetValue();
+            BeginSetValue_Align();
             _isFullDrop = true;
         });
         var tween = Go.to(screen, 1.5f, config);
@@ -84,6 +99,39 @@ public class monthDataController : MonoBehaviour {
             //Debug.Log(child.name);
             child.GetComponent<monthDotInfo>().setValue(monthData[i], max, min);
             i++;
+        }
+    }
+
+    void BeginSetValue_Align()
+    {
+        Debug.Log("begin set align value");
+
+        // find max & min
+        int max = monthData[0];
+        int min = monthData[1];
+        for(int j=1;j<monthData.Length;j++)
+        {
+            if (monthData[j] > max)
+                max = monthData[j];
+            if (monthData[j] < min)
+                min = monthData[j];
+        }
+
+        // 为"monthDot"创建子物体，表示散点
+        for(int j = 0; j < monthData.Length; j++)
+        {
+            GameObject monthDotEntity = Instantiate(monthDotEntityPrefab) as GameObject;
+            monthDotEntity.name = "m_Align" + j;
+            float currentDegree = AlignDegree + AlignStep * j;
+            float posX, posZ;
+            posX = AlignCenter.x + Mathf.Sin(currentDegree / 180 * Mathf.PI) * AlignRadius;
+            posZ = AlignCenter.z + Mathf.Cos(currentDegree / 180 * Mathf.PI) * AlignRadius;
+            monthDotEntity.transform.position = new Vector3(posX, 0, posZ);
+            monthDotEntity.transform.parent = this.transform;
+
+            monthDotEntity.GetComponent<monthDotInfo>().setValue(monthData[j], max, min);
+
+            monthTransformList[j] = monthDotEntity.transform;
         }
     }
 
