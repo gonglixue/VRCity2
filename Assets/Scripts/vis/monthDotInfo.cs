@@ -40,6 +40,7 @@ public class monthDotInfo : MonoBehaviour {
     #endregion
 
     private static int verticalBarOrder = 0;
+    public GameObject _thisVBar;
 
     void Awake()
     {
@@ -67,7 +68,6 @@ public class monthDotInfo : MonoBehaviour {
             Debug.Log("mouse up:" + month);
             PointerOutMonth();
         }
-        Test();
 
     }
 
@@ -90,7 +90,7 @@ public class monthDotInfo : MonoBehaviour {
         Go.to(this.transform, 1.0f, config);
     }
 
-    public void setValue(int v, int max, int min)
+    public void setValue(int v, float max, float min)
     {
         createVerticalBar();
         value = v;
@@ -184,15 +184,29 @@ public class monthDotInfo : MonoBehaviour {
         float vBary = 3.8f;
         Vector3 vBarPos = new Vector3(this.transform.position.x, vBary, this.transform.position.z);
         GameObject vBar = Instantiate(verticalBar) as GameObject;
-        
+        _thisVBar = vBar;
+
         vBar.transform.position = vBarPos;
         vBar.transform.SetParent(this.transform.parent);
+
 
         verticalBarOrder++;
         if(verticalBarOrder%2 == 0)
         {
             vBar.GetComponent<MeshRenderer>().material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
+    }
+
+    public void moveVerticalBar(Vector3 newPos)
+    {
+        GoTweenConfig config = new GoTweenConfig()
+            .position(newPos)
+            .setEaseType(GoEaseType.Linear);
+        config.onComplete(delegate (AbstractGoTween obj)
+        {
+        });
+
+        Go.to(_thisVBar.transform, 0.8f, config);
     }
 
     /// <summary>
@@ -264,16 +278,5 @@ public class monthDotInfo : MonoBehaviour {
         }
     }
 
-    void Test()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            triggerUseClassData();
-
-
-        }
-
-        
-    }
 
 }

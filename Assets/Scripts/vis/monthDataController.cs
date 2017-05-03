@@ -3,12 +3,14 @@ using System.Collections;
 
 public class monthDataController : MonoBehaviour {
     public int[] monthData;
-
+    //public ArrayList monthData = new ArrayList();
     public GameObject linePrefab;
     public Transform screen;
+    public Transform lineGroup;
     public GameObject classDataGroup;
 
     public Transform[] monthTransformList;
+    //public ArrayList monthTransformList = new ArrayList();
 
     private bool _isFullDrop = false;
     private bool _firstDrop = true;
@@ -29,7 +31,7 @@ public class monthDataController : MonoBehaviour {
     void Start () {
         //DropDownScreen();
         AlignStep = Mathf.Abs(AlignDegree) * 2 / (monthData.Length - 1);
-        monthTransformList = new Transform[12];       
+        monthTransformList = new Transform[monthData.Length];       
     }
 	
 	// Update is called once per frame
@@ -151,9 +153,95 @@ public class monthDataController : MonoBehaviour {
             float distance = Vector3.Distance(lastChild.position, child.position);
             Vector3 centerPos = (lastChild.position + child.position) / 2.0f;
 
-            GameObject line = Instantiate(linePrefab, centerPos, Quaternion.identity, this.transform) as GameObject;
+            GameObject line = Instantiate(linePrefab, centerPos, Quaternion.identity, lineGroup) as GameObject;
+            //GameObject line = Instantiate(linePrefab) as GameObject;
+            //line.transform.rotation = Quaternion.identity;
+            //line.transform.position = centerPos;
             line.transform.forward = child.position - lastChild.position;
             line.transform.localScale = new Vector3(line.transform.localScale.x, line.transform.localScale.y, distance);
+            //line.transform.parent = lineGroup;
+        }
+    }
+
+    public void ReAlignDots()
+    {
+        DestroyOldLine();
+
+        int[] oldMonthData = monthData;
+        monthData = new int[oldMonthData.Length + 12];
+
+        float max=oldMonthData[0], min=oldMonthData[0];
+
+        for(int i=0; i<monthData.Length; i++)
+        {
+            if(i < oldMonthData.Length)
+                monthData[i] = oldMonthData[i];
+            else  // temp: 复制原来的数据
+            {
+                monthData[i] = oldMonthData[i % oldMonthData.Length];
+                if (monthData[i] > max)
+                    max = monthData[i];
+                if (monthData[i] < min)
+                    min = monthData[i];
+            }
+        }
+
+        AlignStep = Mathf.Abs(AlignDegree) * 2 / (monthData.Length - 1);
+        Transform[] oldTransformList = monthTransformList;
+
+        monthTransformList = new Transform[oldTransformList.Length + 12];
+        for(int i=0; i<monthTransformList.Length; i++)
+        {
+            if(i < oldTransformList.Length)
+            {
+                float currentDegree = AlignDegree + AlignStep * i;
+                float posX, posZ;
+                posX = AlignCenter.x + Mathf.Sin(currentDegree / 180 * Mathf.PI) * AlignRadius;
+                posZ = AlignCenter.z + Mathf.Cos(currentDegree / 180 * Mathf.PI) * AlignRadius;
+
+                GoTweenConfig config = new GoTweenConfig()
+                    .position(new Vector3(posX, 0, posZ))
+                    .setEaseType(GoEaseType.Linear);
+                config.onComplete(delegate (AbstractGoTween obj)
+                {
+
+                });
+
+                Go.to(oldTransformList[i], 0.8f, config);
+
+                //移动原有的柱子
+                oldTransformList[i].GetComponent<monthDotInfo>().moveVerticalBar(new Vector3(posX, 3.8f, posZ));
+
+                monthTransformList[i] = oldTransformList[i];
+            }
+            else
+            {
+                // 新dot
+                GameObject monthDotEntity = Instantiate(monthDotEntityPrefab) as GameObject;
+                monthDotEntity.name = "m_Align" + i;
+                float currentDegree = AlignDegree + AlignStep * i;
+                float posX, posZ;
+                posX = AlignCenter.x + Mathf.Sin(currentDegree / 180 * Mathf.PI) * AlignRadius;
+                posZ = AlignCenter.z + Mathf.Cos(currentDegree / 180 * Mathf.PI) * AlignRadius;
+                monthDotEntity.transform.position = new Vector3(posX, 0, posZ);
+                monthDotEntity.transform.parent = this.transform;
+
+                monthDotEntity.GetComponent<monthDotInfo>().setValue(monthData[i], max, min);
+
+                monthTransformList[i] = monthDotEntity.transform;
+            }
+        }
+
+        JoinLine();
+
+    }
+
+    void DestroyOldLine()
+    {
+        Debug.Log("destroy old line");
+        foreach(Transform lineChild in lineGroup)
+        {
+            Destroy(lineChild.gameObject);
         }
     }
 }
