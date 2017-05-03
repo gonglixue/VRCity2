@@ -17,6 +17,7 @@ public class Vis_UI_Interactions : MonoBehaviour {
 
     public void DropDown(int value)
     {
+        Debug.Log("screen ui: dropdown " + value);
         if(value == 1)
         {
             MonthDataCtr.GetComponent<monthDataController>().ReAlignDots();

@@ -28,6 +28,8 @@ public class monthDataController : MonoBehaviour {
     static int AlignFinishNum = 0;  // 所有点排列完再连线
     #endregion
 
+    public GameObject ScreenUICanvas;
+
     // Use this for initialization
     void Start () {
         //DropDownScreen();
@@ -56,6 +58,9 @@ public class monthDataController : MonoBehaviour {
             else
                 BeginSetValue();
             _isFullDrop = true;
+
+            // 显示chartScreen UI
+            ScreenUICanvas.GetComponent<Canvas>().enabled = true;
         });
         var tween = Go.to(screen, 1.5f, config);
     }

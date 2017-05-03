@@ -215,19 +215,9 @@ public class monthDotInfo : MonoBehaviour {
     /// </summary>
     public void triggerUseClassData()
     {
-        if(!_displayClassData)
-        {
             // 对classGroupController进行操作
             classGroup.GetComponent<classGroupController>().SetClassData(this.classData);
-            classGroup.GetComponent<classGroupController>().StartElevation();
-            _displayClassData = true;
-        }
-        else
-        {
-            classGroup.GetComponent<classGroupController>().HideCylinder();
-            _displayClassData = false;
-        }
-        
+            classGroup.GetComponent<classGroupController>().StartElevation();     
     }
 
     /// <summary>
