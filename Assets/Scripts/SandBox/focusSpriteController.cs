@@ -5,6 +5,7 @@ public class focusSpriteController : MonoBehaviour {
     public Transform screenCenter;
 	// Use this for initialization
 	void Start () {
+        screenCenter = GameObject.Find("ScreenCenter").transform;
         Vector3 temp = this.transform.position - screenCenter.transform.position;
         this.transform.forward = new Vector3(temp.x, this.transform.forward.y, temp.z);
 	}

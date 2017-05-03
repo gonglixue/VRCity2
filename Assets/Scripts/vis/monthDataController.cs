@@ -25,6 +25,7 @@ public class monthDataController : MonoBehaviour {
     private float AlignStep;
     [SerializeField]
     private GameObject monthDotEntityPrefab;
+    static int AlignFinishNum = 0;  // 所有点排列完再连线
     #endregion
 
     // Use this for initialization
@@ -36,7 +37,7 @@ public class monthDataController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        Test();
 	}
 
     public void DropDownScreen()
@@ -195,16 +196,21 @@ public class monthDataController : MonoBehaviour {
             if(i < oldTransformList.Length)
             {
                 float currentDegree = AlignDegree + AlignStep * i;
-                float posX, posZ;
+                float posX, posZ, posY;
                 posX = AlignCenter.x + Mathf.Sin(currentDegree / 180 * Mathf.PI) * AlignRadius;
                 posZ = AlignCenter.z + Mathf.Cos(currentDegree / 180 * Mathf.PI) * AlignRadius;
+                posY = oldTransformList[i].position.y;
 
                 GoTweenConfig config = new GoTweenConfig()
-                    .position(new Vector3(posX, 0, posZ))
+                    .position(new Vector3(posX, posY, posZ))
                     .setEaseType(GoEaseType.Linear);
                 config.onComplete(delegate (AbstractGoTween obj)
                 {
-
+                    AlignFinishNum++;
+                    if(AlignFinishNum == monthTransformList.Length)
+                    {
+                        JoinLine();
+                    }
                 });
 
                 Go.to(oldTransformList[i], 0.8f, config);
@@ -229,19 +235,29 @@ public class monthDataController : MonoBehaviour {
                 monthDotEntity.GetComponent<monthDotInfo>().setValue(monthData[i], max, min);
 
                 monthTransformList[i] = monthDotEntity.transform;
+                AlignFinishNum++;
             }
         }
 
-        JoinLine();
+        
 
     }
 
     void DestroyOldLine()
     {
-        Debug.Log("destroy old line");
+        
         foreach(Transform lineChild in lineGroup)
         {
+            Debug.Log("destroy old line");
             Destroy(lineChild.gameObject);
+        }
+    }
+
+    void Test()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            ReAlignDots();
         }
     }
 }
