@@ -130,6 +130,7 @@ public class monthDataController : MonoBehaviour {
             if (monthData[j] < min)
                 min = monthData[j];
         }
+        NetworkService myNetwork = new NetworkService();
 
         // 为"monthDot"创建子物体，表示散点
         for(int j = 0; j < monthData.Length; j++)
@@ -144,6 +145,11 @@ public class monthDataController : MonoBehaviour {
             monthDotEntity.transform.parent = this.transform;
 
             monthDotEntity.GetComponent<monthDotInfo>().setValue(monthData[j], max, min);
+            monthDotEntity.GetComponent<monthDotInfo>().month = j + 1;  // 设置月份
+            // TODO 设置每个散点的柱状图数据
+            // TODO 网络请求： 请求月份天气 ?month=j&year=2016
+            string args = "?month=" + j + "&year=2016";
+            StartCoroutine(myNetwork.RequestClassData(args, monthDotEntity, RequestClassDataCallback));
 
             monthTransformList[j] = monthDotEntity.transform;
         }
@@ -256,9 +262,15 @@ public class monthDataController : MonoBehaviour {
         
         foreach(Transform lineChild in lineGroup)
         {
-            Debug.Log("destroy old line");
+            //Debug.Log("destroy old line");
             Destroy(lineChild.gameObject);
         }
+    }
+
+    void RequestClassDataCallback(GameObject monthDotEntity, float[] data_in)
+    {
+        monthDotEntity.GetComponent<monthDotInfo>().SetClassData(data_in);
+        Debug.Log("request class data callback: " + data_in[0] + "," + data_in[1] + "," + data_in[2] + "," + data_in[3]);
     }
 
     void Test()

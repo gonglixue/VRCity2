@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.IO;
+using LitJson;
 
 public class NetworkService{
 
@@ -14,6 +15,8 @@ public class NetworkService{
     private const string host = "http://127.0.0.1:8888";
     private const string loadTextureUrl = "http://127.0.0.1:8888/texture";
     private const string downloadFilePath = @"D:/temp/";
+
+    private const string classDataUrl = "http://127.0.0.1:8888/classData";
 
     
 
@@ -204,5 +207,31 @@ public class NetworkService{
         stream.Close();
         stream.Dispose();
 
+    }
+
+    public IEnumerator RequestClassData(string args, GameObject monthDotEntity, Action<GameObject, float[]> callback)
+    {
+        string url = classDataUrl + args;
+        WWW www = new WWW(url);
+        yield return www;
+
+        if(!IsResponseValid(www))
+        {
+            Debug.Log("request class data error");
+            yield break;
+        }
+        if(www.isDone)
+        {
+            // 解析JSON数据
+            JsonData classJson = new JsonData();
+            classJson = JsonMapper.ToObject(www.text);
+            float[] classDataList = new float[4];
+            classDataList[0] = int.Parse(classJson["sunny"].ToString());
+            classDataList[1] = int.Parse(classJson["rainy"].ToString());
+            classDataList[2] = int.Parse(classJson["cloudy"].ToString());
+            classDataList[3] = int.Parse(classJson["snowy"].ToString());
+
+            callback(monthDotEntity, classDataList); //设置柱状图数据
+        }
     }
 }

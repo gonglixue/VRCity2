@@ -279,5 +279,9 @@ public class monthDotInfo : MonoBehaviour {
         }
     }
 
+    public void SetClassData(float[] data_in)
+    {
+        this.classData = data_in;
+    }
 
 }
