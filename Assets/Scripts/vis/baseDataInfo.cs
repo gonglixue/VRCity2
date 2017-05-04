@@ -5,7 +5,7 @@ public class baseDataInfo : MonoBehaviour {
     public Vector3 localPosition = new Vector3(0, 0, 0);
     public Vector3 localScale = new Vector3(0.7f, 10, 0.7f);
 
-    static float maxHeight = 25f;
+    static float maxHeight = 20f;
 
     private float _value;
     public GameObject cylinderPrefab;

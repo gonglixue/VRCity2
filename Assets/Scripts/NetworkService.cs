@@ -226,10 +226,10 @@ public class NetworkService{
             JsonData classJson = new JsonData();
             classJson = JsonMapper.ToObject(www.text);
             float[] classDataList = new float[4];
-            classDataList[0] = int.Parse(classJson["sunny"].ToString());
-            classDataList[1] = int.Parse(classJson["rainy"].ToString());
-            classDataList[2] = int.Parse(classJson["cloudy"].ToString());
-            classDataList[3] = int.Parse(classJson["snowy"].ToString());
+            classDataList[0] = int.Parse(classJson["sunnydays"].ToString());
+            classDataList[1] = int.Parse(classJson["rainydays"].ToString());
+            classDataList[2] = int.Parse(classJson["cloudydays"].ToString());
+            classDataList[3] = int.Parse(classJson["snowydays"].ToString());
 
             callback(monthDotEntity, classDataList); //设置柱状图数据
         }

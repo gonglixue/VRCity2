@@ -33,11 +33,4 @@ public class Sandbox_CubeMenuController : MonoBehaviour {
         Go.to(this.transform, 0.6f, config);
     }
 
-    void Test()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SwipeLeft();
-        }
-    }
 }
