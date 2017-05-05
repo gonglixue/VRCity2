@@ -209,6 +209,7 @@ public class NetworkService{
 
     }
 
+    // 请求天气数据
     public IEnumerator RequestClassData(string args, GameObject monthDotEntity, Action<GameObject, float[]> callback)
     {
         string url = classDataUrl + args;
@@ -231,7 +232,7 @@ public class NetworkService{
             classDataList[2] = int.Parse(classJson["cloudydays"].ToString());
             classDataList[3] = int.Parse(classJson["snowydays"].ToString());
 
-            callback(monthDotEntity, classDataList); //设置柱状图数据
+            callback(monthDotEntity, classDataList); // monthDataController.cs RequestClassDataCallback 从每个散点物体设置该月份的柱状图数据
         }
     }
 }

@@ -252,9 +252,63 @@ public class monthDataController : MonoBehaviour {
                 AlignFinishNum++;
             }
         }
+    }
 
-        
+    public void DecreaseDots()
+    {
+        DestroyOldLine();
+        int[] oldMonthData = monthData;
+        monthData = new int[oldMonthData.Length - 12];
 
+        float max =oldMonthData[0], min = oldMonthData[0];
+        for(int i=0; i<monthData.Length; i++)
+        {
+            monthData[i] = oldMonthData[i];
+            if (monthData[i] > max)
+                max = oldMonthData[i];
+            if (monthData[i] < min)
+                min = oldMonthData[i];
+        }
+
+        AlignStep = Mathf.Abs(AlignDegree) * 2 / (monthData.Length - 1);
+        AlignFinishNum = 0;
+
+        Transform[] oldTransformList = monthTransformList;
+        monthTransformList = new Transform[oldTransformList.Length - 12];
+        //for(int i=0; i<oldTransformList.Length; i++)
+        for(int i=oldTransformList.Length-1; i>=0; i--)  //先Destroy新增的点，再做异步位移
+        {
+            if(i<monthTransformList.Length)
+            {
+                monthTransformList[i] = oldTransformList[i];
+                // TODO 移动
+                float currentDegree = AlignDegree + AlignStep * i;
+                float posX, posZ, posY;
+                posX = AlignCenter.x + Mathf.Sin(currentDegree / 180 * Mathf.PI) * AlignRadius;
+                posZ = AlignCenter.z + Mathf.Cos(currentDegree / 180 * Mathf.PI) * AlignRadius;
+                posY = oldTransformList[i].position.y;
+
+                GoTweenConfig config = new GoTweenConfig()
+                    .position(new Vector3(posX, posY, posZ))
+                    .setEaseType(GoEaseType.Linear);
+                config.onComplete(delegate (AbstractGoTween obj)
+                {
+                    AlignFinishNum++;
+                    if(AlignFinishNum == monthTransformList.Length)
+                    {
+                        JoinLine();
+                    }
+                });
+
+                Go.to(monthTransformList[i], 0.8f, config);
+                monthTransformList[i].GetComponent<monthDotInfo>().moveVerticalBar(new Vector3(posX, 3.8f, posZ));
+            }
+            else
+            {
+                // TODO Destroy
+                Destroy(oldTransformList[i].gameObject);
+            }
+        }
     }
 
     void DestroyOldLine()

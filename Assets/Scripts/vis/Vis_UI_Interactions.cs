@@ -22,5 +22,9 @@ public class Vis_UI_Interactions : MonoBehaviour {
         {
             MonthDataCtr.GetComponent<monthDataController>().ReAlignDots();
         }
+        else if(value == 0)
+        {
+            MonthDataCtr.GetComponent<monthDataController>().DecreaseDots();
+        }
     }
 }
