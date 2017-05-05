@@ -284,4 +284,10 @@ public class monthDotInfo : MonoBehaviour {
         this.classData = data_in;
     }
 
+    public void DestroyThisDot()
+    {
+        Destroy(verticalBar.gameObject); // destroy vertical bar
+        Destroy(this.gameObject); 
+    }
+
 }

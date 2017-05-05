@@ -306,7 +306,7 @@ public class monthDataController : MonoBehaviour {
             else
             {
                 // TODO Destroy
-                Destroy(oldTransformList[i].gameObject);
+                oldTransformList[i].GetComponent<monthDotInfo>().DestroyThisDot();
             }
         }
     }
