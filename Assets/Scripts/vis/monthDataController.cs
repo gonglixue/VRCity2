@@ -96,7 +96,7 @@ public class monthDataController : MonoBehaviour {
 
     public void MoveUpWeatherTitle()
     {
-        Vector3 UpPos = new Vector3(WeatherTitleCanvas.transform.localPosition.x, 0.1f, WeatherTitleCanvas.transform.localPosition.z);
+        Vector3 UpPos = new Vector3(WeatherTitleCanvas.transform.localPosition.x, 0.1f, WeatherTitleCanvas.transform.localPosition.z);  // -0.3 ~ 1.0
         GoTweenConfig config = new GoTweenConfig()
             .localPosition(UpPos)
             .setEaseType(GoEaseType.Linear);
