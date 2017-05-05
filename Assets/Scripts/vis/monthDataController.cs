@@ -29,6 +29,7 @@ public class monthDataController : MonoBehaviour {
     #endregion
 
     public GameObject ScreenUICanvas;
+    public GameObject WeatherTitleCanvas;
 
     // Use this for initialization
     void Start () {
@@ -52,15 +53,20 @@ public class monthDataController : MonoBehaviour {
         {
             if (_firstDrop)
             {
-                BeginSetValue_Align();
+                BeginSetValue_Align();  // 创建散点，并位移
                 _firstDrop = false;
             }                
             else
-                BeginSetValue();
-            _isFullDrop = true;
-
+            {
+                BeginSetValue();    //散点已创建
+                _isFullDrop = true;
+            }
+                
             // 显示chartScreen UI
             ScreenUICanvas.GetComponent<Canvas>().enabled = true;
+            // 位移WeatherTitle
+            MoveUpWeatherTitle();
+
         });
         var tween = Go.to(screen, 1.5f, config);
     }
@@ -78,12 +84,24 @@ public class monthDataController : MonoBehaviour {
                 this.transform.parent.gameObject.SetActive(false);
                 // 隐藏柱状图
                 classDataGroup.GetComponent<classGroupController>().HideCylinder();
+                // 下移TitleCanvas
+                WeatherTitleCanvas.transform.localPosition = new Vector3(WeatherTitleCanvas.transform.localPosition.x, -0.3f, WeatherTitleCanvas.transform.localPosition.z);
             });
             Go.to(screen, 1.0f, config);
 
             _isFullDrop = false;
         }
         
+    }
+
+    public void MoveUpWeatherTitle()
+    {
+        Vector3 UpPos = new Vector3(WeatherTitleCanvas.transform.localPosition.x, 0.1f, WeatherTitleCanvas.transform.localPosition.z);
+        GoTweenConfig config = new GoTweenConfig()
+            .localPosition(UpPos)
+            .setEaseType(GoEaseType.Linear);
+
+        Go.to(WeatherTitleCanvas.transform, 0.8f, config);
     }
 
     void BeginSetValue()
