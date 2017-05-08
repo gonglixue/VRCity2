@@ -5,7 +5,7 @@
     public class VRCity_PointerListener : MonoBehaviour
     {
         private Transform currentPointerObj = null;   // 当前pointer指向的建筑
-        public bool MenuIsShowed = false;
+        //public bool MenuIsShowed = false;
 
         private void Start()
         {
@@ -42,14 +42,15 @@
                     building.displayBillBoard();
                 }
             }
-            if(e.target.tag == "Menu")
+            if(e.target.tag == "Menu")  // 封闭menu
             {
-                if(this.GetComponent<VRTK.Examples.VRCityControllerListener>().grip && (!MenuIsShowed))
+                Debug.Log("pointer in menu");
+                if(this.GetComponent<VRTK.Examples.VRCityControllerListener>().grip)
                 {
+                    Debug.Log("choose menu");
                     e.target.GetComponent<City_MenuItem>().ConfirmChoose();
-                    MenuIsShowed = false;
-                }
                     
+                }                    
             }
         }
 

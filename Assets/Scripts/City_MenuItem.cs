@@ -13,7 +13,7 @@ public class City_MenuItem : MonoBehaviour {
 
     public CityMenuItemName menuItemName;
     public GameObject cameraRig;
-    public GameObject leftController;
+    public GameObject rightController;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +30,7 @@ public class City_MenuItem : MonoBehaviour {
         switch(this.menuItemName)
         {
             case CityMenuItemName.BackToCity:
-                leftController.GetComponent<VRTK.Examples.VRCityControllerListener>().BackToCity();
+                rightController.GetComponent<VRTK.Examples.VRCityControllerListener>().BackToCity();
                 
                 break;
             case CityMenuItemName.Sandbox:

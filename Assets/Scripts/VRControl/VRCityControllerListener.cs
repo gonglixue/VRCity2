@@ -10,9 +10,9 @@
 
         #endregion
 
-        public Vector3 LastPlayerPos;
+        public static Vector3 LastPlayerPos;  //左右手柄共享
         private Vector3 StandInMenuPos = new Vector3(-26.7f, 20.9f, 0);
-        private bool AllowMovement = true;
+        private static bool AllowMovement = true;
         public GameObject VRMenu;
 
         public bool grip;
@@ -201,9 +201,7 @@
             // 移动到菜单中
             cameraRig.transform.position = StandInMenuPos;
             // 禁用移动
-            this.AllowMovement = false;
-
-            this.GetComponent<VRCity_PointerListener>().MenuIsShowed = true;
+            AllowMovement = false;
 
         }
         public void BackToCity()
@@ -211,6 +209,7 @@
             cameraRig.transform.position = LastPlayerPos;
             VRMenu.SetActive(false);
             AllowMovement = true;
+            //this.GetComponent<VRTK.Examples.VRCity_PointerListener>().MenuIsShowed = false;
         }
     }
 }
