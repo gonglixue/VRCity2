@@ -10,6 +10,12 @@
 
         #endregion
 
+        public Vector3 LastPlayerPos;
+        private Vector3 StandInMenuPos = new Vector3(-26.7f, 20.9f, 0);
+        private bool AllowMovement = true;
+        public GameObject VRMenu;
+
+        public bool grip;
 
         private void Start()
         {
@@ -114,38 +120,44 @@
 
         private void DoApplicationMenuReleased(object sender, ControllerInteractionEventArgs e)
         {
-            //DebugLogger(e.controllerIndex, "APPLICATION MENU", "released", e);
+            DebugLogger(e.controllerIndex, "APPLICATION MENU", "released", e);
+
+            GoToVRMenu();
         }
 
         private void DoGripPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "GRIP", "pressed down", e);
+            grip = true;
         }
 
         private void DoGripReleased(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "GRIP", "released", e);
+            grip = false;
         }
 
         private void DoTouchpadPressed(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "TOUCHPAD", "pressed down", e);
-            // TODO:
-            // Player Move
-            Vector2 touchPos = e.touchpadAxis;
-            float deltaX = 0, deltaY = 0;
-            Vector3 movement;
-            if(touchPos.y > 0.3f || touchPos.y < -0.3f)
+            if (AllowMovement)
             {
-                // move forward
-                deltaY = touchPos.y;
+                // Player Move
+                Vector2 touchPos = e.touchpadAxis;
+                float deltaX = 0, deltaY = 0;
+                Vector3 movement;
+                if (touchPos.y > 0.3f || touchPos.y < -0.3f)
+                {
+                    // move forward
+                    deltaY = touchPos.y;
+                }
+                if (touchPos.x < -0.3f || touchPos.x > 0.3f)
+                {
+                    deltaX = touchPos.x;
+                }
+                movement = new Vector3(deltaX, 0, deltaY);
+                cameraRig.GetComponent<VRCameraRigOperation>().activeMove(movement);
             }
-            if(touchPos.x < -0.3f || touchPos.x > 0.3f)
-            {
-                deltaX = touchPos.x;
-            }
-            movement = new Vector3(deltaX, 0, deltaY);
-            cameraRig.GetComponent<VRCameraRigOperation>().activeMove(movement);
            
             
         }
@@ -179,6 +191,26 @@
         private void DoControllerDisabled(object sender, ControllerInteractionEventArgs e)
         {
             //DebugLogger(e.controllerIndex, "CONTROLLER STATE", "DISABLED", e);
+        }
+        public void GoToVRMenu()
+        {
+            //TODO 在VR City场景显示菜单
+            LastPlayerPos = cameraRig.transform.position;    // 此时位置
+            // 显示菜单
+            VRMenu.SetActive(true);
+            // 移动到菜单中
+            cameraRig.transform.position = StandInMenuPos;
+            // 禁用移动
+            this.AllowMovement = false;
+
+            this.GetComponent<VRCity_PointerListener>().MenuIsShowed = true;
+
+        }
+        public void BackToCity()
+        {
+            cameraRig.transform.position = LastPlayerPos;
+            VRMenu.SetActive(false);
+            AllowMovement = true;
         }
     }
 }

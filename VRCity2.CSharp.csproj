@@ -205,6 +205,7 @@
     <Compile Include="Assets\Scripts\BuildingGeoList.cs" />
     <Compile Include="Assets\Scripts\BuildingIntro.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\City_MenuItem.cs" />
     <Compile Include="Assets\Scripts\CreateMesh\CreateMesh.cs" />
     <Compile Include="Assets\Scripts\EarthBillboardManager.cs" />
     <Compile Include="Assets\Scripts\Earth_Text_Change.cs" />
