@@ -38,10 +38,10 @@ public class GenerateNoiseOctavesWizard : ScriptableWizard {
                 float scale = 2.0f;
                 float noise = 0.0f;
                 float[] noiseDisplaced = new float[3];
-                for (int o = 0; o < 4; o++) {
+                for (int o = 0; o < 4; o++) {  // 四个Octave
                     // The real noise
                     noise = SimplexNoise.SeamlessNoise((float)j/width, (float)i/height, scale, scale, 20.0f);
-                    noise = noise * 0.5f + 0.5f;
+                    noise = noise * 0.5f + 0.5f;  // [-1,1] -> [0,1]
 
                     for (int s = 0; s < 3; s++) {
                         float yDisplaced = ((float)i + displacements[s].y)/height;

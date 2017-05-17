@@ -496,6 +496,7 @@ public class SimplexNoise
     }
  
     //X, Y is [0..1]
+	// dx, dy are noise scale in x and y axes.
     public static float SeamlessNoise(float x, float y, float dx, float dy, float xyOffset)
     {
         float s = x;
