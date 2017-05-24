@@ -14,8 +14,12 @@ public class WeatherController : MonoBehaviour {
     public GameObject snowySystem;
     public GameObject sunnySystem;
     public GameObject cloudySystem;
+    public GameObject DirectLight;
 
     public GameObject skyBox;
+    public bool bLightning = false;
+    private float lightningStart;
+    private bool firstLight = true;
 
     #region snowMat
     public GameObject[] matHostGameObject;
@@ -28,11 +32,31 @@ public class WeatherController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (bLightning)
+        {
+            if (firstLight)
+            {
+                lightningStart = Time.time;
+                firstLight = false;
+            }
+            
+            TurnOnLightning();
+            SetLightIntensity(1.0f);
+            if(Time.time > lightningStart + 0.3f)
+            {
+                firstLight = true;
+                bLightning = false;
+                TurnDownLightning();
+                SetLightIntensity(0);
+            }
+                
+        }
 	
 	}
 
     void InitSnowySystem()
     {
+        SetLightIntensity(0);
         SkyBoxConfig snowSkyConf = new SkyBoxConfig(new Color(3f/255, 30f/255, 49f/255, 1), new Color(75f/255, 86f/255, 86f/255, 1), new Color(167f/255, 168f/255, 168f/255), 0.3f, 0.079f, 0.821f);
         SetSkyBoxAttrib(snowSkyConf);
 
@@ -48,22 +72,29 @@ public class WeatherController : MonoBehaviour {
     }
     void InitRainySystem()
     {
+        SetLightIntensity(0);
         SkyBoxConfig rainSkyConf = new SkyBoxConfig(new Color(3f/255, 30f/255, 49f/255, 1), new Color(75f/255, 86f/255, 86f/255, 1), new Color(167f/255, 168f/255, 168f/255), 0.3f, 0.079f, 0.821f);
         SetSkyBoxAttrib(rainSkyConf);
         rainySystem.SetActive(true);
+        ClearSnowMat();
+
     }
     void InitSunnySystem()
     {
+        SetLightIntensity(0.8f);
         CancelSnowMat();
         SkyBoxConfig sunnySkyConf = new SkyBoxConfig(new Color(20f/255, 124f/255, 197f/255, 1), new Color(181f/255, 216f/255, 246f/255, 1), new Color(255f/255, 255f/255, 255f/255), 0.3f, 0.0f, 1.0f);
         SetSkyBoxAttrib(sunnySkyConf);
         //sunnySystem.SetActive(true);
+        ClearSnowMat();
     }
     void InitCloudySystem()
     {
+        SetLightIntensity(0.54f);
         SkyBoxConfig cloudSkyConf = new SkyBoxConfig(new Color(20f/255, 124f/255, 197f/255, 1), new Color(181f/255, 216f/255, 246f/255, 1), new Color(191f/255, 191f/255, 191f/255), 0.3f, 0.0f, 0.32f);
         SetSkyBoxAttrib(cloudSkyConf);
         //cloudySystem.SetActive(true);
+        ClearSnowMat();
     }
 
     void ChooseWeather()
@@ -117,6 +148,23 @@ public class WeatherController : MonoBehaviour {
             m.SetFloat("_SnowDepth", 0);
         }
     }
+
+    void SetLightIntensity(float light)
+    {
+        DirectLight.GetComponent<Light>().intensity = light;
+    }
+
+    void TurnOnLightning()
+    {
+        Material m = skyBox.GetComponent<MeshRenderer>().material;
+        m.SetFloat("_Lightning", 1.0f);
+    }
+    void TurnDownLightning()
+    {
+        Material m = skyBox.GetComponent<MeshRenderer>().material;
+        m.SetFloat("_Lightning", 0.0f);
+    }
+
 }
 
 public class SkyBoxConfig

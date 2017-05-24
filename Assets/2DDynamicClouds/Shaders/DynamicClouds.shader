@@ -12,6 +12,7 @@
 	_Speed("Speed", Range(0.0, 1.0)) = 0.1
 		_Emptiness("Emptiness", Range(0.0, 1.0)) = 0.2
 		_Sharpness("Sharpness", Range(0.0, 1.0)) = 1.0
+		_Lightning("Lightning", Range(0.0, 1.0)) = 0.0
 	}
 		SubShader{
 		Tags{ "RenderType" = "Opaque" "Queue" = "Background" }
@@ -28,6 +29,7 @@
 	sampler2D _Octave0;
 	sampler2D _Octave3;
 	sampler2D _SkyBackground;
+	fixed _Lightning;
 
 	struct appdata {
 		float4 vertex : POSITION;
@@ -54,8 +56,10 @@
 	//fixed3 starcolor1 = pow(tex2D(_Octave3, i.uv + half2(0.4, 0.6)).a, 60.0) * fixed3(4.0, 4.0, 3.0) * tex2D(_Octave3, i.uv + _Time.y * 0.15).a;
 
 	//col.rgb += starcolor0 + starcolor1;
-	col.rgb = col.rgb;
-	//col.rgb = tex2D(_SkyBackground, i.uv).rgb*0.8 + col.rgb;
+	if(_Lightning < 0.5)
+		col.rgb = col.rgb; //normal
+	else
+		col.rgb = tex2D(_SkyBackground, i.uv).rgb*0.8 + col.rgb;
 	col.a = 1.0;
 
 	return col;
