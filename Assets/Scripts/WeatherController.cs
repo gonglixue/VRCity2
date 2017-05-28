@@ -32,7 +32,7 @@ public class WeatherController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (bLightning)
+        if (bLightning)  // 闪电模拟
         {
             if (firstLight)
             {

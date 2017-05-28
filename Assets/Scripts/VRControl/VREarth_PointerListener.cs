@@ -70,7 +70,7 @@
             {
                 if(this._lastPointerPos.x > -900)
                 {
-                    Vector2 axis = GetPointerAxis(this._lastPointerPos, e.destinationPosition);
+                    Vector2 axis = GetPointerAxis(this._lastPointerPos, e.destinationPosition);  //delta
                     // 进行旋转；
                     RotateEarth(axis);
                 }
@@ -120,6 +120,8 @@
                 _flagControllerScript = null;
             }
 
+            this._lastPointerPos = new Vector3(-1000, -1000, -1000);
+
         }
 
         private void DoPointerDestinationSet(object sender, DestinationMarkerEventArgs e)  // release
@@ -133,6 +135,7 @@
                 // ??
                 _flagControllerScript = null;
             }
+            Debug.Log("VREarth_Pointer Listener: PointerDestinationSet");
         }
         #endregion
 
@@ -173,13 +176,16 @@
         {
             if(axis.x !=0 || axis.y !=0)
             {
-                //Debug.Log("rotate earth: " + axis.x + " " + axis.y);
+                //Debug.Log("RotateEarth axis: " + axis.x + " " + axis.y);
 
                 float temp = ((dist - EARTH_RADIUS) / (EARTH_RADIUS)) * rotateSensitivityFactor;
-                float rotateSensitivity = Mathf.Min(20f, temp);
-                Debug.Log("calculate sensitivity: " + temp);
-                earthRotation *= (Quaternion.AngleAxis(rotateSensitivity * axis.x, Vector3.up) *
-                    Quaternion.AngleAxis(rotateSensitivity * axis.y, Vector3.left));  //绕世界坐标的up, left旋转
+                float rotateSensitivity = Mathf.Min(20f, temp)*1.2f;
+                //Debug.Log("calculate sensitivity: " + temp);
+                Matrix4x4 rot = new Matrix4x4();
+                rot.SetTRS(new Vector3(0, 0, 0), earthRotation, new Vector3(1, 1, 1));
+                rot = rot.inverse;
+                earthRotation *= (Quaternion.AngleAxis(rotateSensitivity * axis.x, rot*Vector3.up) *
+                    Quaternion.AngleAxis(rotateSensitivity * axis.y, rot*Vector3.left));  //绕世界坐标的up, left旋转
                 earth.rotation = earthRotation;
             }
         }
@@ -191,6 +197,7 @@
             {
                 _flagControllerScript = null;
             }
+            Debug.Log("VREarth_Pointer Listener: ReleasePointer");
         }
 
 
@@ -222,7 +229,7 @@
             Bridge.latitude = LatLon.x;
             Bridge.longitude = LatLon.y;
 
-            Debug.Log("放置大头针");
+            Debug.Log("放置大头针- position:" + position + "latlon:" + LatLon);
         }
 
 

@@ -20,7 +20,7 @@ public class EaseSpriteFrame : MonoBehaviour {
             {
                 _alpha += Time.deltaTime * easeFactor;
                 this.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, _alpha);
-                Debug.Log("chang alpha:" + _alpha);
+                //Debug.Log("chang alpha:" + _alpha);
             }
         }
 	    
