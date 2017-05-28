@@ -255,6 +255,9 @@
             float r2 = Mathf.Cos(LatLon.x) * EARTH_RADIUS;
             Debug.Log("r2 " + r2);
             float cosLon = position.z / r2;
+            //Debug.Log("cos Lon: " + cosLon);
+            if (cosLon > 1)
+                cosLon = 1;
             LatLon.y = Mathf.Acos(cosLon);  // 返回0~pi
 
             if (position.x > 0)
