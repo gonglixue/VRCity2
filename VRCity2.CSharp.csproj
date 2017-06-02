@@ -254,6 +254,7 @@
     <Compile Include="Assets\Scripts\util\CityQuadTree.cs" />
     <Compile Include="Assets\Scripts\util\Config.cs" />
     <Compile Include="Assets\Scripts\util\Quadtree.cs" />
+    <Compile Include="Assets\Scripts\util\TextEffect.cs" />
     <Compile Include="Assets\Scripts\util\XMLParser.cs" />
     <Compile Include="Assets\Scripts\vis\SpriteTriggerReceiver.cs" />
     <Compile Include="Assets\Scripts\vis\Vis_UI_Interactions.cs" />

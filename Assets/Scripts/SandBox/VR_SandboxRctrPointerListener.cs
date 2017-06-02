@@ -122,6 +122,7 @@
             this.GetComponent<VRTK.Examples.VR_SandboxRctrListener>().LeaveNaviMode();
             // 隐藏 tool tip
             this.transform.Find("ControllerTooltips").gameObject.SetActive(false);
+            // 飞入路径中
         }
 
         // 判断是否是可放置路标的合法点

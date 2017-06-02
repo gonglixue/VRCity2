@@ -20,6 +20,8 @@ public class WeatherController : MonoBehaviour {
     public bool bLightning = false;
     private float lightningStart;
     private bool firstLight = true;
+    [SerializeField]
+    private float lightningDuration = 0.3f;  // 每次闪电持续时间
 
     #region snowMat
     public GameObject[] matHostGameObject;
@@ -36,18 +38,32 @@ public class WeatherController : MonoBehaviour {
         {
             if (firstLight)
             {
-                lightningStart = Time.time;
+                lightningStart = Time.time; //开启闪电的时间点
                 firstLight = false;
             }
             
-            TurnOnLightning();
-            SetLightIntensity(1.0f);
-            if(Time.time > lightningStart + 0.3f)
+            TurnOnLightning();          // 开启打开shader中的闪电贴图控制，天空背景为第一张闪电贴图
+            SetLightIntensity(1.0f);    // 照亮场景
+            if(Time.time >= lightningStart + lightningDuration)   // 闪电持续0.3s后，切换闪电图片
             {
-                firstLight = true;
-                bLightning = false;
-                TurnDownLightning();
-                SetLightIntensity(0);
+                if(Time.time < lightningStart + lightningDuration*2)  // 第二张闪电贴图
+                {
+                    ChangeShaderLightning(2.0f);
+                    SetLightIntensity(0.6f);
+                }
+                else if(Time.time >= lightningStart + lightningDuration*2 && Time.time < lightningStart + lightningDuration*3)  // 第三章闪电贴图
+                {
+                    ChangeShaderLightning(3.0f);
+                    SetLightIntensity(1.0f);
+                }
+                else
+                {
+                    firstLight = true;
+                    bLightning = false;   // 关闭闪电模拟
+                    ChangeShaderLightning(0);   // 取消shader中的闪电模拟
+                    SetLightIntensity(0);       // 恢复场景亮度
+                }
+
             }
                 
         }
@@ -159,10 +175,10 @@ public class WeatherController : MonoBehaviour {
         Material m = skyBox.GetComponent<MeshRenderer>().material;
         m.SetFloat("_Lightning", 1.0f);
     }
-    void TurnDownLightning()
+    void ChangeShaderLightning(float shader_lightning)
     {
         Material m = skyBox.GetComponent<MeshRenderer>().material;
-        m.SetFloat("_Lightning", 0.0f);
+        m.SetFloat("_Lightning", shader_lightning);
     }
 
 }

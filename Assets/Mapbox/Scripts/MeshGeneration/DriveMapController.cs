@@ -52,6 +52,13 @@ namespace Mapbox.MeshGeneration
                 }
             }
             _root.transform.position = new Vector3(0, 0.199f, 0);
+
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                this.Zoom = 14;
+                Execute();
+                Debug.Log("Press R");
+            }
         }
 
         public void Execute()
@@ -85,7 +92,8 @@ namespace Mapbox.MeshGeneration
                 for (int j = (int)(tms.y - frame.y); j <= (tms.y + frame.w); j++)
                 {
                     var tile = new GameObject("Tile - " + i + " | " + j).AddComponent<UnityTile>();
-                    _tiles.Add(new Vector2(i, j), tile);
+                    if(!_tiles.ContainsKey(new Vector2(i,j)))
+                        _tiles.Add(new Vector2(i, j), tile);
                     tile.Zoom = zoom;
                     tile.RelativeScale = Conversions.GetTileScaleInMeters(0, Zoom) / Conversions.GetTileScaleInMeters((float)lat, Zoom);
                     tile.TileCoordinate = new Vector2(i, j);
