@@ -59,9 +59,9 @@ public class WeatherController : MonoBehaviour {
                 else
                 {
                     firstLight = true;
-                    bLightning = false;   // 关闭闪电模拟
-                    ChangeShaderLightning(0);   // 取消shader中的闪电模拟
-                    SetLightIntensity(0);       // 恢复场景亮度
+                    //bLightning = false;   // 关闭闪电模拟
+                    //ChangeShaderLightning(0);   // 取消shader中的闪电模拟
+                    //SetLightIntensity(0);       // 恢复场景亮度
                 }
 
             }

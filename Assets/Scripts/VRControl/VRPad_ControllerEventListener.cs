@@ -188,7 +188,8 @@
                 _buttonState = false;
 
                 Debug.Log("按钮release，跳转");
-                SceneManager.LoadScene("MeshGenerationOrigin");
+                //SceneManager.LoadScene("MeshGenerationOrigin");
+                SceneManager.LoadScene("GoogleEarthScene");
             }
         }
 

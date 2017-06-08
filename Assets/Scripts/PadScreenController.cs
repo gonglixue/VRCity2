@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PadScreenController : MonoBehaviour {
 
@@ -37,9 +38,14 @@ public class PadScreenController : MonoBehaviour {
         InitialTip.SetActive(false);
 
         // 设置显示文字 （TODO 文字显示特效）
-        LocationTransform.GetComponent<TextMesh>().text = location;
-        CityTransform.GetComponent<TextMesh>().text = cityName;
-        CountryTransform.GetComponent<TextMesh>().text = countryName;
+        //LocationTransform.GetComponent<TextMesh>().text = location;
+        //CityTransform.GetComponent<TextMesh>().text = cityName;
+        //CountryTransform.GetComponent<TextMesh>().text = countryName;
+
+        // 使用Canvas显示文字
+        LocationTransform.GetComponent<Text>().text = location;
+        CityTransform.GetComponent<Text>().text = cityName;
+        CountryTransform.GetComponent<Text>().text = countryName;
     }
 
     public void DisplayPin(string location)
@@ -52,6 +58,8 @@ public class PadScreenController : MonoBehaviour {
         ContentText.SetActive(false);
         InitialTip.SetActive(true);
 
-        InitialTip.transform.GetChild(0).GetComponent<TextMesh>().text = context;
+        //InitialTip.transform.GetChild(0).GetComponent<TextMesh>().text = context;
+        // 使用canvas显示文字
+        InitialTip.GetComponent<Text>().text = context;
     }
 }
